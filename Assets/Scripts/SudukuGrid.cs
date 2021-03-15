@@ -13,7 +13,7 @@ public class SudukuGrid : MonoBehaviour
 
     private List<GameObject> grid_squares_ = new List<GameObject>();
 
-    public static int selectData;
+    public int selectData;
 
     // Start is called before the first frame update
     void Start()
@@ -49,9 +49,9 @@ public class SudukuGrid : MonoBehaviour
         {
             for (int j = 0; j < columns; j++)
             {
-                grid_squares_.Add(Instantiate(grid_square) as GameObject);
+                grid_squares_.Add(Instantiate(grid_square, this.transform));
                 grid_squares_[grid_squares_.Count - 1].GetComponent<GridSquare>().SetSquareIndex(square_index_);
-                grid_squares_[grid_squares_.Count - 1].transform.parent = this.transform;
+                //grid_squares_[grid_squares_.Count - 1].transform.parent = this.transform;
                 grid_squares_[grid_squares_.Count - 1].transform.localScale = new Vector3(square_scale, square_scale, square_scale);
                 square_index_++;
             }
@@ -77,7 +77,7 @@ public class SudukuGrid : MonoBehaviour
             }
             var pos_x_offset = offset.x * column_number;
             var pos_y_offset = offset.y * row_number;
-            square.GetComponent<RectTransform>().anchoredPosition = new Vector2(start_position.x + pos_x_offset, start_position.y - pos_y_offset);
+            square.GetComponent<RectTransform>().anchoredPosition = new Vector3(start_position.x + pos_x_offset, start_position.y - pos_y_offset);
             column_number ++;
         }
     }
@@ -107,6 +107,8 @@ public class SudukuGrid : MonoBehaviour
         for (int i = 0; i < grid_squares_.Count; i++)
         {
             grid_squares_[i].GetComponent<GridSquare>().SetNumber(data[selectData].unsolve_data[i]);
+            grid_squares_[i].GetComponent<GridSquare>().SetCorectNumber(data[selectData].solve_data[i]);
+            grid_squares_[i].GetComponent<GridSquare>().SetHasDefaultValue(data[selectData].unsolve_data[i] !=0 && data[selectData].unsolve_data[i] == data[selectData].solve_data[i]);
         }
     }
 }

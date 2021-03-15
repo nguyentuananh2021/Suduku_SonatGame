@@ -12,22 +12,39 @@ public class GameEvents : MonoBehaviour
         if (OnUpdateSquareNumber != null)
         {
             OnUpdateSquareNumber(number);
-            //Lives.GetValueNumberButton(number);
         }
            
     }
 
     public delegate void SquareSelected(int square_index);
     public static event SquareSelected OnSquareSelected;
-
     public static void SquareSelectedMethod(int square_index)
     {
         if (OnSquareSelected != null)
         {
             OnSquareSelected(square_index);
-            lives.GetValueSquareData(square_index);
+            
         }
             
 
     }
+
+    public delegate void WrongNumber();
+    public static event WrongNumber OnWrongNumber;
+    public static void OnWrongNumberMethod()
+    {
+        if (OnWrongNumber != null)
+            OnWrongNumber();
+    }
+
+    public delegate void GameOver();
+    public static event GameOver OnGameOver;
+    public static void OnGameOverMethod()
+    {
+        if(OnGameOver != null)
+        {
+            OnGameOver();
+        }
+    }
+
 }

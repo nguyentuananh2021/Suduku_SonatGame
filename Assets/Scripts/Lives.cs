@@ -5,43 +5,40 @@ using UnityEngine.UI;
 
 public class Lives : MonoBehaviour
 {
-    public Text wrong_text;
-    public int wrong_number = 0;
+    public List<GameObject> error_images;
 
-    public static int value_Square_Data;
-
-    private static List<SudukuData.SudukuBoardData> data;
-    void Start()
+    int lives_ = 0;
+    int error_number_ = 0;
+    public GameObject game_over_popup;
+    private void Start()
     {
-        Debug.Log("text = " + wrong_text.GetComponent<Text>().text);
-        data = new List<SudukuData.SudukuBoardData>();
-        data = SudukuData.GetData();
-     
-
-        Debug.Log(SudukuGrid.selectData + "square_solve = ");
+        lives_ = error_images.Count;
+        error_number_ = 0;
     }
- 
-    public void checkSolveData(int value_data, int number_button)
+    private void WrongNumber()
     {
-        if(value_data != number_button)
+        if(error_number_ < error_images.Count)
         {
-            Debug.Log("erro number !!!");
-            ErroNumber();
+            error_images[error_number_].SetActive(true);
+            error_number_++;
+            lives_--;
+        }
+        CheckForGameOver();
+    }
+    private void CheckForGameOver()
+    {
+        if(lives_<= 0)
+        {
+            GameEvents.OnGameOverMethod();
+            game_over_popup.SetActive(true);
         }
     }
-    public void GetValueSquareData(int square_index)
+    private void OnEnable()
     {
-        value_Square_Data = data[SudukuGrid.selectData].solve_data[square_index];
+        GameEvents.OnWrongNumber += WrongNumber;
     }
-    public void ErroNumber()
+    private void OnDisable()
     {
-        wrong_number ++;
-        //Debug.Log("wrong_number"+ wrong_number);
-        //Debug.Log("wrong_text" + wrong_text.text);
-        wrong_text.GetComponent<Text>().text = "2";
-        if(wrong_number > 0)
-        {
-            wrong_text.GetComponent<Text>().color = Color.red;
-        }
+        GameEvents.OnWrongNumber -= WrongNumber;
     }
 }
