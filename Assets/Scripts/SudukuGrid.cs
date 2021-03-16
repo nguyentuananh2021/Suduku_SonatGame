@@ -11,9 +11,11 @@ public class SudukuGrid : MonoBehaviour
     public Vector2 start_position = new Vector2(0.0f, 0.0f);
     public float square_scale = 1.0f;
 
+    public float square_gap = 1f;
+
     private List<GameObject> grid_squares_ = new List<GameObject>();
 
-    public int selectData;
+    private int seleced_grid_data = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +27,9 @@ public class SudukuGrid : MonoBehaviour
         else
         {
             CreateGrid();
-            SetGridNumber();
+            Debug.Log("done create grid ");
+            SetGridNumber("Easy");
+            Debug.Log("done set number grid ");
         }
     }
     /*
@@ -62,6 +66,9 @@ public class SudukuGrid : MonoBehaviour
     {
         var square_rect = grid_squares_[0].GetComponent<RectTransform>();
         Vector2 offset = new Vector2();
+        Vector2 square_gap_number = new Vector2(0.0f, 0.0f);
+        bool row_moved = false;
+
         offset.x = square_rect.rect.width * square_rect.transform.localScale.x + square_offset;
         offset.y = square_rect.rect.height * square_rect.transform.localScale.y + square_offset;
 
@@ -70,13 +77,29 @@ public class SudukuGrid : MonoBehaviour
 
         foreach (GameObject square in grid_squares_)
         {
-            if(column_number +1 > columns)
+            if (column_number + 1 > columns)
             {
                 row_number++;
                 column_number = 0;
+
+                square_gap_number.x = 0;
+                row_moved = false;
             }
-            var pos_x_offset = offset.x * column_number;
-            var pos_y_offset = offset.y * row_number;
+            var pos_x_offset = offset.x * column_number + (square_gap_number.x * square_gap);
+            var pos_y_offset = offset.y * row_number + (square_gap_number.y * square_gap);
+
+            if (column_number > 0 && column_number % 3 == 0)
+            {
+                square_gap_number.x++;
+                pos_x_offset += square_gap;
+            }
+            if(row_number > 0 && row_number % 3 == 0 && row_moved == false)
+            {
+                row_moved = true;
+                square_gap_number.y++;
+                pos_y_offset += square_gap;
+            }
+
             square.GetComponent<RectTransform>().anchoredPosition = new Vector3(start_position.x + pos_x_offset, start_position.y - pos_y_offset);
             column_number ++;
         }
@@ -89,26 +112,23 @@ public class SudukuGrid : MonoBehaviour
     .
     .
      */
-    private void SetGridNumber()
+    private void SetGridNumber(string level)
     {
+        seleced_grid_data = Random.Range(0, SudukuData.Instance.suduku_game[level].Count);
         
-        List<SudukuData.SudukuBoardData> data = new List<SudukuData.SudukuBoardData>();
-        data = SudukuData.GetData();
+        var data = SudukuData.Instance.suduku_game[level][0];
+        Debug.Log("random = " + seleced_grid_data);
 
-        //foreach (var square in grid_squares_)
-        //{
-        //    square.GetComponent<GridSquare>().SetNumber(Random.Range(0, 9));
-        //}
-        selectData = Random.Range(0, data.Count);
-        SetGridSquareData(selectData,data);
+        Debug.Log("level = " +SudukuData.Instance.suduku_game[level][0]);
+        SetGridSquareData(data);
     }
-    private void SetGridSquareData(int selectData,List<SudukuData.SudukuBoardData> data)
+    private void SetGridSquareData(SudukuData.SudukuBoardData data)
     {
-        for (int i = 0; i < grid_squares_.Count; i++)
+        for (int index = 0; index < grid_squares_.Count; index++)
         {
-            grid_squares_[i].GetComponent<GridSquare>().SetNumber(data[selectData].unsolve_data[i]);
-            grid_squares_[i].GetComponent<GridSquare>().SetCorectNumber(data[selectData].solve_data[i]);
-            grid_squares_[i].GetComponent<GridSquare>().SetHasDefaultValue(data[selectData].unsolve_data[i] !=0 && data[selectData].unsolve_data[i] == data[selectData].solve_data[i]);
+            grid_squares_[index].GetComponent<GridSquare>().SetNumber(data.unsolve_data[index]);
+            grid_squares_[index].GetComponent<GridSquare>().SetCorectNumber(data.solve_data[index]);
+            grid_squares_[index].GetComponent<GridSquare>().SetHasDefaultValue(data.unsolve_data[index] !=0 && data.unsolve_data[index] == data.solve_data[index]);
         }
     }
 }

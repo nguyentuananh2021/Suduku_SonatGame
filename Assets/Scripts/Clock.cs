@@ -13,7 +13,7 @@ public class Clock : MonoBehaviour
     private Text textClock;
     private float delta_time;
     private bool stop_clock_ = false;
-
+    private bool pause_clock_ = false;
     public static Clock Instance;
     private void Awake()
     {
@@ -36,13 +36,18 @@ public class Clock : MonoBehaviour
     {
         if(stop_clock_ == false)
         {
-            delta_time += Time.deltaTime;
-            TimeSpan span = TimeSpan.FromSeconds(delta_time);
-            string hour = LeadingZero(span.Hours);
-            string minute = LeadingZero(span.Minutes);
-            string seconds = LeadingZero(span.Seconds);
+            if(pause_clock_ == false)
+            {
+                delta_time += Time.deltaTime;
+                TimeSpan span = TimeSpan.FromSeconds(delta_time);
+                string hour = LeadingZero(span.Hours);
+                string minute = LeadingZero(span.Minutes);
+                string seconds = LeadingZero(span.Seconds);
 
-            textClock.text = hour + ":" + minute + ":" + seconds;
+                textClock.text = hour + ":" + minute + ":" + seconds;
+            }
+            
+            
         }
     }
 
@@ -67,4 +72,9 @@ public class Clock : MonoBehaviour
     {
         return textClock;
     }
+    public void OnPauseGame(bool Bool)
+    {
+        pause_clock_ = Bool;
+    }
+    
 }
