@@ -10,8 +10,11 @@ public class Lives : MonoBehaviour
     int lives_ = 0;
     int error_number_ = 0;
     public GameObject game_over_popup;
+    public Text level_text;
+
     private void Start()
     {
+        level_text.GetComponent<Text>().text = GameSetting.Instance.GetGameMode();
         lives_ = error_images.Count;
         error_number_ = 0;
     }

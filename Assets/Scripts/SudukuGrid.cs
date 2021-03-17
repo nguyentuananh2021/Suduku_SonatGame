@@ -17,29 +17,21 @@ public class SudukuGrid : MonoBehaviour
 
     private int seleced_grid_data = 0;
 
+    public Color line_color = Color.red;
     // Start is called before the first frame update
     void Start()
     {
+        //Debug.Log(SudukuData.Instance.suduku_game.Count);
         if(grid_square.GetComponent<GridSquare>() == null)
         {
-            Debug.Log("add gameObject?");
+            Debug.Log("GridSquare is null");
         }
-        else
-        {
-            CreateGrid();
-            Debug.Log("done create grid ");
-            SetGridNumber("Easy");
-            Debug.Log("done set number grid ");
-        }
+        CreateGrid();
+        SetGridNumber(GameSetting.Instance.GetGameMode());
     }
-    /*
-   .
-   .
-   . CreateGrid
-   .
-   .
-   .
-    */
+   /*
+    CreateGrid
+   */
     private void CreateGrid()
     {
         SpawnGridSquares();
@@ -105,21 +97,17 @@ public class SudukuGrid : MonoBehaviour
         }
     }
     /*
-    .
-    .
-    . SetGridNumber
-    .
-    .
-    .
-     */
+     SetGridNumber
+    */
     private void SetGridNumber(string level)
     {
-        seleced_grid_data = Random.Range(0, SudukuData.Instance.suduku_game[level].Count);
-        
-        var data = SudukuData.Instance.suduku_game[level][0];
-        Debug.Log("random = " + seleced_grid_data);
+        if (level is null)
+        {
+            throw new System.ArgumentNullException(nameof(level));
+        }
 
-        Debug.Log("level = " +SudukuData.Instance.suduku_game[level][0]);
+        seleced_grid_data = Random.Range(0, SudukuData.Instance.suduku_game[level].Count);
+        SudukuData.SudukuBoardData data = SudukuData.Instance.suduku_game[level][seleced_grid_data];
         SetGridSquareData(data);
     }
     private void SetGridSquareData(SudukuData.SudukuBoardData data)
@@ -130,5 +118,37 @@ public class SudukuGrid : MonoBehaviour
             grid_squares_[index].GetComponent<GridSquare>().SetCorectNumber(data.solve_data[index]);
             grid_squares_[index].GetComponent<GridSquare>().SetHasDefaultValue(data.unsolve_data[index] !=0 && data.unsolve_data[index] == data.solve_data[index]);
         }
+    }
+    public void OnEnable()
+    {
+        GameEvents.OnSquareSelected += OnSquareSelected;
+    }
+    public void OnDisable()
+    {
+        GameEvents.OnSquareSelected += OnSquareSelected;
+    }
+
+    private void SetSquaresColor(int[] data, Color co)
+    {
+        foreach (var index in data)
+        {
+            var comp = grid_squares_[index].GetComponent<GridSquare>();
+            if(comp.HasWrongValue() == false && comp.IsSelected() == false)
+            {
+                comp.SetSquareColor(co);
+            }
+        }
+    }
+    public void OnSquareSelected(int square_index)
+    {
+        var horizontal_line = LineIndicator.Instance.GetHorizontalLine(square_index);
+        var vertical_line = LineIndicator.Instance.GetVerticalLine(square_index);
+        var square = LineIndicator.Instance.GetSquare(square_index);
+
+        SetSquaresColor(LineIndicator.Instance.GetAllSquaresIndexs(), Color.white);
+
+        SetSquaresColor(horizontal_line, line_color);
+        SetSquaresColor(vertical_line, line_color);
+        SetSquaresColor(square, line_color);
     }
 }

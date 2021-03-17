@@ -28,6 +28,7 @@ TextureImporter:
     21300046: time
     21300048: continue
     21300050: Pause
+    21300052: PlayADToContinue
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -282,10 +283,10 @@ TextureImporter:
       name: gameOverPopup
       rect:
         serializedVersion: 2
-        x: 947
-        y: 275
-        width: 710
-        height: 933
+        x: 963
+        y: 284
+        width: 681
+        height: 923
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -344,7 +345,7 @@ TextureImporter:
         serializedVersion: 2
         x: 35
         y: 335
-        width: 625
+        width: 802
         height: 208
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -404,7 +405,7 @@ TextureImporter:
         serializedVersion: 2
         x: 33
         y: 81
-        width: 628
+        width: 804
         height: 206
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -434,6 +435,26 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 0e2498e3c02edcb40bad000900146fdc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayADToContinue
+      rect:
+        serializedVersion: 2
+        x: 887
+        y: 54
+        width: 803
+        height: 205
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6564b19276d4f8d42bc48c0716866ec9
       vertices: []
       indices: 
       edges: []

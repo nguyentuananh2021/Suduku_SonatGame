@@ -66,11 +66,14 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Clock.cs" />
     <Compile Include="Assets\Scripts\GameEvents.cs" />
+    <Compile Include="Assets\Scripts\GameSetting.cs" />
     <Compile Include="Assets\Scripts\GridSquare.cs" />
+    <Compile Include="Assets\Scripts\LineIndicator.cs" />
     <Compile Include="Assets\Scripts\Lives.cs" />
     <Compile Include="Assets\Scripts\MenuButtons.cs" />
     <Compile Include="Assets\Scripts\MenuGameOvePopup.cs" />
     <Compile Include="Assets\Scripts\MenuPause.cs" />
+    <Compile Include="Assets\Scripts\NoteButton.cs" />
     <Compile Include="Assets\Scripts\NumberButton.cs" />
     <Compile Include="Assets\Scripts\SudukuData.cs" />
     <Compile Include="Assets\Scripts\SudukuGrid.cs" />

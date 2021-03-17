@@ -10,9 +10,7 @@ public class NumberButton : Selectable, IPointerClickHandler, ISubmitHandler, IP
     
     public void OnPointerClick(PointerEventData eventData)
     {
-        //Debug.Log("Number Button Value: " +value);
         GameEvents.OnUpdateSquareNumberMethod(value);
-        //lives.CheckSolveData(Lives.value_Square_Data, value);
     }
 
     public void OnSubmit(BaseEventData eventData)

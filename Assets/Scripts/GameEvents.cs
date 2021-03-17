@@ -5,15 +5,14 @@ using UnityEngine;
 public class GameEvents : MonoBehaviour
 {
     public delegate void UpdateSquareNumber(int number);
+
     public static event UpdateSquareNumber OnUpdateSquareNumber;
-    private static Lives lives = new Lives();
     public static void OnUpdateSquareNumberMethod(int number)
     {
         if (OnUpdateSquareNumber != null)
         {
             OnUpdateSquareNumber(number);
         }
-           
     }
 
     public delegate void SquareSelected(int square_index);
@@ -25,8 +24,6 @@ public class GameEvents : MonoBehaviour
             OnSquareSelected(square_index);
             
         }
-            
-
     }
 
     public delegate void WrongNumber();
@@ -47,4 +44,13 @@ public class GameEvents : MonoBehaviour
         }
     }
 
+    public delegate void NotesActive(bool active);
+    public static event NotesActive OnNotesActive;
+    public static void OnNotesActiveMethod(bool active)
+    {
+        if(OnNotesActive != null)
+        {
+            OnNotesActive(active);
+        }
+    }
 }
