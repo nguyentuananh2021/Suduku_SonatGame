@@ -53,4 +53,14 @@ public class GameEvents : MonoBehaviour
             OnNotesActive(active);
         }
     }
+
+    public delegate void DeleteNumber();
+    public static event DeleteNumber OnDeleteNumber;
+    public static void OnDeleteNumbermethod()
+    {
+        if(OnDeleteNumber != null)
+        {
+            OnDeleteNumber();
+        }
+    }
 }

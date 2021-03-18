@@ -15,6 +15,6 @@ public class NumberButton : Selectable, IPointerClickHandler, ISubmitHandler, IP
 
     public void OnSubmit(BaseEventData eventData)
     {
-        
+
     }
 }

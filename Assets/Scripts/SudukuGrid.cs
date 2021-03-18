@@ -13,7 +13,7 @@ public class SudukuGrid : MonoBehaviour
 
     public float square_gap = 1f;
 
-    private List<GameObject> grid_squares_ = new List<GameObject>();
+    public List<GameObject> grid_squares_ = new List<GameObject>();
 
     private int seleced_grid_data = 0;
 
@@ -40,6 +40,10 @@ public class SudukuGrid : MonoBehaviour
 
     private void SpawnGridSquares()
     {   //0 1 2 3 4 5 6 7 8 9...81
+        if(grid_squares_ != null)
+        {
+            grid_squares_.Clear();
+        }
         int square_index_ = 0;
         for (int i = 0; i < rows; i++)
         {
@@ -118,6 +122,7 @@ public class SudukuGrid : MonoBehaviour
             grid_squares_[index].GetComponent<GridSquare>().SetCorectNumber(data.solve_data[index]);
             grid_squares_[index].GetComponent<GridSquare>().SetHasDefaultValue(data.unsolve_data[index] !=0 && data.unsolve_data[index] == data.solve_data[index]);
         }
+        
     }
     public void OnEnable()
     {
@@ -125,17 +130,24 @@ public class SudukuGrid : MonoBehaviour
     }
     public void OnDisable()
     {
-        GameEvents.OnSquareSelected += OnSquareSelected;
+        GameEvents.OnSquareSelected -= OnSquareSelected;
+    }
+
+    public void OnDestroy()
+    {
+        GameEvents.OnSquareSelected -= OnSquareSelected;
     }
 
     private void SetSquaresColor(int[] data, Color co)
     {
+        //Debug.Log(data.Length);
         foreach (var index in data)
         {
-            var comp = grid_squares_[index].GetComponent<GridSquare>();
-            if(comp.HasWrongValue() == false && comp.IsSelected() == false)
+            var component = grid_squares_[index].GetComponent<GridSquare>();
+            
+            if(component.HasWrongValue() == false && component.IsSelected() == false)
             {
-                comp.SetSquareColor(co);
+                component.SetSquareColor(co);
             }
         }
     }
@@ -144,11 +156,12 @@ public class SudukuGrid : MonoBehaviour
         var horizontal_line = LineIndicator.Instance.GetHorizontalLine(square_index);
         var vertical_line = LineIndicator.Instance.GetVerticalLine(square_index);
         var square = LineIndicator.Instance.GetSquare(square_index);
-
         SetSquaresColor(LineIndicator.Instance.GetAllSquaresIndexs(), Color.white);
 
+        SetSquaresColor(square, line_color);
         SetSquaresColor(horizontal_line, line_color);
         SetSquaresColor(vertical_line, line_color);
-        SetSquaresColor(square, line_color);
+        
+        
     }
 }

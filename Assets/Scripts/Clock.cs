@@ -6,9 +6,9 @@ using UnityEngine.UI;
 
 public class Clock : MonoBehaviour
 {
-    int hour_ = 0;
-    int minute_ = 0;
-    int seconds_ = 0;
+    //int hour_ = 0;
+    //int minute_ = 0;
+    //int seconds_ = 0;
 
     private Text textClock;
     private float delta_time;
