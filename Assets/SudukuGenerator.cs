@@ -6,10 +6,6 @@ public class SudukuGenerator : MonoBehaviour
 {
     private int[] arr;
     public int row, col;
-
-
-
-
     //private int[,] line_data = new int[9, 9]
     //{
     //    {0, 1, 2,   3, 4, 5,   6, 7, 8 },
@@ -63,7 +59,7 @@ public class SudukuGenerator : MonoBehaviour
         ShuffleArray(arr);
         
     }
-    void ShuffleArray(int[] arr)
+    private void ShuffleArray(int[] arr)
     {
         for (int i = 0; i < arr.Length; i++)
         {

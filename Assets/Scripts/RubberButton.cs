@@ -11,8 +11,4 @@ public class RubberButton : Selectable, IPointerClickHandler
         GameEvents.OnDeleteNumbermethod();
     }
 
-    public void OnRubberButtonClick(int index)
-    {
-
-    }
 }

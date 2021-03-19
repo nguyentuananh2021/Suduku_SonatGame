@@ -71,7 +71,7 @@
     <Compile Include="Assets\Scripts\LineIndicator.cs" />
     <Compile Include="Assets\Scripts\Lives.cs" />
     <Compile Include="Assets\Scripts\MenuButtons.cs" />
-    <Compile Include="Assets\Scripts\MenuGameOvePopup.cs" />
+    <Compile Include="Assets\Scripts\MenuGameOver.cs" />
     <Compile Include="Assets\Scripts\MenuPause.cs" />
     <Compile Include="Assets\Scripts\NoteButton.cs" />
     <Compile Include="Assets\Scripts\NumberButton.cs" />

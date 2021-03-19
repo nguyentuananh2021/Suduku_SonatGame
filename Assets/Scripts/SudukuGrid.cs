@@ -45,14 +45,21 @@ public class SudukuGrid : MonoBehaviour
             grid_squares_.Clear();
         }
         int square_index_ = 0;
+
+        switch (columns)
+        {
+            case 9: square_scale = 1 ; break;
+            case 6: square_scale = 1.5f; start_position.x += 45; start_position.y -=38 ; break;
+            case 4: square_scale = 2.25f; start_position.x += 105; start_position.y -= 105; break;
+        }
+
         for (int i = 0; i < rows; i++)
         {
             for (int j = 0; j < columns; j++)
             {
                 grid_squares_.Add(Instantiate(grid_square, this.transform));
                 grid_squares_[grid_squares_.Count - 1].GetComponent<GridSquare>().SetSquareIndex(square_index_);
-                //grid_squares_[grid_squares_.Count - 1].transform.parent = this.transform;
-                grid_squares_[grid_squares_.Count - 1].transform.localScale = new Vector3(square_scale, square_scale, square_scale);
+                grid_squares_[grid_squares_.Count - 1].transform.localScale = new Vector2(square_scale, square_scale);
                 square_index_++;
             }
         }
@@ -73,6 +80,13 @@ public class SudukuGrid : MonoBehaviour
 
         foreach (GameObject square in grid_squares_)
         {
+            Vector2 pos = new Vector2(3,3);
+            switch (columns)
+            {
+                case 9: pos = new Vector2(3,3); break;
+                case 6: pos = new Vector2(3,2); square_gap =10; break;
+                case 4: pos = new Vector2(2, 2); square_gap = 10; break;
+            }
             if (column_number + 1 > columns)
             {
                 row_number++;
@@ -84,12 +98,12 @@ public class SudukuGrid : MonoBehaviour
             var pos_x_offset = offset.x * column_number + (square_gap_number.x * square_gap);
             var pos_y_offset = offset.y * row_number + (square_gap_number.y * square_gap);
 
-            if (column_number > 0 && column_number % 3 == 0)
+            if (column_number > 0 && column_number %pos.x == 0)
             {
                 square_gap_number.x++;
                 pos_x_offset += square_gap;
             }
-            if(row_number > 0 && row_number % 3 == 0 && row_moved == false)
+            if(row_number > 0 && row_number %pos.y == 0 && row_moved == false)
             {
                 row_moved = true;
                 square_gap_number.y++;
@@ -161,7 +175,6 @@ public class SudukuGrid : MonoBehaviour
         SetSquaresColor(square, line_color);
         SetSquaresColor(horizontal_line, line_color);
         SetSquaresColor(vertical_line, line_color);
-        
         
     }
 }
