@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
+using TMPro;
+
 public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPointerUpHandler, IPointerExitHandler
 {
     public GameObject number_text;
@@ -34,7 +36,7 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
         var notes = new List<string>();
         foreach (var number in number_notes)
         {
-            notes.Add(number.GetComponent<Text>().text);
+            notes.Add(number.GetComponent<TMP_Text>().text);
         }
         return notes;
     }
@@ -43,8 +45,8 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
     {
         foreach (var number in number_notes)
         {
-            if (number.GetComponent<Text>().text == "0")
-                number.GetComponent<Text>().text = "";
+            if (number.GetComponent<TMP_Text>().text == "0")
+                number.GetComponent<TMP_Text>().text = "";
         }
     }
     private void SetNoteNumberValue(int value)
@@ -53,23 +55,23 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
         {
             if (value <= 0)
             {
-                number.GetComponent<Text>().text = "";
+                number.GetComponent<TMP_Text>().text = "";
             }
-            else number.GetComponent<Text>().text = value.ToString();
+            else number.GetComponent<TMP_Text>().text = value.ToString();
         }
     }
 
     private void SetNoteSingleNumberValue(int value, bool foce_update = false)
     {
         if (note_active == false && foce_update == false) return;
-        if(value <= 0) { number_notes[value - 1].GetComponent<Text>().text = ""; }
+        if(value <= 0) { number_notes[value - 1].GetComponent<TMP_Text>().text = ""; }
         else
         {
             SetNumber(0);
-            if (number_notes[value - 1].GetComponent<Text>().text == "" || foce_update)
-                number_notes[value - 1].GetComponent<Text>().text = value.ToString();
+            if (number_notes[value - 1].GetComponent<TMP_Text>().text == "" || foce_update)
+                number_notes[value - 1].GetComponent<TMP_Text>().text = value.ToString();
             else
-                number_notes[value - 1].GetComponent<Text>().text = "";
+                number_notes[value - 1].GetComponent<TMP_Text>().text = "";
         }
     }
 
@@ -115,10 +117,10 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
     {
         if (number_ <= 0)
         {
-            number_text.GetComponent<Text>().text = default;
+            number_text.GetComponent<TMP_Text>().text = default;
         }
         else
-            number_text.GetComponent<Text>().text = number_.ToString();
+            number_text.GetComponent<TMP_Text>().text = number_.ToString();
     }
 
     public void OnPointerClick(PointerEventData eventData)

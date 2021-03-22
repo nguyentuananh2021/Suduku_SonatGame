@@ -18,9 +18,21 @@ public class SudukuGrid : MonoBehaviour
     private int seleced_grid_data = 0;
 
     public Color line_color = Color.red;
-    // Start is called before the first frame update
+
+    public SudukuGrid(int columns, int rows)
+    {
+        this.columns = columns;
+        this.rows = rows;
+    }
+
+    private void Awake()
+    {
+       rows = columns = GameSetting.Instance.SetGridMode();
+        
+    }
     void Start()
     {
+
         //Debug.Log(SudukuData.Instance.suduku_game.Count);
         if(grid_square.GetComponent<GridSquare>() == null)
         {
@@ -123,7 +135,7 @@ public class SudukuGrid : MonoBehaviour
         {
             throw new System.ArgumentNullException(nameof(level));
         }
-
+        Debug.Log(level);
         seleced_grid_data = Random.Range(0, SudukuData.Instance.suduku_game[level].Count);
         SudukuData.SudukuBoardData data = SudukuData.Instance.suduku_game[level][seleced_grid_data];
         SetGridSquareData(data);
