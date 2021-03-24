@@ -5,8 +5,6 @@ using UnityEngine.UI;
 using TMPro;
 public class GameSetting : MonoBehaviour
 {
-    public int dropdown_value = 0;
-    public TMP_Dropdown dropdown;
     public enum EGameMode
     {
         NOT_SET,
@@ -30,7 +28,7 @@ public class GameSetting : MonoBehaviour
     private void Start()
     {
         _GameMode = EGameMode.NOT_SET;
-        dropdown_value = 0;
+      
     }
 
     public void SetGameMode(EGameMode mode)
@@ -39,23 +37,23 @@ public class GameSetting : MonoBehaviour
     }
     public void SetGameMode(string mode)
     {
-        switch (dropdown_value)
+        switch (Dropdown.Instance.grid_mode)
         {
-            case 0:
+            case 4:
                 if (mode == "Easy_4x4") SetGameMode(EGameMode.EASY_4x4);
                 else if (mode == "Medium_4x4") SetGameMode(EGameMode.MEDIUM_4x4);
                 else if (mode == "Hard_4x4") SetGameMode(EGameMode.HARD_4x4);
                 else if (mode == "Very_Hard_4x4") SetGameMode(EGameMode.VERY_HARD_4x4);
                 else SetGameMode(EGameMode.NOT_SET);
                 break;
-            case 1:
+            case 6:
                 if (mode == "Easy_6x6") SetGameMode(EGameMode.EASY_6x6);
                 else if (mode == "Medium_6x6") SetGameMode(EGameMode.MEDIUM_6x6);
                 else if (mode == "Hard_6x6") SetGameMode(EGameMode.HARD_6x6);
                 else if (mode == "Very_Hard_6x6") SetGameMode(EGameMode.VERY_HARD_6x6);
                 else SetGameMode(EGameMode.NOT_SET);
                 break;
-            case 2:
+            case 9:
                 if (mode == "Easy_9x9") SetGameMode(EGameMode.EASY_9x9);
                 else if (mode == "Medium_9x9") SetGameMode(EGameMode.MEDIUM_9x9);
                 else if (mode == "Hard_9x9") SetGameMode(EGameMode.HARD_9x9);
@@ -90,25 +88,6 @@ public class GameSetting : MonoBehaviour
         return "";
     }
 
-    public void GetDropdownvalue()
-    {
-        dropdown_value = dropdown.GetComponent<TMP_Dropdown>().value;
-    }
-    public int SetGridMode()
-    {
-        var value = 0;
-        switch (dropdown_value)
-        {
-            case 0:
-                value = 4;
-                break;
-            case 1:
-                value = 6;
-                break;
-            case 2:
-                value = 9;
-                break;
-        }
-        return value;
-    }
+  
+    
 }

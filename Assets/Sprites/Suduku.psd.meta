@@ -29,6 +29,7 @@ TextureImporter:
     21300048: continue
     21300050: Pause
     21300052: PlayADToContinue
+    21300054: Suduku_0
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -448,13 +449,33 @@ TextureImporter:
         width: 803
         height: 205
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
       spriteID: 6564b19276d4f8d42bc48c0716866ec9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Suduku_0
+      rect:
+        serializedVersion: 2
+        x: 1431
+        y: 1781
+        width: 241
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03354e5b8bcd029459022fd7840c82cc
       vertices: []
       indices: 
       edges: []

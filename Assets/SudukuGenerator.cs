@@ -2,84 +2,157 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SudukuGenerator : MonoBehaviour
+public class SudukuGenerator:MonoBehaviour
 {
-    private int[] arr;
-    public int row, col;
-    //private int[,] line_data = new int[9, 9]
-    //{
-    //    {0, 1, 2,   3, 4, 5,   6, 7, 8 },
-    //    {9,10, 11,  12,13,14,  15,16,17},
-    //    {18,19,20,  21,22,23,  24,25,26},
-
-    //    {27,28,29,  30,31,32,  33,34,35},
-    //    {36,37,38,  39,40,41,  42,43,44},
-    //    {45,46,47,  48,49,50,  51,52,53},
-
-    //    {54,55,56,  57,58,59,  60,61,62},
-    //    {63,64,65,  66,67,68,  69,70,71},
-    //    {72,73,74,  75,76,77,  78,79,80}
-    //};
-    private int[] index_data = new int[81]
-   {
-        0, 1, 2,   3, 4, 5,   6, 7, 8 ,
-        9,10, 11,  12,13,14,  15,16,17,
-        18,19,20,  21,22,23,  24,25,26,
-
-        27,28,29,  30,31,32,  33,34,35,
-        36,37,38,  39,40,41,  42,43,44,
-        45,46,47,  48,49,50,  51,52,53,
-
-        54,55,56,  57,58,59,  60,61,62,
-        63,64,65,  66,67,68,  69,70,71,
-        72,73,74,  75,76,77,  78,79,80
-   };
-    private int[] data = new int[81];
-    private int[,] square_data = new int[9, 9]
+	public static SudukuGenerator Instance;
+    private void Awake()
     {
-        {0, 1, 2,  9, 10,11, 18,19,20},
-        {3, 4, 5,  12,13,14, 21,22,23},
-        {6, 7, 8,  15,16,17, 24,25,26},
-        {27,28,29, 36,37,38, 45,46,47},
-        {30,31,32, 39,40,41, 48,49,50},
-        {33,34,35, 42,43,44, 51,52,53},
-        {54,55,56, 63,64,65, 72,73,74},
-        {57,58,59, 66,67,68, 75,76,77},
-        {60,61,62, 69,70,71, 78,79,80},
-    };
-
-
-    private void Start()
-    {
-        FillDiagonalmatrix();
+		if (Instance == null)
+		{
+			Instance = this;
+		}
+		else Destroy(this);
     }
-    private void FillDiagonalmatrix()
+    private static int[] RandomNumberRowOne(int n)
+	{
+		int[] arr = new int[n];
+		for (int i = 0; i < arr.Length; i++)
+		{
+			arr[i] = i + 1;
+		}
+		return Shuffle(arr);
+	}
+	private static int[] Shuffle(int[] arr)
+	{
+		for (int i = 0; i < arr.Length; i++)
+		{
+			//temp = value a[n]
+			int ran = Random.Range(0, arr.Length);
+			int temp = arr[ran];
+			arr[ran] = arr[i];
+			arr[i] = temp;
+		}
+		return arr;
+	}
+	public static int[] GetDataSolve(int n)
     {
-        arr = new int[9] { 1,2,3,4,5,6,7,8,9};
-        ShuffleArray(arr);
-        
-    }
-    private void ShuffleArray(int[] arr)
-    {
-        for (int i = 0; i < arr.Length; i++)
+		int[] row_1 = RandomNumberRowOne(n);
+		int[,] puzzle = new int[n, n];
+		int[] data_solve = new int[n * n];
+        for (int i = 0; i < n; i++)
         {
-            int n = Random.Range(0, 8);
-            int temp = arr[i];
-            arr[i] = arr[n];
-            arr[n] = temp;
+			puzzle[0, i] = row_1[i];
         }
+		SolveSudoku(puzzle, 1, 0, n);
+		int j = 0;
+		foreach (var item in puzzle)
+        {
+			data_solve[j] = item;
+			j++;
+        }
+        return data_solve;
     }
-  private bool checkRows(int value_data)
+	public static int[] GetDataUnsolve(int[] data_solve, int k)
     {
-       
-        return true;
-    }
-    private bool checkCollumns()
-    {
-        return true;
-    }
-    private bool checkSquare()
-    {
-        return true;
-    }
+		int[] data_unsolve = new int[data_solve.Length];
+        for (int i = 0; i < data_solve.Length; i++)
+        {
+			data_unsolve[i] = data_solve[i];
+        }
+
+		for (int i = 0; i < k; i++)
+        {
+			int random = Random.Range(0, data_unsolve.Length - 1);
+			if (data_unsolve[random] == 0)
+				i--;
+			else
+				data_unsolve[random] = 0;
+		}
+		return data_unsolve;
+	}
+
+
+
+
+	public static bool SolveSudoku(int[,] puzzle, int row, int col, int grid_mode)
+	{
+
+		if (row < grid_mode && col < grid_mode)
+		{
+			if (puzzle[row, col] != 0)
+			{
+				if ((col + 1) < grid_mode) return SolveSudoku(puzzle, row, col + 1, grid_mode);
+				else if ((row + 1) < grid_mode) return SolveSudoku(puzzle, row + 1, 0, grid_mode);
+				else return true;
+			}
+			else
+			{
+				for (int i = 0; i < grid_mode; ++i)
+				{
+					if (IsAvailable(puzzle, row, col, i + 1, grid_mode))
+					{
+						puzzle[row, col] = i + 1;
+
+						if ((col + 1) < grid_mode)
+						{
+							if (SolveSudoku(puzzle, row, col + 1, grid_mode)) return true;
+							else puzzle[row, col] = 0;
+						}
+						else if ((row + 1) < grid_mode)
+						{
+							if (SolveSudoku(puzzle, row + 1, 0, grid_mode)) return true;
+							else puzzle[row, col] = 0;
+						}
+						else return true;
+					}
+				}
+			}
+
+			return false;
+		}
+		else return true;
+	}
+
+	private static bool IsAvailable(int[,] puzzle, int row, int col, int num, int grid_mode)
+	{
+		int rowStart;
+		int colStart;
+		switch (grid_mode)
+		{
+			case 4:
+				rowStart = (row / 2) * 2;
+				colStart = (col / 2) * 2;
+
+				for (int i = 0; i < grid_mode; ++i)
+				{
+					if (puzzle[row, i] == num) return false;
+					if (puzzle[i, col] == num) return false;
+					if (puzzle[rowStart + (i % 2), colStart + (i / 2)] == num) return false;
+				}
+				break;
+			case 6:
+				rowStart = (row / 2) * 2;
+				colStart = (col / 3) * 3;
+
+				for (int i = 0; i < grid_mode; ++i)
+				{
+					if (puzzle[row, i] == num) return false;
+					if (puzzle[i, col] == num) return false;
+					if (puzzle[rowStart + (i % 2), colStart + (i % 3)] == num) return false;
+				}
+				break;
+			case 9:
+				rowStart = (row / 3) * 3;
+				colStart = (col / 3) * 3;
+
+				for (int i = 0; i < grid_mode; ++i)
+				{
+					if (puzzle[row, i] == num) return false;
+					if (puzzle[i, col] == num) return false;
+					if (puzzle[rowStart + (i % 3), colStart + (i / 3)] == num) return false;
+				}
+				break;
+		}
+		return true;
+	}
 }

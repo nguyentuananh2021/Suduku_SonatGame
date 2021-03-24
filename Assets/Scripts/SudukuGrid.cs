@@ -8,63 +8,55 @@ public class SudukuGrid : MonoBehaviour
     public int rows = 0;
     public float square_offset = .0f;
     public GameObject grid_square;
-    public Vector2 start_position = new Vector2(0.0f, 0.0f);
+    public Vector2 start_position;
     public float square_scale = 1.0f;
 
     public float square_gap = 1f;
 
     public List<GameObject> grid_squares_ = new List<GameObject>();
 
-    private int seleced_grid_data = 0;
+    public Color line_color = Color.red; public Color cell_color = Color.red; public Color cells_data_color = Color.red;
 
-    public Color line_color = Color.red;
 
-    public SudukuGrid(int columns, int rows)
+    public void SetGridMode(int n)
     {
-        this.columns = columns;
-        this.rows = rows;
-    }
-
-    private void Awake()
-    {
-       rows = columns = GameSetting.Instance.SetGridMode();
-        
+        columns = n;
+        rows = n;
     }
     void Start()
     {
-
+        start_position = new Vector2(0.0f, 0.0f);
         //Debug.Log(SudukuData.Instance.suduku_game.Count);
-        if(grid_square.GetComponent<GridSquare>() == null)
+        if (grid_square.GetComponent<GridSquare>() == null)
         {
             Debug.Log("GridSquare is null");
         }
-        CreateGrid();
-        SetGridNumber(GameSetting.Instance.GetGameMode());
+        if (Dropdown.Instance.grid_mode >= 0)
+        {
+            SetGridMode(Dropdown.Instance.grid_mode);
+            CreateGrid();
+            SetGridNumber(GameSetting.Instance.GetGameMode());
+        }
+        else Debug.Log("Grid Mode Null");
     }
-   /*
-    CreateGrid
-   */
     private void CreateGrid()
     {
         SpawnGridSquares();
         SetSquaresPosition();
     }
-
     private void SpawnGridSquares()
-    {   //0 1 2 3 4 5 6 7 8 9...81
+    {   
         if(grid_squares_ != null)
         {
             grid_squares_.Clear();
         }
         int square_index_ = 0;
-
         switch (columns)
         {
             case 9: square_scale = 1 ; break;
-            case 6: square_scale = 1.5f; start_position.x += 45; start_position.y -=38 ; break;
-            case 4: square_scale = 2.25f; start_position.x += 105; start_position.y -= 105; break;
+            case 6: square_scale = 1.525f; start_position.x += 38; start_position.y -=35 ; break;
+            case 4: square_scale = 2.27f; start_position.x += 100; start_position.y -= 100; break;
         }
-
         for (int i = 0; i < rows; i++)
         {
             for (int j = 0; j < columns; j++)
@@ -75,7 +67,6 @@ public class SudukuGrid : MonoBehaviour
                 square_index_++;
             }
         }
-
     }
     private void SetSquaresPosition()
     {
@@ -96,7 +87,7 @@ public class SudukuGrid : MonoBehaviour
             switch (columns)
             {
                 case 9: pos = new Vector2(3,3); break;
-                case 6: pos = new Vector2(3,2); square_gap =10; break;
+                case 6: pos = new Vector2(3,2); square_gap =7; break;
                 case 4: pos = new Vector2(2, 2); square_gap = 10; break;
             }
             if (column_number + 1 > columns)
@@ -126,19 +117,16 @@ public class SudukuGrid : MonoBehaviour
             column_number ++;
         }
     }
-    /*
-     SetGridNumber
-    */
     private void SetGridNumber(string level)
     {
         if (level is null)
         {
             throw new System.ArgumentNullException(nameof(level));
         }
-        Debug.Log(level);
-        seleced_grid_data = Random.Range(0, SudukuData.Instance.suduku_game[level].Count);
-        SudukuData.SudukuBoardData data = SudukuData.Instance.suduku_game[level][seleced_grid_data];
+        //Debug.Log("--------------"+level);
+        SudukuData.SudukuBoardData data = SudukuData.Instance.GetDataGameMode(level);
         SetGridSquareData(data);
+        //Debug.Log(data.solve_data)
     }
     private void SetGridSquareData(SudukuData.SudukuBoardData data)
     {
@@ -148,7 +136,6 @@ public class SudukuGrid : MonoBehaviour
             grid_squares_[index].GetComponent<GridSquare>().SetCorectNumber(data.solve_data[index]);
             grid_squares_[index].GetComponent<GridSquare>().SetHasDefaultValue(data.unsolve_data[index] !=0 && data.unsolve_data[index] == data.solve_data[index]);
         }
-        
     }
     public void OnEnable()
     {
@@ -158,35 +145,41 @@ public class SudukuGrid : MonoBehaviour
     {
         GameEvents.OnSquareSelected -= OnSquareSelected;
     }
-
     public void OnDestroy()
     {
         GameEvents.OnSquareSelected -= OnSquareSelected;
     }
-
-    private void SetSquaresColor(int[] data, Color co)
+    private void SetSquaresColor(int[] data, Color color)
     {
         //Debug.Log(data.Length);
         foreach (var index in data)
         {
             var component = grid_squares_[index].GetComponent<GridSquare>();
             
-            if(component.HasWrongValue() == false && component.IsSelected() == false)
+            if(component.HasWrongValue() == false)
             {
-                component.SetSquareColor(co);
+                component.SetSquareColor(color);
             }
         }
     }
     public void OnSquareSelected(int square_index)
     {
+         
+        var cells_data_unsolve = LineIndicator.Instance.GetCellDataSolve(SudukuData.Instance.data.unsolve_data);
         var horizontal_line = LineIndicator.Instance.GetHorizontalLine(square_index);
         var vertical_line = LineIndicator.Instance.GetVerticalLine(square_index);
         var square = LineIndicator.Instance.GetSquare(square_index);
-        SetSquaresColor(LineIndicator.Instance.GetAllSquaresIndexs(), Color.white);
+        var same_number = LineIndicator.Instance.GetAllSameNumber(square_index, SudukuData.Instance.data.unsolve_data);
+        var cell_selected = LineIndicator.Instance.GetCellSelected(square_index);
 
-        SetSquaresColor(square, line_color);
+        SetSquaresColor(LineIndicator.Instance.GetAllSquaresIndexs(), Color.white);
+        SetSquaresColor(cells_data_unsolve, cells_data_color);
         SetSquaresColor(horizontal_line, line_color);
         SetSquaresColor(vertical_line, line_color);
+        SetSquaresColor(square, line_color);
+        SetSquaresColor(cell_selected, Color.white);
+        if (same_number != null)
+            SetSquaresColor(same_number, cell_color);
         
     }
 }

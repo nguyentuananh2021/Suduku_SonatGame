@@ -43,14 +43,10 @@ public class Clock : MonoBehaviour
                 string hour = LeadingZero(span.Hours);
                 string minute = LeadingZero(span.Minutes);
                 string seconds = LeadingZero(span.Seconds);
-
                 textClock.text = hour + ":" + minute + ":" + seconds;
             }
-            
-            
         }
     }
-
     public string LeadingZero(int n)
     {
         return n.ToString().PadLeft(2, '0');
@@ -59,12 +55,18 @@ public class Clock : MonoBehaviour
     {
         stop_clock_ = true;
     }
+    public void OnYouWin()
+    {
+        stop_clock_ = true;
+    }
     private void OnEnable()
     {
+        GameEvents.OnYouWin += OnYouWin;
         GameEvents.OnGameOver += OnGameOver;
     }
     private void OnDisable()
     {
+        GameEvents.OnYouWin -= OnYouWin;
         GameEvents.OnGameOver -= OnGameOver;
     }
 

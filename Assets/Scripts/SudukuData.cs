@@ -4,290 +4,11 @@ using UnityEngine;
 
 public class SudukuData : MonoBehaviour
 {
-
-    public class SudukuEasyData_4x4 : MonoBehaviour
-    {
-        public static List<SudukuData.SudukuBoardData> GetData()
-        {
-            List<SudukuData.SudukuBoardData> data = new List<SudukuData.SudukuBoardData>();
-            data.Add(new SudukuData.SudukuBoardData(
-                new int[16]
-                {
-                0,4,5,1,0,9,6,4,0,6,9,0,7,0,3,1
-                },
-                new int[16]
-                {
-                7,4,5,1,2,9,6,4,5,6,9,2,7,8,3,1
-                }
-                ));
-            return data;
-        }
-
-    }
-    public class SudukuMediumData_4x4 : MonoBehaviour
-    {
-        public static List<SudukuData.SudukuBoardData> GetData()
-        {
-            List<SudukuData.SudukuBoardData> data = new List<SudukuData.SudukuBoardData>();
-            data.Add(new SudukuData.SudukuBoardData(
-                new int[16]
-                {
-                0,4,5,1,0,9,6,4,0,6,9,0,7,0,3,1
-                },
-                new int[16]
-                {
-                7,4,5,1,2,9,6,4,5,6,9,2,7,8,3,1
-                }
-                ));
-            return data;
-        }
-
-    }
-    public class SudukuHardData_4x4 : MonoBehaviour
-    {
-        public static List<SudukuData.SudukuBoardData> GetData()
-        {
-            List<SudukuData.SudukuBoardData> data = new List<SudukuData.SudukuBoardData>();
-            data.Add(new SudukuData.SudukuBoardData(
-                 new int[16]
-                {
-                0,4,5,1,0,9,6,4,0,6,9,0,7,0,3,1
-                },
-                new int[16]
-                {
-                7,4,5,1,2,9,6,4,5,6,9,2,7,8,3,1
-                }
-                ));
-            return data;
-        }
-
-    }
-    public class SudukuVeryHardData_4x4 : MonoBehaviour
-    {
-        public static List<SudukuData.SudukuBoardData> GetData()
-        {
-            List<SudukuData.SudukuBoardData> data = new List<SudukuData.SudukuBoardData>();
-            data.Add(new SudukuData.SudukuBoardData(
-                 new int[16]
-                {
-                0,4,5,1,0,9,6,4,0,6,9,0,7,0,3,1
-                },
-                new int[16]
-                {
-                7,4,5,1,2,9,6,4,5,6,9,2,7,8,3,1
-                }
-                ));
-            return data;
-        }
-
-    }
-    public class SudukuEasyData_6x6 : MonoBehaviour
-    {
-        public static List<SudukuData.SudukuBoardData> GetData()
-        {
-            List<SudukuData.SudukuBoardData> data = new List<SudukuData.SudukuBoardData>();
-            data.Add(new SudukuData.SudukuBoardData(
-                new int[36]
-                {
-                    7,6,0,2,0,8,0,1,4,2,9,1,8,0,3,7,4,5,8,3,0,4,5,1,0,9,6,4,0,6,9,0,7,0,3,1
-                },
-                new int[36]
-                {
-                    7,6,9,2,3,8,5,1,4,2,9,1,8,6,3,7,4,5,8,3,7,4,5,1,2,9,6,4,5,6,9,2,7,8,3,1
-                }
-                ));
-            return data;
-        }
-
-    }
-    public class SudukuMediumData_6x6 : MonoBehaviour
-    {
-        public static List<SudukuData.SudukuBoardData> GetData()
-        {
-            List<SudukuData.SudukuBoardData> data = new List<SudukuData.SudukuBoardData>();
-            data.Add(new SudukuData.SudukuBoardData(
-               new int[36]
-                {
-                    7,6,0,2,0,8,0,1,4,2,9,1,8,0,3,7,4,5,8,3,0,4,5,1,0,9,6,4,0,6,9,0,7,0,3,1
-                },
-                new int[36]
-                {
-                    7,6,9,2,3,8,5,1,4,2,9,1,8,6,3,7,4,5,8,3,7,4,5,1,2,9,6,4,5,6,9,2,7,8,3,1
-                }
-                ));
-            return data;
-        }
-
-    }
-    public class SudukuHardData_6x6 : MonoBehaviour
-    {
-        public static List<SudukuData.SudukuBoardData> GetData()
-        {
-            List<SudukuData.SudukuBoardData> data = new List<SudukuData.SudukuBoardData>();
-            data.Add(new SudukuData.SudukuBoardData(
-                new int[36]
-                {
-                    7,6,0,2,0,8,0,1,4,2,9,1,8,0,3,7,4,5,8,3,0,4,5,1,0,9,6,4,0,6,9,0,7,0,3,1
-                },
-                new int[36]
-                {
-                    7,6,9,2,3,8,5,1,4,2,9,1,8,6,3,7,4,5,8,3,7,4,5,1,2,9,6,4,5,6,9,2,7,8,3,1
-                }
-                ));
-            return data;
-        }
-
-    }
-    public class SudukuVeryHardData_6x6 : MonoBehaviour
-    {
-        public static List<SudukuData.SudukuBoardData> GetData()
-        {
-            List<SudukuData.SudukuBoardData> data = new List<SudukuData.SudukuBoardData>();
-            data.Add(new SudukuData.SudukuBoardData(
-                new int[36]
-                {
-                    7,6,0,2,0,8,0,1,4,2,9,1,8,0,3,7,4,5,8,3,0,4,5,1,0,9,6,4,0,6,9,0,7,0,3,1
-                },
-                new int[36]
-                {
-                    7,6,9,2,3,8,5,1,4,2,9,1,8,6,3,7,4,5,8,3,7,4,5,1,2,9,6,4,5,6,9,2,7,8,3,1
-                }
-                ));
-            return data;
-        }
-
-    }
-    public class SudukuEasyData_9x9 : MonoBehaviour
-    {
-        public static List<SudukuData.SudukuBoardData> GetData()
-        {
-            List<SudukuData.SudukuBoardData> data = new List<SudukuData.SudukuBoardData>();
-            data.Add(new SudukuData.SudukuBoardData(
-                new int[81]
-                {
-                9,0,0,7,4,0,6,8,0,3,4,0,6,8,0,1,2,7,0,7,0,0,1,2,4,0,9,0,2,0,5,0,4,0,6,8,0,8,4,1,0,6,3,0,0,7,6,0,2,0,8,0,1,4,2,9,1,8,0,3,7,4,5,8,3,0,4,5,1,0,9,6,4,0,6,9,0,7,0,3,1
-                },
-                new int[81]
-                {
-                9,1,2,7,4,5,6,8,3,3,4,5,6,8,9,1,2,7,6,7,8,3,1,2,4,5,9,1,2,3,5,7,4,9,6,8,5,8,4,1,9,6,3,7,2,7,6,9,2,3,8,5,1,4,2,9,1,8,6,3,7,4,5,8,3,7,4,5,1,2,9,6,4,5,6,9,2,7,8,3,1
-                }
-                ));
-            data.Add(new SudukuData.SudukuBoardData(
-                new int[81]
-                {
-                    1,0,7,2,0,8,3,0,9,2,3,5,0,7,9,0,4,8,6,8,0,3,1,4,2,5,7,3,6,0,8,9,2,0,7,4,9,5,4,0,3,6,8,0,2,7,2,0,1,4,0,9,3,6,0,9,0,5,2,0,0,0,1,8,1,2,4,0,3,7,9,0,0,7,6,0,8,1,0,2,0
-                },
-                new int[81]
-                {
-                    1,4,7,2,5,8,3,6,9,2,3,5,6,7,9,1,4,8,6,8,9,3,1,4,2,5,7,3,6,1,8,9,2,5,7,4,9,5,4,7,3,6,8,1,2,7,2,8,1,4,5,9,3,6,4,9,3,5,2,7,6,8,1,8,1,2,4,6,3,7,9,5,5,7,6,9,8,1,4,2,3
-                }
-                ));
-            return data;
-        }
-
-    }
-    public class SudukuMediumData_9x9 : MonoBehaviour
-    {
-        public static List<SudukuData.SudukuBoardData> GetData()
-        {
-            List<SudukuData.SudukuBoardData> data = new List<SudukuData.SudukuBoardData>();
-            data.Add(new SudukuData.SudukuBoardData(
-                new int[81]
-                {
-                2, 1, 0, 9, 8, 3, 4, 6, 7, 0, 2, 1, 5, 9, 8, 3, 4, 6, 0, 4, 2, 1, 0, 9, 8, 3, 0, 6, 7, 4, 0, 1, 5, 9, 0, 3, 0, 6, 0, 4,
-                0, 1, 0, 9, 8, 3, 0, 0, 7, 0, 0, 0, 5, 0, 0, 3, 4, 0, 7, 0, 0, 1, 5, 9, 8, 3, 0, 0, 7, 4, 0, 1, 5, 9, 8, 0, 4, 0, 7, 4, 1
-                },
-                new int[81]
-                {
-                2, 1, 5, 9, 8, 3, 4, 6, 7, 4, 2, 1, 5, 9, 8, 3, 4, 6, 7, 4, 2, 1, 5, 9, 8, 3, 4, 6, 7, 4, 2, 1, 5, 9, 8, 3, 4, 6, 7, 4,
-                2, 1, 5, 9, 8, 3, 4, 6, 7, 4, 2, 1, 5, 9, 8, 3, 4, 6, 7, 4, 2, 1, 5, 9, 8, 3, 4, 6, 7, 4, 2, 1, 5, 9, 8, 3, 4, 6, 7, 4, 1
-                }
-                ));
-            data.Add(new SudukuData.SudukuBoardData(
-                new int[81]
-                {
-                5, 0, 0, 9, 8, 3, 0, 0, 7, 0, 2, 1, 5, 0, 9, 3, 4, 0, 0, 4, 2, 1, 0, 9, 8, 2, 0, 6, 0, 4, 0, 1, 4, 9, 0, 6, 0, 6, 0, 3,
-                0, 1, 0, 9, 8, 3, 0, 0, 7, 0, 0, 0, 5, 0, 0, 0, 0, 6, 7, 4, 0, 3, 5, 0, 8, 3, 0, 0, 7, 4, 0, 1, 0, 8, 0, 0, 4, 0, 7, 4, 1
-                },
-                new int[81]
-                {
-                5, 2, 5, 9, 8, 3, 7, 7, 7, 4, 2, 1, 5, 9, 9, 3, 4, 6, 7, 4, 2, 1, 5, 9, 8, 2, 4, 6, 7, 4, 2, 1, 4, 9, 8, 6, 4, 6, 7, 3,
-                2, 1, 6, 9, 8, 3, 4, 6, 7, 4, 2, 1, 5, 9, 8, 3, 4, 6, 7, 4, 2, 3, 5, 9, 8, 3, 5, 6, 7, 4, 2, 1, 1, 8, 8, 8, 4, 6, 7, 4, 1
-                }
-                ));
-            return data;
-        }
-
-    }
-    public class SudukuHardData_9x9 : MonoBehaviour
-    {
-        public static List<SudukuData.SudukuBoardData> GetData()
-        {
-            List<SudukuData.SudukuBoardData> data = new List<SudukuData.SudukuBoardData>();
-            data.Add(new SudukuData.SudukuBoardData(
-                new int[81]
-                {
-                2, 1, 0, 9, 8, 3, 4, 6, 7, 0, 2, 1, 5, 9, 8, 3, 4, 6, 0, 4, 2, 1, 0, 9, 8, 3, 0, 6, 7, 4, 0, 1, 5, 9, 0, 3, 0, 6, 0, 4,
-                0, 1, 0, 9, 8, 3, 0, 0, 7, 0, 0, 0, 5, 0, 0, 3, 4, 0, 7, 0, 0, 1, 5, 9, 8, 3, 0, 0, 7, 4, 0, 1, 5, 9, 8, 0, 4, 0, 7, 4, 1
-                },
-                new int[81]
-                {
-                2, 1, 5, 9, 8, 3, 4, 6, 7, 4, 2, 1, 5, 9, 8, 3, 4, 6, 7, 4, 2, 1, 5, 9, 8, 3, 4, 6, 7, 4, 2, 1, 5, 9, 8, 3, 4, 6, 7, 4,
-                2, 1, 5, 9, 8, 3, 4, 6, 7, 4, 2, 1, 5, 9, 8, 3, 4, 6, 7, 4, 2, 1, 5, 9, 8, 3, 4, 6, 7, 4, 2, 1, 5, 9, 8, 3, 4, 6, 7, 4, 1
-                }
-                ));
-            data.Add(new SudukuData.SudukuBoardData(
-                new int[81]
-                {
-                5, 0, 0, 9, 8, 3, 0, 0, 7, 0, 2, 1, 5, 0, 9, 3, 4, 0, 0, 4, 2, 1, 0, 9, 8, 2, 0, 6, 0, 4, 0, 1, 4, 9, 0, 6, 0, 6, 0, 3,
-                0, 1, 0, 9, 8, 3, 0, 0, 7, 0, 0, 0, 5, 0, 0, 0, 0, 6, 7, 4, 0, 3, 5, 0, 8, 3, 0, 0, 7, 4, 0, 1, 0, 8, 0, 0, 4, 0, 7, 4, 1
-                },
-                new int[81]
-                {
-                5, 2, 5, 9, 8, 3, 7, 7, 7, 4, 2, 1, 5, 9, 9, 3, 4, 6, 7, 4, 2, 1, 5, 9, 8, 2, 4, 6, 7, 4, 2, 1, 4, 9, 8, 6, 4, 6, 7, 3,
-                2, 1, 6, 9, 8, 3, 4, 6, 7, 4, 2, 1, 5, 9, 8, 3, 4, 6, 7, 4, 2, 3, 5, 9, 8, 3, 5, 6, 7, 4, 2, 1, 1, 8, 8, 8, 4, 6, 7, 4, 1
-                }
-                ));
-            return data;
-        }
-
-    }
-    public class SudukuVeryHardData_9x9 : MonoBehaviour
-    {
-        public static List<SudukuData.SudukuBoardData> GetData()
-        {
-            List<SudukuData.SudukuBoardData> data = new List<SudukuData.SudukuBoardData>();
-            data.Add(new SudukuData.SudukuBoardData(
-                new int[81]
-                {
-                2, 1, 0, 9, 8, 3, 4, 6, 7, 0, 2, 1, 5, 9, 8, 3, 4, 6, 0, 4, 2, 1, 0, 9, 8, 3, 0, 6, 7, 4, 0, 1, 5, 9, 0, 3, 0, 6, 0, 4,
-                0, 1, 0, 9, 8, 3, 0, 0, 7, 0, 0, 0, 5, 0, 0, 3, 4, 0, 7, 0, 0, 1, 5, 9, 8, 3, 0, 0, 7, 4, 0, 1, 5, 9, 8, 0, 4, 0, 7, 4, 1
-                },
-                new int[81]
-                {
-                2, 1, 5, 9, 8, 3, 4, 6, 7, 4, 2, 1, 5, 9, 8, 3, 4, 6, 7, 4, 2, 1, 5, 9, 8, 3, 4, 6, 7, 4, 2, 1, 5, 9, 8, 3, 4, 6, 7, 4,
-                2, 1, 5, 9, 8, 3, 4, 6, 7, 4, 2, 1, 5, 9, 8, 3, 4, 6, 7, 4, 2, 1, 5, 9, 8, 3, 4, 6, 7, 4, 2, 1, 5, 9, 8, 3, 4, 6, 7, 4, 1
-                }
-                ));
-            data.Add(new SudukuData.SudukuBoardData(
-                new int[81]
-                {
-                5, 0, 0, 9, 8, 3, 0, 0, 7, 0, 2, 1, 5, 0, 9, 3, 4, 0, 0, 4, 2, 1, 0, 9, 8, 2, 0, 6, 0, 4, 0, 1, 4, 9, 0, 6, 0, 6, 0, 3,
-                0, 1, 0, 9, 8, 3, 0, 0, 7, 0, 0, 0, 5, 0, 0, 0, 0, 6, 7, 4, 0, 3, 5, 0, 8, 3, 0, 0, 7, 4, 0, 1, 0, 8, 0, 0, 4, 0, 7, 4, 1
-                },
-                new int[81]
-                {
-                5, 2, 5, 9, 8, 3, 7, 7, 7, 4, 2, 1, 5, 9, 9, 3, 4, 6, 7, 4, 2, 1, 5, 9, 8, 2, 4, 6, 7, 4, 2, 1, 4, 9, 8, 6, 4, 6, 7, 3,
-                2, 1, 6, 9, 8, 3, 4, 6, 7, 4, 2, 1, 5, 9, 8, 3, 4, 6, 7, 4, 2, 3, 5, 9, 8, 3, 5, 6, 7, 4, 2, 1, 1, 8, 8, 8, 4, 6, 7, 4, 1
-                }
-                ));
-            return data;
-        }
-
-    }
-
-
+    public GameObject you_win;
+    public SudukuBoardData data = new SudukuBoardData();
     public static SudukuData Instance;
+    public int square_empty;
+    
     public struct SudukuBoardData
     {
         public int[] unsolve_data;
@@ -299,11 +20,83 @@ public class SudukuData : MonoBehaviour
             this.solve_data = solve_data;
         }
     }
+    public void CheckForYouWin()
+    {
+        if (GetSquareEmpty() == 0)
+        {
+            you_win.SetActive(true);
+            GameEvents.OnYouWinMethod();
+        }
+    }
+    public int GetSquareEmpty()
+    {
+        square_empty = 0;
+        foreach (var item in data.unsolve_data)
+        {
+            if (item == 0)
+                square_empty++;
+        }
+        return square_empty;
+    }
+   public SudukuBoardData GetDataGameMode(string level)
+    {
+        switch (level)
+        {
+            case "Easy_4x4":
+                SetData(Dropdown.Instance.grid_mode, 7);
+                break;
+            case "Medium_4x4":
+                SetData(Dropdown.Instance.grid_mode, 8);
+                break;
+            case "Hard_4x4":
+                SetData(Dropdown.Instance.grid_mode, 9);
+                break;
+            case "Very_Hard_4x4":
+                SetData(Dropdown.Instance.grid_mode, 10);
+                break;
 
-    public Dictionary<string, List<SudukuBoardData>> suduku_game = new Dictionary<string, List<SudukuBoardData>>();
+            case "Easy_6x6":
+                SetData(Dropdown.Instance.grid_mode, 15);
+                break;
+            case "Medium_6x6":
+                SetData(Dropdown.Instance.grid_mode, 18);
+                break;
+            case "Hard_6x6":
+                SetData(Dropdown.Instance.grid_mode, 20);
+                break;
+            case "Very_Hard_6x6":
+                SetData(Dropdown.Instance.grid_mode, 24);
+                break;
 
-
-    // Start is called before the first frame update
+           case "Easy_9x9":
+                SetData(Dropdown.Instance.grid_mode, 40);
+                break;
+            case "Medium_9x9":
+                SetData(Dropdown.Instance.grid_mode, 50);
+                break;
+            case "Hard_9x9":
+                SetData(Dropdown.Instance.grid_mode, 55);
+                break;
+            case "Very_Hard_9x9":
+                SetData(Dropdown.Instance.grid_mode, 64);
+                break;
+        }
+        return data;
+    }
+    public SudukuBoardData SetData(int n, int k)
+    {
+        int[] data_solve = new int[n * n];
+        int[] data_unsolve = new int[n * n];
+        data_solve = SudukuGenerator.GetDataSolve(n);
+        data_unsolve = SudukuGenerator.GetDataUnsolve(data_solve, k);
+        data.solve_data = data_solve;
+        data.unsolve_data = data_unsolve;
+        //foreach (var item in data_solve)
+        //{
+        //    Debug.Log("------------------------" + item);
+        //}
+        return data;
+    }
     void Awake()
     {
         if (Instance == null)
@@ -312,22 +105,5 @@ public class SudukuData : MonoBehaviour
         } 
         else
             Destroy(this);
-
-        suduku_game.Add("Easy_4x4", SudukuEasyData_4x4.GetData());
-        suduku_game.Add("Medium_4x4", SudukuMediumData_4x4.GetData());
-        suduku_game.Add("Hard_4x4", SudukuHardData_4x4.GetData());
-        suduku_game.Add("Very Hard_4x4", SudukuVeryHardData_4x4.GetData());
-
-        suduku_game.Add("Easy_6x6", SudukuEasyData_6x6.GetData());
-        suduku_game.Add("Medium_6x6", SudukuMediumData_6x6.GetData());
-        suduku_game.Add("Hard_6x6", SudukuHardData_6x6.GetData());
-        suduku_game.Add("Very_Hard_6x6", SudukuVeryHardData_6x6.GetData());
-
-        suduku_game.Add("Easy_9x9", SudukuEasyData_9x9.GetData());
-        suduku_game.Add("Medium_9x9", SudukuMediumData_9x9.GetData());
-        suduku_game.Add("Hard_9x9", SudukuVeryHardData_9x9.GetData());
-        suduku_game.Add("Very_Hard_9x9", SudukuVeryHardData_9x9.GetData());
-
     }
-
 }

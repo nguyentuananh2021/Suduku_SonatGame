@@ -8,6 +8,7 @@ using TMPro;
 
 public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPointerUpHandler, IPointerExitHandler
 {
+
     public GameObject number_text;
     public List<GameObject> number_notes;
     private bool note_active;
@@ -21,7 +22,6 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
     private int square_index_ = -1;
 
     private bool has_wrong_value = false;
-    //private bool has_default_value = false;
     public bool IsSelected() { return selected_; }
 
      void Awake()
@@ -68,13 +68,13 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
         else
         {
             SetNumber(0);
+            SetNumberData(0, square_index_);
             if (number_notes[value - 1].GetComponent<TMP_Text>().text == "" || foce_update)
                 number_notes[value - 1].GetComponent<TMP_Text>().text = value.ToString();
             else
                 number_notes[value - 1].GetComponent<TMP_Text>().text = "";
         }
     }
-
     public void SetGridNotes(List<int> notes)
     {
         foreach (var note in notes)
@@ -82,16 +82,14 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
             SetNoteSingleNumberValue(note, true);
         }
     }
-
     public void OnNotesActive(bool active)
     {
+        //SetSquareColor(Color.white);
         note_active = active;
     }
-
-
-
     public void SetCorectNumber(int number)
     {
+        //Debug.Log(number);
         correct_number = number;
         has_wrong_value = false;
     }
@@ -106,12 +104,19 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
     {
         square_index_ = index;
     }
-
     public void SetNumber(int number)
     {
         number_ = number;
         DisplayText();
-        
+    }
+        public void SetNumberData(int num, int square_index)
+    {
+        SudukuData.Instance.data.unsolve_data[square_index] = num;
+        if(SudukuData.Instance.GetSquareEmpty() == 0)
+        {
+            Debug.Log("YOU WIN");
+            SudukuData.Instance.CheckForYouWin();
+        }
     }
     public void DisplayText()
     {
@@ -122,19 +127,13 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
         else
             number_text.GetComponent<TMP_Text>().text = number_.ToString();
     }
-
     public void OnPointerClick(PointerEventData eventData)
     {
         selected_ = true;
+
         GameEvents.SquareSelectedMethod(square_index_);
-      
     }
-
-    public void OnSubmit(BaseEventData eventData)
-    {
-
-    }
-
+    public void OnSubmit(BaseEventData eventData){}
     private void OnEnable()
     {
         GameEvents.OnUpdateSquareNumber += OnSetNumber;
@@ -144,12 +143,12 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
     }
     private void OnDisable()
     {
+        //selected_ = false;
         GameEvents.OnUpdateSquareNumber -= OnSetNumber;
         GameEvents.OnSquareSelected -= OnSquareSelected;
         GameEvents.OnNotesActive -= OnNotesActive;
         GameEvents.OnDeleteNumber -= OnDeleteNumber;
     }
-
     public void OnDeleteNumber()
     {
         if(selected_ && !has_default_value)
@@ -161,7 +160,6 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
             DisplayText();
         }
     }
-
     public void OnSetNumber(int number)
     {
         if (selected_ && has_default_value == false)
@@ -174,13 +172,13 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
             {
                 SetNoteNumberValue(0);
                 SetNumber(number);
+                
                 if (correct_number != number_)
                 {
                     has_wrong_value = true;
                     var colors = this.colors;
                     colors.normalColor = Color.red;
                     this.colors = colors;
-
                     GameEvents.OnWrongNumberMethod();
                 }
                 else
@@ -189,6 +187,7 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
                     var colors = this.colors;
                     colors.normalColor = Color.white;
                     this.colors = colors;
+                    SetNumberData(number, square_index_);
                 }
             }
         }
@@ -200,13 +199,10 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
             selected_ = false;
         }
     }
-
-    public void SetSquareColor(Color co)
+    public void SetSquareColor(Color color)
     {
         var colors = this.colors;
-        colors.normalColor = co;
+        colors.normalColor = color;
         this.colors = colors;
     }
-
-   
 }

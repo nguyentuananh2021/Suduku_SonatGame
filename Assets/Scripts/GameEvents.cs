@@ -43,6 +43,15 @@ public class GameEvents : MonoBehaviour
             OnGameOver();
         }
     }
+    public delegate void YouWin();
+    public static event YouWin OnYouWin;
+    public static void OnYouWinMethod()
+    {
+        if(OnYouWin != null)
+        {
+            OnYouWin();
+        }
+    }
 
     public delegate void NotesActive(bool active);
     public static event NotesActive OnNotesActive;
