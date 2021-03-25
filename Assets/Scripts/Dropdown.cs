@@ -15,13 +15,11 @@ public class Dropdown : MonoBehaviour
             Instance = this;
         }
         else Destroy(this);
-        GetDropdownvalue();
     }
-    //void Start()
-    //{
-    //GetComponent<TMP_Dropdown>().value = PlayerPrefs.GetInt("grid_mode_data");
-    //Debug.Log(PlayerPrefs.GetInt("grid_mode_data"));
-    //}
+    void Start()
+    {
+        GetComponent<TMP_Dropdown>().value = PlayerPrefs.GetInt("grid_mode_data");
+    }
     public void GetDropdownvalue()
     {
         int value = this.GetComponent<TMP_Dropdown>().value;
@@ -37,6 +35,6 @@ public class Dropdown : MonoBehaviour
                 grid_mode = 9;
                 break;
         }
-        //PlayerPrefs.SetInt("grid_mode_data", value);
+        PlayerPrefs.SetInt("grid_mode_data", value);
     }
 }

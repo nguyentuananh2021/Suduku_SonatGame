@@ -5,13 +5,26 @@ using UnityEngine.UI;
 
 public class Lives : MonoBehaviour
 {
+    public static Lives Instance;
     public List<GameObject> error_images;
 
     int lives_ = 0;
-    int error_number_ = 0;
+    public int error_number_ = 0;
     public GameObject game_over_popup;
     public Text level_text;
 
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else Destroy(this);
+    }
+    public int GetWrong() 
+    {
+        return error_number_;
+    }
     private void Start()
     {
         level_text.GetComponent<Text>().text = GameSetting.Instance.GetGameMode();

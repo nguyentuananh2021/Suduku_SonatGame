@@ -1,6 +1,6 @@
 Android
 PlayerPath?
-C:/Users/Admin/Dropbox/Sudoku/Suduku.apk
+C:/Users/Admin/Dropbox/NTA_Game/Suduku.apk
 SceneListBegin?
 Assets/Scenes/MenuGame.unity
 Assets/Scenes/GameScene.unity

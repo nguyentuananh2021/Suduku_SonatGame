@@ -22,6 +22,7 @@ public class SudukuGrid : MonoBehaviour
     {
         columns = n;
         rows = n;
+
     }
     void Start()
     {
@@ -36,6 +37,7 @@ public class SudukuGrid : MonoBehaviour
             SetGridMode(Dropdown.Instance.grid_mode);
             CreateGrid();
             SetGridNumber(GameSetting.Instance.GetGameMode());
+            SetSquaresColor(LineIndicator.Instance.GetCellDataSolve(SudukuData.Instance.unsolve_data), cells_data_color);
         }
         else Debug.Log("Grid Mode Null");
     }
@@ -54,8 +56,8 @@ public class SudukuGrid : MonoBehaviour
         switch (columns)
         {
             case 9: square_scale = 1 ; break;
-            case 6: square_scale = 1.525f; start_position.x += 38; start_position.y -=35 ; break;
-            case 4: square_scale = 2.27f; start_position.x += 100; start_position.y -= 100; break;
+            case 6: square_scale = 1.525f; start_position.x += 37; start_position.y -=35 ; break;
+            case 4: square_scale = 2.27f; start_position.x += 98; start_position.y -= 98; break;
         }
         for (int i = 0; i < rows; i++)
         {
@@ -88,7 +90,7 @@ public class SudukuGrid : MonoBehaviour
             {
                 case 9: pos = new Vector2(3,3); break;
                 case 6: pos = new Vector2(3,2); square_gap =7; break;
-                case 4: pos = new Vector2(2, 2); square_gap = 10; break;
+                case 4: pos = new Vector2(2, 2); square_gap = 15; break;
             }
             if (column_number + 1 > columns)
             {
@@ -164,8 +166,7 @@ public class SudukuGrid : MonoBehaviour
     }
     public void OnSquareSelected(int square_index)
     {
-         
-        var cells_data_unsolve = LineIndicator.Instance.GetCellDataSolve(SudukuData.Instance.data.unsolve_data);
+        var cells_data_unsolve = LineIndicator.Instance.GetCellDataSolve(SudukuData.Instance.unsolve_data);
         var horizontal_line = LineIndicator.Instance.GetHorizontalLine(square_index);
         var vertical_line = LineIndicator.Instance.GetVerticalLine(square_index);
         var square = LineIndicator.Instance.GetSquare(square_index);

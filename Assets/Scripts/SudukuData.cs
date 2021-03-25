@@ -8,7 +8,7 @@ public class SudukuData : MonoBehaviour
     public SudukuBoardData data = new SudukuBoardData();
     public static SudukuData Instance;
     public int square_empty;
-    
+    public int[] unsolve_data;
     public struct SudukuBoardData
     {
         public int[] unsolve_data;
@@ -42,45 +42,46 @@ public class SudukuData : MonoBehaviour
     {
         switch (level)
         {
-            case "Easy_4x4":
+            case "Easy 4x4":
                 SetData(Dropdown.Instance.grid_mode, 7);
                 break;
-            case "Medium_4x4":
+            case "Medium 4x4":
                 SetData(Dropdown.Instance.grid_mode, 8);
                 break;
-            case "Hard_4x4":
+            case "Hard 4x4":
                 SetData(Dropdown.Instance.grid_mode, 9);
                 break;
-            case "Very_Hard_4x4":
+            case "Very Hard 4x4":
                 SetData(Dropdown.Instance.grid_mode, 10);
                 break;
 
-            case "Easy_6x6":
+            case "Easy 6x6":
                 SetData(Dropdown.Instance.grid_mode, 15);
                 break;
-            case "Medium_6x6":
+            case "Medium 6x6":
                 SetData(Dropdown.Instance.grid_mode, 18);
                 break;
-            case "Hard_6x6":
+            case "Hard 6x6":
                 SetData(Dropdown.Instance.grid_mode, 20);
                 break;
-            case "Very_Hard_6x6":
+            case "Very Hard 6x6":
                 SetData(Dropdown.Instance.grid_mode, 24);
                 break;
 
-           case "Easy_9x9":
+           case "Easy 9x9":
                 SetData(Dropdown.Instance.grid_mode, 40);
                 break;
-            case "Medium_9x9":
+            case "Medium 9x9":
                 SetData(Dropdown.Instance.grid_mode, 50);
                 break;
-            case "Hard_9x9":
+            case "Hard 9x9":
                 SetData(Dropdown.Instance.grid_mode, 55);
                 break;
-            case "Very_Hard_9x9":
+            case "Very Hard 9x9":
                 SetData(Dropdown.Instance.grid_mode, 64);
                 break;
         }
+        CopyUnsolveData();
         return data;
     }
     public SudukuBoardData SetData(int n, int k)
@@ -105,5 +106,13 @@ public class SudukuData : MonoBehaviour
         } 
         else
             Destroy(this);
+    }
+    private void CopyUnsolveData() 
+    {
+        unsolve_data = new int[data.unsolve_data.Length];
+        for (int i = 0; i < data.unsolve_data.Length; i++)
+        {
+            unsolve_data[i] = data.unsolve_data[i];
+        }    
     }
 }
