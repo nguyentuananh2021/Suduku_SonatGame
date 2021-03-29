@@ -25,10 +25,32 @@ public class GameSetting : MonoBehaviour
             Destroy(this);
     }
     private EGameMode _GameMode;
+
+    private bool _continuePreviousGame = false;
+    private bool _exitAfterWon = false;
+
+    public void SetExitAfterWon(bool set)
+    {
+        _exitAfterWon = set;
+        _continuePreviousGame = false;
+    }
+    public bool GetExitAfterWon()
+    {
+        return _exitAfterWon;
+    }
+    public void SetContinuePreviousGame(bool continue_game)
+    {
+        _continuePreviousGame = continue_game;
+    }
+    public bool GetContinuePreviousGame()
+    {
+        return _continuePreviousGame;
+    }
+
     private void Start()
     {
         _GameMode = EGameMode.NOT_SET;
-      
+        _continuePreviousGame = false;
     }
 
     public void SetGameMode(EGameMode mode)
@@ -71,17 +93,17 @@ public class GameSetting : MonoBehaviour
             case EGameMode.EASY_4x4: return "Easy 4x4";
             case EGameMode.MEDIUM_4x4: return "Medium 4x4";
             case EGameMode.HARD_4x4: return "Hard 4x4";
-            case EGameMode.VERY_HARD_4x4: return "Very Hard 4x4";
+            case EGameMode.VERY_HARD_4x4: return "VeryHard 4x4";
 
             case EGameMode.EASY_6x6: return "Easy 6x6";
             case EGameMode.MEDIUM_6x6: return "Medium 6x6";
             case EGameMode.HARD_6x6: return "Hard 6x6";
-            case EGameMode.VERY_HARD_6x6: return "Very Hard 6x6";
+            case EGameMode.VERY_HARD_6x6: return "VeryHard 6x6";
             
             case EGameMode.EASY_9x9: return "Easy 9x9";
             case EGameMode.MEDIUM_9x9: return "Medium 9x9";
             case EGameMode.HARD_9x9: return "Hard 9x9";
-            case EGameMode.VERY_HARD_9x9: return "Very Hard 9x9";
+            case EGameMode.VERY_HARD_9x9: return "VeryHard 9x9";
         }
         Debug.Log("Error: game level is not set...!");
         return "";

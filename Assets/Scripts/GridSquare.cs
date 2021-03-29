@@ -8,9 +8,9 @@ using TMPro;
 
 public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPointerUpHandler, IPointerExitHandler
 {
-
     public GameObject number_text;
     public List<GameObject> number_notes;
+    public GameObject grid_number_note;
     private bool note_active;
     
     private int number_ = 0;
@@ -24,13 +24,40 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
     private bool has_wrong_value = false;
     public bool IsSelected() { return selected_; }
 
-     void Awake()
+    private void Awake()
     {
         note_active = false;
         selected_ = false;
         SetNoteNumberValue(0);
     }
-    
+    private void Start()
+    {
+        DeActivateNumberNode();
+        ActivateNumberNote(Dropdown.Instance.grid_mode);
+        set_grid_note();
+    }
+    private void ActivateNumberNote(int grid_mode)
+    {
+        for (int i = 0; i < grid_mode; i++)
+        {
+            number_notes[i].SetActive(true);
+        }
+    }
+    private void DeActivateNumberNode()
+    {
+        foreach (var item in number_notes)
+        {
+            item.SetActive(false);
+        }
+    }
+    public void set_grid_note()
+    {
+        if(Dropdown.Instance.grid_mode == 4)
+        {
+            grid_number_note.GetComponent<GridLayoutGroup>().constraint = GridLayoutGroup.Constraint.FixedRowCount;
+            grid_number_note.GetComponent<GridLayoutGroup>().cellSize = new Vector2(70, 70);
+        }
+    }
     public List<string> GetSquareNotes()
     {
         var notes = new List<string>();
@@ -40,7 +67,6 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
         }
         return notes;
     }
-
     private void SetClearEmptyNotes()
     {
         foreach (var number in number_notes)
@@ -114,7 +140,7 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
         SudukuData.Instance.data.unsolve_data[square_index] = num;
         if(SudukuData.Instance.GetSquareEmpty() == 0)
         {
-            Debug.Log("YOU WIN");
+            //Debug.Log("YOU WIN");
             SudukuData.Instance.CheckForYouWin();
         }
     }

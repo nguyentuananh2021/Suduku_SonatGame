@@ -64,26 +64,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\LineNumber.cs" />
-    <Compile Include="Assets\MenuStatisticalPopup.cs" />
     <Compile Include="Assets\Scripts\Clock.cs" />
+    <Compile Include="Assets\Scripts\Config.cs" />
     <Compile Include="Assets\Scripts\Dropdown.cs" />
     <Compile Include="Assets\Scripts\GameEvents.cs" />
     <Compile Include="Assets\Scripts\GameSetting.cs" />
-    <Compile Include="Assets\Scripts\GameStatistic.cs" />
     <Compile Include="Assets\Scripts\GridSquare.cs" />
     <Compile Include="Assets\Scripts\LineIndicator.cs" />
+    <Compile Include="Assets\Scripts\LineNumber.cs" />
     <Compile Include="Assets\Scripts\Lives.cs" />
     <Compile Include="Assets\Scripts\MenuButtons.cs" />
     <Compile Include="Assets\Scripts\MenuGameOver.cs" />
     <Compile Include="Assets\Scripts\MenuPause.cs" />
+    <Compile Include="Assets\Scripts\MenuStatisticalPopup.cs" />
     <Compile Include="Assets\Scripts\NoteButton.cs" />
     <Compile Include="Assets\Scripts\NumberButton.cs" />
-    <Compile Include="Assets\Scripts\PlayerPref.cs" />
     <Compile Include="Assets\Scripts\RubberButton.cs" />
     <Compile Include="Assets\Scripts\SudukuData.cs" />
+    <Compile Include="Assets\Scripts\SudukuGenerator.cs" />
     <Compile Include="Assets\Scripts\SudukuGrid.cs" />
-    <Compile Include="Assets\SudukuGenerator.cs" />
+    <Compile Include="Assets\Scripts\YouWinPopup.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
@@ -117,7 +117,6 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
-    <Compile Include="Assets\YouWinPopup.cs" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
@@ -129,6 +128,7 @@
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Anton OFL.txt" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Bangers - OFL.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Mobile.shader" />
+    <None Include="Assets\Resources\SUDUKU_JSON.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />

@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class Dropdown : MonoBehaviour
 {
-    public int grid_mode;
     public static Dropdown Instance;
-    
+    public int grid_mode;
+
     void Awake()
     {
         if (Instance == null)
@@ -20,7 +20,12 @@ public class Dropdown : MonoBehaviour
     {
         GetComponent<TMP_Dropdown>().value = PlayerPrefs.GetInt("grid_mode_data");
     }
-    public void GetDropdownvalue()
+
+    public int GetDropdownValue()
+    {
+        return grid_mode;
+    }
+    public void SetDropdownValue()
     {
         int value = this.GetComponent<TMP_Dropdown>().value;
         switch (value)

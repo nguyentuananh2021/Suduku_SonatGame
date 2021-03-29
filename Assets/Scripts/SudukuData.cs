@@ -51,7 +51,7 @@ public class SudukuData : MonoBehaviour
             case "Hard 4x4":
                 SetData(Dropdown.Instance.grid_mode, 9);
                 break;
-            case "Very Hard 4x4":
+            case "VeryHard 4x4":
                 SetData(Dropdown.Instance.grid_mode, 10);
                 break;
 
@@ -64,7 +64,7 @@ public class SudukuData : MonoBehaviour
             case "Hard 6x6":
                 SetData(Dropdown.Instance.grid_mode, 20);
                 break;
-            case "Very Hard 6x6":
+            case "VeryHard 6x6":
                 SetData(Dropdown.Instance.grid_mode, 24);
                 break;
 
@@ -77,7 +77,7 @@ public class SudukuData : MonoBehaviour
             case "Hard 9x9":
                 SetData(Dropdown.Instance.grid_mode, 55);
                 break;
-            case "Very Hard 9x9":
+            case "VeryHard 9x9":
                 SetData(Dropdown.Instance.grid_mode, 64);
                 break;
         }

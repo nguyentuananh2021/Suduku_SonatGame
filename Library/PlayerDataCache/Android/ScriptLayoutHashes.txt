@@ -1,6 +1,6 @@
 Android
 PlayerPath?
-C:/Users/Admin/Dropbox/NTA_Game/Suduku.apk
+C:/Users/Admin/Dropbox/Sudoku/Suduku.apk
 SceneListBegin?
 Assets/Scenes/MenuGame.unity
 Assets/Scenes/GameScene.unity
@@ -126,14 +126,14 @@ b8a5e8091ab0b8861d2add371082c5e0 Unity.TextMeshPro.dll:TMPro.TMP_SpriteAsset
 47930f3b40e24ef5b3b5e3d9ada7097a Assembly-CSharp.dll:TMPro.Examples.Benchmark01
 b3ab2106268377ffe25dd18ac23dca28 Unity.TextMeshPro.dll:TMPro.TMP_Asset
 3375c3d749f8f4cad889721b431bdc27 Assembly-CSharp.dll:TMPro.Examples.CameraController
-ab24eda85fa673b54bcf66429443954c Assembly-CSharp.dll:.GridSquare
-71bb6a6b6c8f052f948db64c7dd3ca4f Assembly-CSharp.dll:.SudukuGenerator
+1576363858e4a77f948a059e6f196518 Assembly-CSharp.dll:.GridSquare
 e63944317d2f5958e31963668bb29158 Assembly-CSharp.dll:TMPro.Examples.VertexJitter
+71bb6a6b6c8f052f948db64c7dd3ca4f Assembly-CSharp.dll:.PlayerPref
 71bb6a6b6c8f052f948db64c7dd3ca4f Unity.TextMeshPro.dll:TMPro.TMP_SpriteAnimator
 7dcd94d58f97daac9bf499d9dbae1af8 Assembly-CSharp.dll:.RubberButton
 4fd8bf02e3089425d3502e26c44ba31a Unity.TextMeshPro.dll:TMPro.TextContainer
 3cae62e09a50c5d5aae8d0536b3d8fde Assembly-CSharp.dll:.ChatController
-8ffe46ec5dd9aa306d151faafb1b31c3 Assembly-CSharp.dll:.MenuPause
+c0941fd3b06ae13efb368897a854a0c1 Assembly-CSharp.dll:.MenuPause
 e244702e0dc05782229aa524e4d757f5 Assembly-CSharp.dll:TMPro.Examples.TMP_ExampleScript_01
 e6ae40841db498b6e673877ac45ad208 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkAnimator
 71bb6a6b6c8f052f948db64c7dd3ca4f UnityEngine.Networking.dll:UnityEngine.Networking.NetworkBehaviour
@@ -200,8 +200,10 @@ df434544c9f7b33d1cc7e635b180d279 Unity.TextMeshPro.dll:TMPro.TextMeshPro
 3165968ba45c74472d279ba04455fccb Unity.TextMeshPro.dll:TMPro.TMP_ColorGradient
 0784d4fd5b93bd75440d01eb2fac4233 Assembly-CSharp.dll:TMPro.Examples.VertexShakeA
 8b1fe5dfdcf943fb3b72506b9f19335f Assembly-CSharp.dll:.EnvMapAnimator
-6cf338f927ac962d5724218d35fc2c52 Assembly-CSharp.dll:.Lives
+c4eb6ba085af405d9ed3ea13870527af Assembly-CSharp.dll:.Lives
 8649814970b42d345b89944b862453cc Unity.TextMeshPro.dll:TMPro.TMP_SubMesh
-88c4d67187e89d39ef2ff73fdd194841 Assembly-CSharp.dll:.SudukuData
-5da8bb5959a12cc00d67c58f156d9601 Assembly-CSharp.dll:.LineNumber
-1d0e28c5227f4bbd1816dc9e7693c92a Assembly-CSharp.dll:.YouWinPopup
+487c2da36fc2a5bafdef185fc4e5a5b7 Assembly-CSharp.dll:.SudukuData
+71bb6a6b6c8f052f948db64c7dd3ca4f Assembly-CSharp.dll:.SudukuGenerator
+2f1677d5da9fc00e8e030429aa13f3bb Assembly-CSharp.dll:.YouWinPopup
+422dfaa323a2e1d1b8336b8c13e0ea72 Assembly-CSharp.dll:.LineNumber
+a0088d3397cece5bdf331b4d9ae2659d Assembly-CSharp.dll:.MenuStatisticalPopup

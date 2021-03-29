@@ -34,9 +34,12 @@ public class Clock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(stop_clock_ == false)
+        if(stop_clock_ == true)
         {
-            if(pause_clock_ == false)
+            Destroy(this);
+            //Debug.Log("Destroy Timer");
+        }
+        if (pause_clock_ == false)
             {
                 delta_time += Time.deltaTime;
                 TimeSpan span = TimeSpan.FromSeconds(delta_time);
@@ -45,7 +48,7 @@ public class Clock : MonoBehaviour
                 string seconds = LeadingZero(span.Seconds);
                 textClock.text = hour + ":" + minute + ":" + seconds;
             }
-        }
+     
     }
     public string LeadingZero(int n)
     {
@@ -78,5 +81,8 @@ public class Clock : MonoBehaviour
     {
         pause_clock_ = Bool;
     }
-    
+    public static string GetCurrentTime()
+    {
+        return Instance.delta_time.ToString();
+    }
 }
