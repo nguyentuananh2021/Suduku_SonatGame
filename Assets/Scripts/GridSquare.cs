@@ -16,7 +16,7 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
     private int number_ = 0;
     
     private int correct_number;
-    private bool has_default_value;
+    public bool has_default_value;
 
     private bool selected_ = false;
     private int square_index_ = -1;
@@ -101,13 +101,13 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
                 number_notes[value - 1].GetComponent<TMP_Text>().text = "";
         }
     }
-    public void SetGridNotes(List<int> notes)
-    {
-        foreach (var note in notes)
-        {
-            SetNoteSingleNumberValue(note, true);
-        }
-    }
+    //public void SetGridNotes(List<int> notes)
+    //{
+    //    foreach (var note in notes)
+    //    {
+    //        SetNoteSingleNumberValue(note, true);
+    //    }
+    //}
     public void OnNotesActive(bool active)
     {
         //SetSquareColor(Color.white);
@@ -115,7 +115,6 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
     }
     public void SetCorectNumber(int number)
     {
-        //Debug.Log(number);
         correct_number = number;
         has_wrong_value = false;
     }
@@ -133,11 +132,13 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
     public void SetNumber(int number)
     {
         number_ = number;
+        
         DisplayText();
     }
-        public void SetNumberData(int num, int square_index)
+    public void SetNumberData(int num, int square_index)
     {
         SudukuData.Instance.data.unsolve_data[square_index] = num;
+        SudukuGrid.Instance.OnSquareSelected(square_index);
         if(SudukuData.Instance.GetSquareEmpty() == 0)
         {
             //Debug.Log("YOU WIN");
@@ -152,6 +153,9 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
         }
         else
             number_text.GetComponent<TMP_Text>().text = number_.ToString();
+        if(has_default_value)
+            number_text.GetComponent<TMP_Text>().color = Color.black;
+
     }
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -186,11 +190,13 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
             DisplayText();
         }
     }
+
+
     public void OnSetNumber(int number)
     {
         if (selected_ && has_default_value == false)
         {
-            if (note_active == true && has_wrong_value == false)
+            if (note_active == true && has_wrong_value == false )
             {
                 SetNoteSingleNumberValue(number);
             }

@@ -83,6 +83,7 @@
     <Compile Include="Assets\Scripts\SudukuData.cs" />
     <Compile Include="Assets\Scripts\SudukuGenerator.cs" />
     <Compile Include="Assets\Scripts\SudukuGrid.cs" />
+    <Compile Include="Assets\Scripts\SudukuJSON.cs" />
     <Compile Include="Assets\Scripts\YouWinPopup.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />

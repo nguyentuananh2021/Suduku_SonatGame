@@ -4396,7 +4396,7 @@ MonoBehaviour:
   grid_squares_: []
   line_color: {r: 0.6862745, g: 0.8235295, b: 0.91372555, a: 1}
   cell_color: {r: 1, g: 0.85449505, b: 0.7311321, a: 1}
-  cells_data_color: {r: 0.8867924, g: 0.8867924, b: 0.8867924, a: 1}
+  cells_data_color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!222 &1402100906
 CanvasRenderer:
   m_ObjectHideFlags: 0

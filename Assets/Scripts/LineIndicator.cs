@@ -214,4 +214,16 @@ public class LineIndicator : MonoBehaviour
     {
         return line_data_falt;
     }
+    //public int[] GetCellNotes(int value, int square_index, int[]unsolved_data)
+    //{
+    //    int[] row_arr = GetHorizontalLine(square_index);
+    //    int[] col_arr = GetVerticalLine(square_index);
+    //    int[] squ_arr = GetSquare(square_index);
+
+    //    int[] Arr = new int[3];
+    //    foreach (var item in row_arr)
+    //    {
+
+    //    }
+    //}
 }

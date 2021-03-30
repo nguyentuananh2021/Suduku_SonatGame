@@ -1,23 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class SudukuGrid : MonoBehaviour
 {
+    public static SudukuGrid Instance;
     public int columns = 0;
     public int rows = 0;
     public float square_offset = .0f;
     public GameObject grid_square;
     public Vector2 start_position;
     public float square_scale = 1.0f;
-
     public float square_gap = 1f;
-
     public List<GameObject> grid_squares_ = new List<GameObject>();
 
     public Color line_color = Color.red; public Color cell_color = Color.red; public Color cells_data_color = Color.red;
 
+    private void Awake()
+    {
+        if (Instance) Destroy(this);
+        Instance = this;
 
+    }
     public void SetGridMode(int n)
     {
         columns = n;
@@ -119,6 +124,7 @@ public class SudukuGrid : MonoBehaviour
             column_number ++;
         }
     }
+
     private void SetGridNumber(string level)
     {
         if (level is null)
@@ -137,11 +143,16 @@ public class SudukuGrid : MonoBehaviour
             grid_squares_[index].GetComponent<GridSquare>().SetNumber(data.unsolve_data[index]);
             grid_squares_[index].GetComponent<GridSquare>().SetCorectNumber(data.solve_data[index]);
             grid_squares_[index].GetComponent<GridSquare>().SetHasDefaultValue(data.unsolve_data[index] !=0 && data.unsolve_data[index] == data.solve_data[index]);
+            if (grid_squares_[index].GetComponent<GridSquare>().has_default_value)
+            {
+                grid_squares_[index].transform.GetChild(2).gameObject.GetComponent<TMP_Text>().color = Color.black;
+            }
         }
     }
     public void OnEnable()
     {
         GameEvents.OnSquareSelected += OnSquareSelected;
+
     }
     public void OnDisable()
     {
