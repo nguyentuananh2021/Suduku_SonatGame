@@ -6,23 +6,14 @@ using UnityEngine.UI;
 
 public class MenuStatisticalPopup : MonoBehaviour
 {
-
     public TMP_Text Title_;
     public List<TMP_Text> wrongs_;
     public List<TMP_Text> times_;
     public List<Button> btns_;
-    private void Start()
+
+    public void Display()
     {
-        Display(Dropdown.Instance.GetDropdownValue());
-        Debug.Log(Dropdown.Instance.GetDropdownValue());
-    }
-    public void Display(int grid_mode)
-    {
-        if (grid_mode == 4)
-            Displaytext_4x4();
-        else if (grid_mode == 6)
-            Displaytext_6x6();
-        else Displaytext_9x9();
+        Displaytext_4x4();
     }
     public void Displaytext_4x4()
     {

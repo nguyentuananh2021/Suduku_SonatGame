@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LineIndicator : MonoBehaviour
 {
@@ -214,16 +216,68 @@ public class LineIndicator : MonoBehaviour
     {
         return line_data_falt;
     }
-    //public int[] GetCellNotes(int value, int square_index, int[]unsolved_data)
-    //{
-    //    int[] row_arr = GetHorizontalLine(square_index);
-    //    int[] col_arr = GetVerticalLine(square_index);
-    //    int[] squ_arr = GetSquare(square_index);
+    public List<int> GetCellNotes(int value, int square_index, int[] unsolved_data)
+    {
+        int[] row_arr = GetHorizontalLine(square_index);
+        int[] col_arr = GetVerticalLine(square_index);
+        int[] squ_arr = GetSquare(square_index);
 
-    //    int[] Arr = new int[3];
-    //    foreach (var item in row_arr)
-    //    {
+        List<int> list_index = new List<int>();
+        for (int index = 0; index < n; index++)
+        {
+            if(unsolved_data[row_arr[index]] == value)
+            {
+                if(Check_cell_index(list_index, row_arr[index]))
+                    list_index.Add(row_arr[index]);
+            }
+            if(unsolved_data[col_arr[index]] == value)
+            {
+                if (Check_cell_index(list_index, col_arr[index]))
+                    list_index.Add(col_arr[index]);
+            }
+            if(unsolved_data[squ_arr[index]] == value)
+            {
+                if (Check_cell_index(list_index, squ_arr[index]))
+                    list_index.Add(squ_arr[index]);
+            }
+        }
+        return list_index;
+    }
 
-    //    }
-    //}
+    private bool Check_cell_index(List<int> list_index,int index)
+    {
+        foreach (var item in list_index)
+        {
+            if (item == index) return false;
+        }
+        return true;
+    }
+
+    public List<int> GetAllCellNoteIsActivate(int square_index)
+    {
+        List<int> list_cell_note = new List<int>();
+        int[] row_arr = GetHorizontalLine(square_index);
+        int[] col_arr = GetVerticalLine(square_index);
+        int[] squ_arr = GetSquare(square_index);
+        for (int index = 0; index < n; index++)
+        {
+            if (Check_cell_index(list_cell_note, row_arr[index])&& SudukuData.Instance.unsolve_data[row_arr[index]] <= 0)
+            {
+                if(row_arr[index] != square_index)
+                    list_cell_note.Add(row_arr[index]);
+            }
+            if (Check_cell_index(list_cell_note, col_arr[index]) && SudukuData.Instance.unsolve_data[col_arr[index]] <= 0)
+            {
+                if (col_arr[index] != square_index)
+                    list_cell_note.Add(col_arr[index]);
+            }
+            if (Check_cell_index(list_cell_note, squ_arr[index]) && SudukuData.Instance.unsolve_data[squ_arr[index]] <= 0)
+            {
+                if (squ_arr[index] != square_index)
+                    list_cell_note.Add(squ_arr[index]);
+            }
+        }
+        return list_cell_note;
+    }
+
 }

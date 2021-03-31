@@ -162,7 +162,7 @@ public class SudukuGrid : MonoBehaviour
     {
         GameEvents.OnSquareSelected -= OnSquareSelected;
     }
-    private void SetSquaresColor(int[] data, Color color)
+    public void SetSquaresColor(int[] data, Color color)
     {
         //Debug.Log(data.Length);
         foreach (var index in data)
@@ -174,6 +174,28 @@ public class SudukuGrid : MonoBehaviour
                 component.SetSquareColor(color);
             }
         }
+    }
+    
+    public void SetCellNotesColor(List<int> list_cell)
+    {
+        IEnumerator ExecuteAfterTime(float time)
+        {
+            yield return new WaitForSeconds(time);
+            foreach (var index in list_cell)
+            {
+                var component = grid_squares_[index].GetComponent<GridSquare>();
+                component.SetSquareColor(line_color);
+            }
+            // Code to execute after the delay
+        }
+        foreach (var index in list_cell)
+        {
+            var component = grid_squares_[index].GetComponent<GridSquare>();
+            component.SetSquareColor(cell_color);
+        }
+        StartCoroutine(ExecuteAfterTime(1));
+           
+
     }
     public void OnSquareSelected(int square_index)
     {
@@ -194,4 +216,12 @@ public class SudukuGrid : MonoBehaviour
             SetSquaresColor(same_number, cell_color);
         
     }
+
+
+    //public int[] CheckNote(int square_index, int value)
+    //{
+        
+    //    return;
+    //}
+
 }

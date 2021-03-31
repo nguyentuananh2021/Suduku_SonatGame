@@ -39,7 +39,7 @@ public class YouWinPopup : MonoBehaviour
     {
         game_mode = GameSetting.Instance.GetGameMode().Split(' ')[1];// 4x4 , 6x6 , 9x9
         level_mode = GameSetting.Instance.GetGameMode().Split(' ')[0];
-        time_data = PlayerPrefs.GetString(game_mode + "_Times_" + LevelToInt(level_mode));
+        time_data = PlayerPrefs.GetString(game_mode + "_times_" + LevelToInt(level_mode));
         if (wrong_data == "") wrong_data = "3";
         if (time_data == "") time_data = "99:99:99";
         wrong_data = PlayerPrefs.GetString(game_mode + "_wrongs_" + LevelToInt(level_mode));
@@ -88,7 +88,7 @@ public class YouWinPopup : MonoBehaviour
             case "VeryHard":
                 return 3;
         }
-        return 5;
+        return 4;
     }
     private int TimeToInt(string str)
     {

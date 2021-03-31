@@ -11,7 +11,7 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
     public GameObject number_text;
     public List<GameObject> number_notes;
     public GameObject grid_number_note;
-    private bool note_active;
+    public bool note_active;
     
     private int number_ = 0;
     
@@ -34,7 +34,7 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
     {
         DeActivateNumberNode();
         ActivateNumberNote(Dropdown.Instance.grid_mode);
-        set_grid_note();
+        Set_grid_note();
     }
     private void ActivateNumberNote(int grid_mode)
     {
@@ -50,7 +50,7 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
             item.SetActive(false);
         }
     }
-    public void set_grid_note()
+    public void Set_grid_note()
     {
         if(Dropdown.Instance.grid_mode == 4)
         {
@@ -63,18 +63,19 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
         var notes = new List<string>();
         foreach (var number in number_notes)
         {
+            
             notes.Add(number.GetComponent<TMP_Text>().text);
         }
         return notes;
     }
-    private void SetClearEmptyNotes()
-    {
-        foreach (var number in number_notes)
-        {
-            if (number.GetComponent<TMP_Text>().text == "0")
-                number.GetComponent<TMP_Text>().text = "";
-        }
-    }
+    //private void SetClearEmptyNotes()
+    //{
+    //    foreach (var number in number_notes)
+    //    {
+    //        if (number.GetComponent<TMP_Text>().text == "0")
+    //            number.GetComponent<TMP_Text>().text = "";
+    //    }
+    //}
     private void SetNoteNumberValue(int value)
     {
         foreach (var number in number_notes)
@@ -83,7 +84,10 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
             {
                 number.GetComponent<TMP_Text>().text = "";
             }
-            else number.GetComponent<TMP_Text>().text = value.ToString();
+            else 
+            {
+                number.GetComponent<TMP_Text>().text = value.ToString();
+            }
         }
     }
 
@@ -191,6 +195,25 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
         }
     }
 
+    public void DeleteNumberNotes(int square_index)
+    {
+        List<int> list_index = LineIndicator.Instance.GetAllCellNoteIsActivate(square_index);
+        //Debug.Log(number_);
+        foreach (var index in list_index)
+        {
+            var square_ = SudukuGrid.Instance.grid_squares_[index].GetComponent<GridSquare>();
+            //Debug.Log("index"+index);
+            TMP_Text[] notes = square_.GetComponentInChildren<GridLayoutGroup>().GetComponentsInChildren<TMP_Text>();
+            foreach (var item in notes)
+            {
+                if (item.text == number_.ToString() && number_ == correct_number)
+                {
+                    item.text = "";
+                }
+            }
+
+        }
+    }
 
     public void OnSetNumber(int number)
     {
@@ -198,13 +221,24 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
         {
             if (note_active == true && has_wrong_value == false )
             {
-                SetNoteSingleNumberValue(number);
+                List<int> list_cell = LineIndicator.Instance.GetCellNotes(number, square_index_, SudukuData.Instance.data.unsolve_data);
+
+                if (list_cell.Count > 0)
+                {
+                    SudukuGrid.Instance.SetCellNotesColor(list_cell);
+                }
+                else 
+                {
+                    SetNoteSingleNumberValue(number);
+                    
+                }  
             }
             else if(note_active == false)
             {
                 SetNoteNumberValue(0);
                 SetNumber(number);
-                
+                DeleteNumberNotes(square_index_);
+
                 if (correct_number != number_)
                 {
                     has_wrong_value = true;
