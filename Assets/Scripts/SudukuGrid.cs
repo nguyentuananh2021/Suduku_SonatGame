@@ -42,7 +42,7 @@ public class SudukuGrid : MonoBehaviour
             SetGridMode(Dropdown.Instance.grid_mode);
             CreateGrid();
             SetGridNumber(GameSetting.Instance.GetGameMode());
-            SetSquaresColor(LineIndicator.Instance.GetCellDataSolve(SudukuData.Instance.unsolve_data), cells_data_color);
+            SetSquaresColor(LineIndicator.Instance.GetCellDataSolve(SudukuData.Instance.unsolve_data_base), cells_data_color);
         }
         else Debug.Log("Grid Mode Null");
     }
@@ -131,18 +131,16 @@ public class SudukuGrid : MonoBehaviour
         {
             throw new System.ArgumentNullException(nameof(level));
         }
-        //Debug.Log("--------------"+level);
         SudukuData.SudukuBoardData data = SudukuData.Instance.GetDataGameMode(level);
         SetGridSquareData(data);
-        //Debug.Log(data.solve_data)
     }
     private void SetGridSquareData(SudukuData.SudukuBoardData data)
     {
         for (int index = 0; index < grid_squares_.Count; index++)
         {
-            grid_squares_[index].GetComponent<GridSquare>().SetNumber(data.unsolve_data[index]);
-            grid_squares_[index].GetComponent<GridSquare>().SetCorectNumber(data.solve_data[index]);
-            grid_squares_[index].GetComponent<GridSquare>().SetHasDefaultValue(data.unsolve_data[index] !=0 && data.unsolve_data[index] == data.solve_data[index]);
+            grid_squares_[index].GetComponent<GridSquare>().SetNumber(data.unsolved_data[index]);
+            grid_squares_[index].GetComponent<GridSquare>().SetCorectNumber(data.solved_data[index]);
+            grid_squares_[index].GetComponent<GridSquare>().SetHasDefaultValue(data.unsolved_data[index] !=0 && data.unsolved_data[index] == data.solved_data[index]);
             if (grid_squares_[index].GetComponent<GridSquare>().has_default_value)
             {
                 grid_squares_[index].transform.GetChild(2).gameObject.GetComponent<TMP_Text>().color = Color.black;
@@ -199,11 +197,11 @@ public class SudukuGrid : MonoBehaviour
     }
     public void OnSquareSelected(int square_index)
     {
-        var cells_data_unsolve = LineIndicator.Instance.GetCellDataSolve(SudukuData.Instance.unsolve_data);
+        var cells_data_unsolve = LineIndicator.Instance.GetCellDataSolve(SudukuData.Instance.unsolve_data_base);
         var horizontal_line = LineIndicator.Instance.GetHorizontalLine(square_index);
         var vertical_line = LineIndicator.Instance.GetVerticalLine(square_index);
         var square = LineIndicator.Instance.GetSquare(square_index);
-        var same_number = LineIndicator.Instance.GetAllSameNumber(square_index, SudukuData.Instance.data.unsolve_data);
+        var same_number = LineIndicator.Instance.GetAllSameNumber(square_index, SudukuData.Instance.data.unsolved_data);
         var cell_selected = LineIndicator.Instance.GetCellSelected(square_index);
 
         SetSquaresColor(LineIndicator.Instance.GetAllSquaresIndexs(), Color.white);
@@ -216,12 +214,4 @@ public class SudukuGrid : MonoBehaviour
             SetSquaresColor(same_number, cell_color);
         
     }
-
-
-    //public int[] CheckNote(int square_index, int value)
-    //{
-        
-    //    return;
-    //}
-
 }

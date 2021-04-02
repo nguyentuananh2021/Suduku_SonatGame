@@ -29,11 +29,11 @@ public class Config : MonoBehaviour
         string board_index_string = "#board_index:" + board_index.ToString();
         string unsolved_string = "#unsolved:";
         string solved_string = "#solved:";
-        foreach (var unsolved_data in board_data.unsolve_data)
+        foreach (var unsolved_data in board_data.unsolved_data)
         {
             unsolved_string += unsolved_data.ToString() + ",";
         }
-        foreach (var solved_data in board_data.solve_data)
+        foreach (var solved_data in board_data.solved_data)
         {
             unsolved_string += solved_data.ToString() + ",";
         }

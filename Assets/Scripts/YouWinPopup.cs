@@ -23,7 +23,6 @@ public class YouWinPopup : MonoBehaviour
     public Text text_game_mode; // Easy 4x4, Medium 6x6, ...
     void Start()
     {
-
         GetValuePopup();
         GetData();
         SaveData();
@@ -36,14 +35,22 @@ public class YouWinPopup : MonoBehaviour
         text_game_mode.text = GameSetting.Instance.GetGameMode();
     }
     public void GetData()
-    {
-        game_mode = GameSetting.Instance.GetGameMode().Split(' ')[1];// 4x4 , 6x6 , 9x9
-        level_mode = GameSetting.Instance.GetGameMode().Split(' ')[0];
+        {
+        string grid_mode = Dropdown.Instance.GetGridMode().ToString(); //4, 6, 9
+        game_mode = grid_mode + "x" + grid_mode;
+       
+        string[] level_grid = GameSetting.Instance.GetGameMode().Split(' ');
+        if(level_grid.Length == 3)
+        {
+            level_mode = level_grid[0]+level_grid[1];
+            Debug.Log("level mode vh: " + level_mode);
+        }
+        else level_mode = level_grid[0];
         time_data = PlayerPrefs.GetString(game_mode + "_times_" + LevelToInt(level_mode));
         if (wrong_data == "") wrong_data = "3";
         if (time_data == "") time_data = "99:99:99";
         wrong_data = PlayerPrefs.GetString(game_mode + "_wrongs_" + LevelToInt(level_mode));
-        //Debug.Log(wrong_data + "-" + time_data);
+        Debug.Log(game_mode + "_times_" + LevelToInt(level_mode));
     }
 
     public bool IsBest()

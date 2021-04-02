@@ -8,16 +8,16 @@ public class SudukuData : MonoBehaviour
     public SudukuBoardData data = new SudukuBoardData();
     public static SudukuData Instance;
     public int square_empty;
-    public int[] unsolve_data;
+    public int[] unsolve_data_base;
     public struct SudukuBoardData
     {
-        public int[] unsolve_data;
-        public int[] solve_data;
+        public int[] unsolved_data;
+        public int[] solved_data;
 
         public SudukuBoardData(int[] unsolve_data, int[] solve_data) : this()
         {
-            this.unsolve_data = unsolve_data;
-            this.solve_data = solve_data;
+            this.unsolved_data = unsolve_data;
+            this.solved_data = solve_data;
         }
     }
     public void CheckForYouWin()
@@ -31,7 +31,7 @@ public class SudukuData : MonoBehaviour
     public int GetSquareEmpty()
     {
         square_empty = 0;
-        foreach (var item in data.unsolve_data)
+        foreach (var item in data.unsolved_data)
         {
             if (item == 0)
                 square_empty++;
@@ -42,6 +42,7 @@ public class SudukuData : MonoBehaviour
     {
         switch (level)
         {
+            //4x4
             case "Easy 4x4":
                 SetData(Dropdown.Instance.grid_mode, 7);
                 break;
@@ -51,10 +52,10 @@ public class SudukuData : MonoBehaviour
             case "Hard 4x4":
                 SetData(Dropdown.Instance.grid_mode, 9);
                 break;
-            case "VeryHard 4x4":
+            case "Very Hard 4x4":
                 SetData(Dropdown.Instance.grid_mode, 10);
                 break;
-
+            //6x6
             case "Easy 6x6":
                 SetData(Dropdown.Instance.grid_mode, 15);
                 break;
@@ -64,10 +65,10 @@ public class SudukuData : MonoBehaviour
             case "Hard 6x6":
                 SetData(Dropdown.Instance.grid_mode, 20);
                 break;
-            case "VeryHard 6x6":
+            case "Very Hard 6x6":
                 SetData(Dropdown.Instance.grid_mode, 24);
                 break;
-
+            //9x9
            case "Easy 9x9":
                 SetData(Dropdown.Instance.grid_mode, 40);
                 break;
@@ -77,7 +78,7 @@ public class SudukuData : MonoBehaviour
             case "Hard 9x9":
                 SetData(Dropdown.Instance.grid_mode, 55);
                 break;
-            case "VeryHard 9x9":
+            case "Very Hard 9x9":
                 SetData(Dropdown.Instance.grid_mode, 64);
                 break;
         }
@@ -90,8 +91,8 @@ public class SudukuData : MonoBehaviour
         int[] data_unsolve = new int[n * n];
         data_solve = SudukuGenerator.GetDataSolve(n);
         data_unsolve = SudukuGenerator.GetDataUnsolve(data_solve, k);
-        data.solve_data = data_solve;
-        data.unsolve_data = data_unsolve;
+        data.solved_data = data_solve;
+        data.unsolved_data = data_unsolve;
         //foreach (var item in data_solve)
         //{
         //    Debug.Log("------------------------" + item);
@@ -109,10 +110,10 @@ public class SudukuData : MonoBehaviour
     }
     private void CopyUnsolveData() 
     {
-        unsolve_data = new int[data.unsolve_data.Length];
-        for (int i = 0; i < data.unsolve_data.Length; i++)
+        unsolve_data_base = new int[data.unsolved_data.Length];
+        for (int i = 0; i < data.unsolved_data.Length; i++)
         {
-            unsolve_data[i] = data.unsolve_data[i];
+            unsolve_data_base[i] = data.unsolved_data[i];
         }    
     }
 }

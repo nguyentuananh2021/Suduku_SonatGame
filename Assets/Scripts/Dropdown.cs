@@ -7,7 +7,7 @@ public class Dropdown : MonoBehaviour
 {
     public static Dropdown Instance;
     public int grid_mode;
-
+    
     void Awake()
     {
         if (Instance == null)
@@ -21,7 +21,7 @@ public class Dropdown : MonoBehaviour
         GetComponent<TMP_Dropdown>().value = PlayerPrefs.GetInt("grid_mode_data");
     }
 
-    public int GetDropdownValue()
+    public int GetGridMode()
     {
         return grid_mode;
     }

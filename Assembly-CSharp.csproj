@@ -64,12 +64,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\ContinueGame.cs" />
+    <Compile Include="Assets\Scripts\BackButton.cs" />
     <Compile Include="Assets\Scripts\Clock.cs" />
     <Compile Include="Assets\Scripts\Config.cs" />
     <Compile Include="Assets\Scripts\Dropdown.cs" />
     <Compile Include="Assets\Scripts\GameEvents.cs" />
     <Compile Include="Assets\Scripts\GameSetting.cs" />
     <Compile Include="Assets\Scripts\GridSquare.cs" />
+    <Compile Include="Assets\Scripts\JsonData.cs" />
+    <Compile Include="Assets\Scripts\Level.cs" />
     <Compile Include="Assets\Scripts\LineIndicator.cs" />
     <Compile Include="Assets\Scripts\LineNumber.cs" />
     <Compile Include="Assets\Scripts\Lives.cs" />

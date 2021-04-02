@@ -261,17 +261,17 @@ public class LineIndicator : MonoBehaviour
         int[] squ_arr = GetSquare(square_index);
         for (int index = 0; index < n; index++)
         {
-            if (Check_cell_index(list_cell_note, row_arr[index])&& SudukuData.Instance.unsolve_data[row_arr[index]] <= 0)
+            if (Check_cell_index(list_cell_note, row_arr[index])&& SudukuData.Instance.unsolve_data_base[row_arr[index]] <= 0)
             {
                 if(row_arr[index] != square_index)
                     list_cell_note.Add(row_arr[index]);
             }
-            if (Check_cell_index(list_cell_note, col_arr[index]) && SudukuData.Instance.unsolve_data[col_arr[index]] <= 0)
+            if (Check_cell_index(list_cell_note, col_arr[index]) && SudukuData.Instance.unsolve_data_base[col_arr[index]] <= 0)
             {
                 if (col_arr[index] != square_index)
                     list_cell_note.Add(col_arr[index]);
             }
-            if (Check_cell_index(list_cell_note, squ_arr[index]) && SudukuData.Instance.unsolve_data[squ_arr[index]] <= 0)
+            if (Check_cell_index(list_cell_note, squ_arr[index]) && SudukuData.Instance.unsolve_data_base[squ_arr[index]] <= 0)
             {
                 if (squ_arr[index] != square_index)
                     list_cell_note.Add(squ_arr[index]);

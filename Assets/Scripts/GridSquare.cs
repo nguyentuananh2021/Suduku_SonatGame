@@ -55,7 +55,7 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
         if(Dropdown.Instance.grid_mode == 4)
         {
             grid_number_note.GetComponent<GridLayoutGroup>().constraint = GridLayoutGroup.Constraint.FixedRowCount;
-            grid_number_note.GetComponent<GridLayoutGroup>().cellSize = new Vector2(70, 70);
+            grid_number_note.GetComponent<GridLayoutGroup>().cellSize = new Vector2(60, 60);
         }
     }
     public List<string> GetSquareNotes()
@@ -105,13 +105,13 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
                 number_notes[value - 1].GetComponent<TMP_Text>().text = "";
         }
     }
-    //public void SetGridNotes(List<int> notes)
-    //{
-    //    foreach (var note in notes)
-    //    {
-    //        SetNoteSingleNumberValue(note, true);
-    //    }
-    //}
+    public void SetGridNotes(List<int> notes)
+    {
+        foreach (var note in notes)
+        {
+            SetNoteSingleNumberValue(note, true);
+        }
+    }
     public void OnNotesActive(bool active)
     {
         //SetSquareColor(Color.white);
@@ -141,7 +141,7 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
     }
     public void SetNumberData(int num, int square_index)
     {
-        SudukuData.Instance.data.unsolve_data[square_index] = num;
+        SudukuData.Instance.data.unsolved_data[square_index] = num;
         SudukuGrid.Instance.OnSquareSelected(square_index);
         if(SudukuData.Instance.GetSquareEmpty() == 0)
         {
@@ -221,7 +221,7 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
         {
             if (note_active == true && has_wrong_value == false )
             {
-                List<int> list_cell = LineIndicator.Instance.GetCellNotes(number, square_index_, SudukuData.Instance.data.unsolve_data);
+                List<int> list_cell = LineIndicator.Instance.GetCellNotes(number, square_index_, SudukuData.Instance.data.unsolved_data);
 
                 if (list_cell.Count > 0)
                 {
@@ -245,6 +245,7 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
                     var colors = this.colors;
                     colors.normalColor = Color.red;
                     this.colors = colors;
+
                     GameEvents.OnWrongNumberMethod();
                 }
                 else

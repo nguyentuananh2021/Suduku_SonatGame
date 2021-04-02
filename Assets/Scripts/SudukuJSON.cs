@@ -2,33 +2,60 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
-public class SudukuJSON : MonoBehaviour
+public partial class SudukuJSON : MonoBehaviour
 {
-    public void Start()
+    public static SudukuJSON Instance;
+    private string grid_mode;
+    private string times_;
+    private string wrongs_;
+    private string solved_data;
+    private string unsolved_data;
+    private string unsolved_data_;
+    private static string json_data;
+    private void Awake()
     {
-        SudukuData sudukuData = new SudukuData();
-        sudukuData.grid_mode = 4;
-        sudukuData.level = "Easy";
-        sudukuData.square_notes.Add("",new string[2]{"1", "2"});
-       
-        //Debug.Log(sudukuData.square_notes.Count);
-        string json = JsonUtility.ToJson(sudukuData, true);
-        //Debug.Log(json);
+        if (Instance) Destroy(this);
+        Instance = this;
 
-        //SudukuData su = JsonUtility.FromJson<SudukuData>(json);
-        //Debug.Log("grid mode: "+su.grid_mode);
-        //Debug.Log("level: "+su.level);
-        //Debug.Log("index: "+su.square_notes.Count);
     }
-    
-    public class SudukuData
+    private void Start()
     {
-        public int grid_mode;
-        public string level;
-        public int[] indexs;
-       
-        public Dictionary<string, string[]> square_notes = new Dictionary<string, string[]>();
-        
+        SetJsonData();
+    }
+    public string GetValueContinueGame()
+    {
+        return grid_mode + " " + times_;
+    }
+    public void SetJsonData()
+    {
+        grid_mode = Level.Instance.GetLevelGrid();
+        times_ = Clock.Instance.GetCurrentTimeText().ToString();
+        wrongs_ = Lives.Instance.GetWrong().ToString();
+        solved_data = ArrayToString(SudukuData.Instance.data.solved_data);
+        unsolved_data = ArrayToString(SudukuData.Instance.data.unsolved_data);
+        unsolved_data = ArrayToString(SudukuData.Instance.unsolve_data_base);
+
+        PlayerPrefs.SetInt("continue", 1);
+        PlayerPrefs.Save();
+    }
+    private string ArrayToString(int[] arr)
+    {
+        string str = "";
+        foreach (var item in arr)
+        {
+            str += item + ",";
+        }
+        return str;
+    }
+    public void SaveData()
+    {
+        JsonData suduku_json_data = new JsonData(grid_mode, times_, wrongs_, solved_data, unsolved_data, unsolved_data_);
+        json_data = JsonUtility.ToJson(suduku_json_data);
+    }
+    public JsonData GetJsonData()
+    {
+        var data = JsonUtility.FromJson<JsonData>(json_data);
+        return data;
     }
 }
 
