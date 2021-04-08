@@ -6,9 +6,9 @@ using UnityEngine.UI;
 
 public class Clock : MonoBehaviour
 {
-    //int hour_ = 0;
-    //int minute_ = 0;
-    //int seconds_ = 0;
+    int hour_;
+    int minute_;
+    int seconds_;
 
     private Text textClock;
     private float delta_time;
@@ -29,6 +29,14 @@ public class Clock : MonoBehaviour
     void Start()
     {
         stop_clock_ = false;
+        if (PlayerPrefs.GetString("json_data") != "")
+        {
+            var time = JsonUtility.FromJson<Data>(PlayerPrefs.GetString("json_data")).times_;
+            hour_ = int.Parse(time.Split(':')[0]);
+            minute_ = int.Parse(time.Split(':')[1]);
+            seconds_ = int.Parse(time.Split(':')[2]);
+        }
+       
     }
 
     // Update is called once per frame
@@ -43,9 +51,9 @@ public class Clock : MonoBehaviour
             {
                 delta_time += Time.deltaTime;
                 TimeSpan span = TimeSpan.FromSeconds(delta_time);
-                string hour = LeadingZero(span.Hours);
-                string minute = LeadingZero(span.Minutes);
-                string seconds = LeadingZero(span.Seconds);
+                string hour = LeadingZero(span.Hours + hour_);
+                string minute = LeadingZero(span.Minutes + minute_);
+                string seconds = LeadingZero(span.Seconds + seconds_);
                 textClock.text = hour + ":" + minute + ":" + seconds;
             }
      
@@ -73,9 +81,9 @@ public class Clock : MonoBehaviour
         GameEvents.OnGameOver -= OnGameOver;
     }
 
-    public Text GetCurrentTimeText()
+    public string GetCurrentTimeText()
     {
-        return textClock;
+        return textClock.text;
     }
     public void OnPauseGame(bool Bool)
     {

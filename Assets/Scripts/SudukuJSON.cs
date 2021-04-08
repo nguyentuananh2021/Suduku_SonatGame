@@ -1,61 +1,68 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
-using UnityEngine.Serialization;
-public partial class SudukuJSON : MonoBehaviour
+using UnityEngine.SceneManagement;
+public class Data
+{
+    public string grid_mode;
+    public string times_;
+    public int wrongs_;
+    public int[] solved_data;
+    public int[] unsolved_data;
+    public int[] unsolved_data_base;
+    public string[] arr_notes;
+}
+public class SudukuJSON : MonoBehaviour
 {
     public static SudukuJSON Instance;
-    private string grid_mode;
-    private string times_;
-    private string wrongs_;
-    private string solved_data;
-    private string unsolved_data;
-    private string unsolved_data_;
-    private static string json_data;
+    public Data data = new Data();
+ 
     private void Awake()
     {
-        if (Instance) Destroy(this);
-        Instance = this;
-
-    }
-    private void Start()
-    {
-        SetJsonData();
-    }
-    public string GetValueContinueGame()
-    {
-        return grid_mode + " " + times_;
-    }
-    public void SetJsonData()
-    {
-        grid_mode = Level.Instance.GetLevelGrid();
-        times_ = Clock.Instance.GetCurrentTimeText().ToString();
-        wrongs_ = Lives.Instance.GetWrong().ToString();
-        solved_data = ArrayToString(SudukuData.Instance.data.solved_data);
-        unsolved_data = ArrayToString(SudukuData.Instance.data.unsolved_data);
-        unsolved_data = ArrayToString(SudukuData.Instance.unsolve_data_base);
-
-        PlayerPrefs.SetInt("continue", 1);
-        PlayerPrefs.Save();
-    }
-    private string ArrayToString(int[] arr)
-    {
-        string str = "";
-        foreach (var item in arr)
+        if (Instance == null)
         {
-            str += item + ",";
+            DontDestroyOnLoad(this);
+            Instance = this;
         }
-        return str;
+        else
+            Destroy(this);
+        GetDataFile();
     }
-    public void SaveData()
+    public void ResetFile()
     {
-        JsonData suduku_json_data = new JsonData(grid_mode, times_, wrongs_, solved_data, unsolved_data, unsolved_data_);
-        json_data = JsonUtility.ToJson(suduku_json_data);
+        if (PlayerPrefs.GetString("json_data") != "")
+        {
+            PlayerPrefs.SetString("json_data", "");
+        }
     }
-    public JsonData GetJsonData()
+    public void GetDataFile()
     {
-        var data = JsonUtility.FromJson<JsonData>(json_data);
-        return data;
+        data = JsonUtility.FromJson<Data>(PlayerPrefs.GetString("json_data"));
+    }
+
+    public void SetGamePlay()
+    {
+        Dropdown.Instance.SetGridMode(int.Parse(data.grid_mode.Split('x')[1]));
+        GameSetting.Instance.SetGameMode(GetGameMode());
+        SudukuData.Instance.data = new SudukuData.SudukuBoardData(data.unsolved_data, data.solved_data, data.unsolved_data_base);
+        SceneManager.LoadScene("GameScene");
+    }
+    public string GetGameMode()
+    {
+        string game_mode = "";
+        var json_data = JsonUtility.FromJson<Data>(PlayerPrefs.GetString("json_data"));
+        if (PlayerPrefs.GetString("json_data") != null)
+        {
+           
+            string[] str = json_data.grid_mode.Split(' ');
+            for (int i = 0; i < str.Length; i++)
+            {
+                game_mode += str[i];
+                if (i < str.Length - 1) game_mode += "_";
+            }
+        }
+        return game_mode;
     }
 }
 

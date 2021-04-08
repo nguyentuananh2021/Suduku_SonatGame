@@ -11,7 +11,7 @@ public class Config : MonoBehaviour
 #else
     static string dir = Directory.GetCurrentDirectory();
 #endif
-    private static string file = @"\board_data.ini";
+    private static string file = @"\board_data.Json";
     private static string path = dir + file;
 
     public static void DeleteDataFile()
@@ -111,33 +111,33 @@ public class Config : MonoBehaviour
         file.Close();
         return level;
     }
-    public static SudukuData.SudukuBoardData ReadDridData(int n)
-    {
-        string line;
-        StreamReader file = new StreamReader(path);
-        int[] unsolved_data = new int[n];
-        int[] solved_data = new int[n];
-        int solved_index = 0;
-        while ((line = file.ReadLine()) != null)
-        {
-            string[] word = line.Split(':');
-            if(word[0] == "#unsolved")
-            {
-                string[] substrings = Regex.Split(word[1], ",");
-                foreach (var value in substrings)
-                {
-                    int square_number = -1;
-                    if(int.TryParse(value, out square_number))
-                    {
-                        solved_data[solved_index] = square_number;
-                        solved_index++;
-                    }
-                }
-            }
-        }
-        file.Close();
-        return new SudukuData.SudukuBoardData(unsolved_data, solved_data);
-    }
+    //public static SudukuData.SudukuBoardData ReadDridData(int n)
+    //{
+    //    string line;
+    //    StreamReader file = new StreamReader(path);
+    //    int[] unsolved_data = new int[n];
+    //    int[] solved_data = new int[n];
+    //    int solved_index = 0;
+    //    while ((line = file.ReadLine()) != null)
+    //    {
+    //        string[] word = line.Split(':');
+    //        if(word[0] == "#unsolved")
+    //        {
+    //            string[] substrings = Regex.Split(word[1], ",");
+    //            foreach (var value in substrings)
+    //            {
+    //                int square_number = -1;
+    //                if(int.TryParse(value, out square_number))
+    //                {
+    //                    solved_data[solved_index] = square_number;
+    //                    solved_index++;
+    //                }
+    //            }
+    //        }
+    //    }
+    //    file.Close();
+    //    return new SudukuData.SudukuBoardData(unsolved_data, solved_data);
+    //}
 
     public static int ReadGameBoardLevel()
     {

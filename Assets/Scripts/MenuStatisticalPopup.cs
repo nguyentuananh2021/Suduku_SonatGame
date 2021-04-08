@@ -27,7 +27,7 @@ public class MenuStatisticalPopup : MonoBehaviour
                 wrongs_[i].text = "---";
                 times_[i].text = "---";
             }
-            Debug.Log(PlayerPrefs.GetString("4x4_times_3"));
+            //Debug.Log(PlayerPrefs.GetString("4x4_times_3"));
         }
     }
     public void Displaytext_6x6()

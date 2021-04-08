@@ -24,6 +24,16 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
     private bool has_wrong_value = false;
     public bool IsSelected() { return selected_; }
 
+    public string GetStringNumberNotes()
+    {
+        string notes = "";
+        foreach (var item in number_notes)
+        {
+            notes += item.GetComponent<TMP_Text>().text;
+        }
+        //Debug.Log("===================="+notes);
+        return notes;
+    }
     private void Awake()
     {
         note_active = false;
@@ -63,7 +73,6 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
         var notes = new List<string>();
         foreach (var number in number_notes)
         {
-            
             notes.Add(number.GetComponent<TMP_Text>().text);
         }
         return notes;
@@ -76,6 +85,20 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
     //            number.GetComponent<TMP_Text>().text = "";
     //    }
     //}
+
+    public void SetNoteValues(int index, string[] grid_notes)
+    {
+        var notes = grid_notes[index].Split(' ');
+        if (notes[0] != "")
+        {
+            for (int i = 0; i < notes.Length; i++)
+            {
+                if (notes[i] != "")
+                    number_notes[int.Parse(notes[i])-1].GetComponent<TMP_Text>().text = notes[i];
+            }
+        }
+    }
+
     private void SetNoteNumberValue(int value)
     {
         foreach (var number in number_notes)
@@ -87,6 +110,7 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
             else 
             {
                 number.GetComponent<TMP_Text>().text = value.ToString();
+                BackButton.Instance.SaveJsonData();
             }
         }
     }
@@ -104,6 +128,7 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
             else
                 number_notes[value - 1].GetComponent<TMP_Text>().text = "";
         }
+        BackButton.Instance.SaveJsonData();
     }
     public void SetGridNotes(List<int> notes)
     {
@@ -136,8 +161,8 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
     public void SetNumber(int number)
     {
         number_ = number;
-        
         DisplayText();
+        
     }
     public void SetNumberData(int num, int square_index)
     {
@@ -145,7 +170,6 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
         SudukuGrid.Instance.OnSquareSelected(square_index);
         if(SudukuData.Instance.GetSquareEmpty() == 0)
         {
-            //Debug.Log("YOU WIN");
             SudukuData.Instance.CheckForYouWin();
         }
     }
@@ -156,7 +180,12 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
             number_text.GetComponent<TMP_Text>().text = default;
         }
         else
+        {
             number_text.GetComponent<TMP_Text>().text = number_.ToString();
+            //SetNumberData(number_, square_index_);
+        }
+           
+
         if(has_default_value)
             number_text.GetComponent<TMP_Text>().color = Color.black;
 
@@ -192,6 +221,8 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
             SetSquareColor(Color.white);
             SetNoteNumberValue(0);
             DisplayText();
+            SetNumberData(number_, square_index_);
+            BackButton.Instance.SaveJsonData();
         }
     }
 
@@ -237,6 +268,7 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
             {
                 SetNoteNumberValue(0);
                 SetNumber(number);
+                
                 DeleteNumberNotes(square_index_);
 
                 if (correct_number != number_)
@@ -255,6 +287,7 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
                     colors.normalColor = Color.white;
                     this.colors = colors;
                     SetNumberData(number, square_index_);
+                    BackButton.Instance.SaveJsonData();
                 }
             }
         }

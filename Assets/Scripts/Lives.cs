@@ -26,9 +26,21 @@ public class Lives : MonoBehaviour
     }
     private void Start()
     {
-       
         lives_ = error_images.Count;
         error_number_ = 0;
+        if (PlayerPrefs.GetString("json_data") != "")
+        {
+            var wrong_json = JsonUtility.FromJson<Data>(PlayerPrefs.GetString("json_data")).wrongs_;
+            if (wrong_json > 0)
+            {
+                for (int i = 0; i < wrong_json; i++)
+                {
+                    error_images[i].SetActive(true);
+                    error_number_++;
+                    lives_--;
+                }
+            }
+        } 
     }
     private void WrongNumber()
     {

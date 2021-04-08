@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using TMPro;
 using UnityEngine;
 
 public class SudukuGrid : MonoBehaviour
 {
+    
     public static SudukuGrid Instance;
     public int columns = 0;
     public int rows = 0;
@@ -14,23 +16,24 @@ public class SudukuGrid : MonoBehaviour
     public float square_scale = 1.0f;
     public float square_gap = 1f;
     public List<GameObject> grid_squares_ = new List<GameObject>();
-
     public Color line_color = Color.red; public Color cell_color = Color.red; public Color cells_data_color = Color.red;
 
+    
     private void Awake()
     {
         if (Instance) Destroy(this);
         Instance = this;
-
+        
     }
     public void SetGridMode(int n)
     {
         columns = n;
         rows = n;
-
+       
     }
     void Start()
     {
+
         start_position = new Vector2(0.0f, 0.0f);
         //Debug.Log(SudukuData.Instance.suduku_game.Count);
         if (grid_square.GetComponent<GridSquare>() == null)
@@ -42,28 +45,49 @@ public class SudukuGrid : MonoBehaviour
             SetGridMode(Dropdown.Instance.grid_mode);
             CreateGrid();
             SetGridNumber(GameSetting.Instance.GetGameMode());
-            SetSquaresColor(LineIndicator.Instance.GetCellDataSolve(SudukuData.Instance.unsolve_data_base), cells_data_color);
+            SetSquaresColor(LineIndicator.Instance.GetCellDataSolve(SudukuData.Instance.data.unsolved_data_base), cells_data_color);
         }
         else Debug.Log("Grid Mode Null");
     }
+    
     private void CreateGrid()
     {
         SpawnGridSquares();
         SetSquaresPosition();
     }
     private void SpawnGridSquares()
-    {   
-        if(grid_squares_ != null)
+    {
+        var rt = (RectTransform)this.transform;
+        
+        var w = rt.rect.width;
+        float x = 0;
+        if (grid_squares_ != null)
         {
             grid_squares_.Clear();
         }
         int square_index_ = 0;
+        float scale_ = (w - (square_gap * 4) - (square_offset * (columns - 1)) - (square_gap * columns / 3)) / (155 * columns);
         switch (columns)
         {
-            case 9: square_scale = 1 ; break;
-            case 6: square_scale = 1.525f; start_position.x += 37; start_position.y -=35 ; break;
-            case 4: square_scale = 2.27f; start_position.x += 98; start_position.y -= 98; break;
+            case 9: square_scale = scale_;
+                x = w - (155 * square_scale*columns + (square_offset*(columns-1)) + (square_gap*columns/3));
+                start_position.x -= (w / 2) - (155 * square_scale / 2) - x/2;
+                start_position.y += (w / 2) - (155 * square_scale / 2) - x/2; break;
+
+            case 6: square_scale = scale_;
+                x = w - (155 * square_scale * columns + (square_offset * (columns - 1)) + (square_gap * columns / 3));
+                float y = w - (155 * square_scale * columns + (square_offset * (columns - 1)) + (square_gap * columns / 2));
+                start_position.x -= (w / 2) - (155 * square_scale / 2) - x / 2;
+                start_position.y += (w / 2) - (155 * square_scale / 2) - y / 2; break;
+
+            case 4: square_scale = scale_;
+                x = w - (155 * square_scale * columns + (square_offset * (columns - 1)) + (square_gap * columns / 2));
+                start_position.x -= (w / 2) - (155 * square_scale / 2) - x / 2; ;
+                start_position.y += (w / 2) - (155 * square_scale / 2) - x / 2; ; break;
+
         }
+        //Debug.Log("scale: " + square_scale + "   x = " + x);
+
         for (int i = 0; i < rows; i++)
         {
             for (int j = 0; j < columns; j++)
@@ -93,9 +117,9 @@ public class SudukuGrid : MonoBehaviour
             Vector2 pos = new Vector2(3,3);
             switch (columns)
             {
-                case 9: pos = new Vector2(3,3); break;
-                case 6: pos = new Vector2(3,2); square_gap =7; break;
-                case 4: pos = new Vector2(2, 2); square_gap = 15; break;
+                case 9: pos = new Vector2(3,3); square_gap = 5;  break;
+                case 6: pos = new Vector2(3,2); square_gap =5; break;
+                case 4: pos = new Vector2(2, 2); square_gap = 5; break;
             }
             if (column_number + 1 > columns)
             {
@@ -127,24 +151,35 @@ public class SudukuGrid : MonoBehaviour
 
     private void SetGridNumber(string level)
     {
-        if (level is null)
+       // Debug.Log(data.solved_data[0]);
+        if (PlayerPrefs.GetString("json_data") != "")
         {
-            throw new System.ArgumentNullException(nameof(level));
+            var json_data = JsonUtility.FromJson<Data>(PlayerPrefs.GetString("json_data"));
+            SudukuData.Instance.data = new SudukuData.SudukuBoardData(json_data.unsolved_data, json_data.solved_data, json_data.unsolved_data_base);
+            SetGridSquareData(SudukuData.Instance.data);
         }
-        SudukuData.SudukuBoardData data = SudukuData.Instance.GetDataGameMode(level);
-        SetGridSquareData(data);
+        else
+        {
+            SetGridSquareData( SudukuData.Instance.GetDataGameMode(level));
+        }
+        
+        
     }
     private void SetGridSquareData(SudukuData.SudukuBoardData data)
     {
+        var json_data = PlayerPrefs.GetString("json_data");
         for (int index = 0; index < grid_squares_.Count; index++)
         {
             grid_squares_[index].GetComponent<GridSquare>().SetNumber(data.unsolved_data[index]);
             grid_squares_[index].GetComponent<GridSquare>().SetCorectNumber(data.solved_data[index]);
-            grid_squares_[index].GetComponent<GridSquare>().SetHasDefaultValue(data.unsolved_data[index] !=0 && data.unsolved_data[index] == data.solved_data[index]);
+            if(json_data != "")
+                grid_squares_[index].GetComponent<GridSquare>().SetNoteValues(index, JsonUtility.FromJson<Data>(PlayerPrefs.GetString("json_data")).arr_notes);
+            grid_squares_[index].GetComponent<GridSquare>().SetHasDefaultValue(data.unsolved_data_base[index] !=0 && data.unsolved_data_base[index] == data.solved_data[index]);
             if (grid_squares_[index].GetComponent<GridSquare>().has_default_value)
             {
                 grid_squares_[index].transform.GetChild(2).gameObject.GetComponent<TMP_Text>().color = Color.black;
             }
+            //Debug.Log(grid_squares_[index].GetComponent<TMP_Text>().text);
         }
     }
     public void OnEnable()
@@ -197,7 +232,7 @@ public class SudukuGrid : MonoBehaviour
     }
     public void OnSquareSelected(int square_index)
     {
-        var cells_data_unsolve = LineIndicator.Instance.GetCellDataSolve(SudukuData.Instance.unsolve_data_base);
+        var cells_data_unsolve = LineIndicator.Instance.GetCellDataSolve(SudukuData.Instance.data.unsolved_data_base);
         var horizontal_line = LineIndicator.Instance.GetHorizontalLine(square_index);
         var vertical_line = LineIndicator.Instance.GetVerticalLine(square_index);
         var square = LineIndicator.Instance.GetSquare(square_index);

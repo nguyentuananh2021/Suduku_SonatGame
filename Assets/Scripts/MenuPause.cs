@@ -9,7 +9,7 @@ public class MenuPause : MonoBehaviour
     public Text game_mode;
     public void DisplayTime()
     {
-        time_text.text = Clock.Instance.GetCurrentTimeText().text;
+        time_text.text = Clock.Instance.GetCurrentTimeText();
         game_mode.text = GameSetting.Instance.GetGameMode().ToString();
     }
 }

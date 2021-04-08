@@ -6,7 +6,7 @@ using UnityEngine;
 public class Dropdown : MonoBehaviour
 {
     public static Dropdown Instance;
-    public int grid_mode;
+    public int grid_mode = 9;
     
     void Awake()
     {
@@ -24,6 +24,10 @@ public class Dropdown : MonoBehaviour
     public int GetGridMode()
     {
         return grid_mode;
+    }
+    public void SetGridMode(int grid_mode_)
+    {
+        grid_mode = grid_mode_;
     }
     public void SetDropdownValue()
     {

@@ -8,6 +8,7 @@ public class MenuGameOver : MonoBehaviour
     public Text textClock;
     void Start()
     {
-        textClock.text = Clock.Instance.GetCurrentTimeText().text;
+        textClock.text = Clock.Instance.GetCurrentTimeText();
+        //SudukuJSON.Instance.SaveJsonData();
     }
 }

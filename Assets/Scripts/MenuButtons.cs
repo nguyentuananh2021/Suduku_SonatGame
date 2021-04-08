@@ -6,11 +6,14 @@ public class MenuButtons : MonoBehaviour
 {
     public void LoadSence(string name)
     {
+       // SudukuJSON.Instance.ResetFile();
+        //SudukuJSON.Instance.SaveFileJsonData();
         SceneManager.LoadScene(name);
     }
 
     public void LoadEasyGame(string name)
     {
+        SudukuJSON.Instance.ResetFile();
         switch (Dropdown.Instance.grid_mode)
         {
             case 4:
@@ -30,6 +33,7 @@ public class MenuButtons : MonoBehaviour
     }
     public void LoadMediumGame(string name)
     {
+        SudukuJSON.Instance.ResetFile();
         switch (Dropdown.Instance.grid_mode)
         {
             case 4:
@@ -48,6 +52,7 @@ public class MenuButtons : MonoBehaviour
     }
     public void LoadHardGame(string name)
     {
+        SudukuJSON.Instance.ResetFile();
         switch (Dropdown.Instance.grid_mode)
         {
             case 4:
@@ -66,6 +71,7 @@ public class MenuButtons : MonoBehaviour
     }
     public void LoadVeryHardGame(string name)
     {
+        SudukuJSON.Instance.ResetFile();
         switch (Dropdown.Instance.grid_mode)
         {
             case 4:

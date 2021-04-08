@@ -25,34 +25,12 @@ public class GameSetting : MonoBehaviour
             Destroy(this);
     }
     private EGameMode _GameMode;
-
-    private bool _continuePreviousGame = false;
-    private bool _exitAfterWon = false;
-
-    public void SetExitAfterWon(bool set)
-    {
-        _exitAfterWon = set;
-        _continuePreviousGame = false;
-    }
-    public bool GetExitAfterWon()
-    {
-        return _exitAfterWon;
-    }
-    public void SetContinuePreviousGame(bool continue_game)
-    {
-        _continuePreviousGame = continue_game;
-    }
-    public bool GetContinuePreviousGame()
-    {
-        return _continuePreviousGame;
-    }
-
     private void Start()
     {
         _GameMode = EGameMode.NOT_SET;
-        _continuePreviousGame = false;
        // PlayerPrefs.SetInt("continue", 0);
     }
+
 
     public void SetGameMode(EGameMode mode)
     {

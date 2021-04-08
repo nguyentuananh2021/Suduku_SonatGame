@@ -1,29 +1,48 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using System.IO;
+using TMPro;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class ContinueGame : MonoBehaviour
 {
-    public TMPro.TMP_Text text_;
-    private void Start()
+    public TMP_Text text_continue;
+    public static ContinueGame Instance;
+    private void Awake()
     {
-        SetDisplay();
+        if (Instance) Destroy(this);
+        //DontDestroyOnLoad(this);
+        Instance = this;
     }
-    public string GetLevelAndTime()
+    void Start()
     {
-        if(PlayerPrefs.GetInt("continue")!= 0)
-            return "Easy 4x4 00:00:23";
-        return "";
+        Display();
     }
-    public void SetDisplay()
+    public void SetGamePlay()
     {
-        var str = GetLevelAndTime();
-        Debug.Log(str);
-        if (str != "")
+
+        Dropdown.Instance.SetGridMode(int.Parse(JsonUtility.FromJson<Data>(PlayerPrefs.GetString("json_data")).grid_mode.Split('x')[1]));
+        GameSetting.Instance.SetGameMode(SudukuJSON.Instance.GetGameMode());
+        
+        SceneManager.LoadScene("GameScene");
+    }
+
+
+    private void Display()
+    {
+        Debug.Log(PlayerPrefs.GetString("json_data"));
+        var data = JsonUtility.FromJson<Data>(PlayerPrefs.GetString("json_data"));
+        if (PlayerPrefs.GetString("json_data") == "")
         {
-            text_.text = str;
-            gameObject.SetActive(true);
+            SetActive(false);
         }
-        else gameObject.SetActive(false);
+        else
+        {
+            text_continue.text = data.grid_mode + " " + data.times_;
+            SetActive(true);
+        }
+    }
+    public void SetActive(bool bool_)
+    {
+        gameObject.SetActive(bool_);
     }
 }

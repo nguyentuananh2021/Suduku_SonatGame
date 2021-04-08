@@ -27,10 +27,11 @@ public class YouWinPopup : MonoBehaviour
         GetData();
         SaveData();
         DisplayGameResults();
+        PlayerPrefs.SetString("json_data", "");
     }
     public void GetValuePopup()
     {
-        text_time.text = Clock.Instance.GetCurrentTimeText().text;
+        text_time.text = Clock.Instance.GetCurrentTimeText();
         text_wrong.text = Lives.Instance.error_number_.ToString();
         text_game_mode.text = GameSetting.Instance.GetGameMode();
     }
@@ -50,7 +51,7 @@ public class YouWinPopup : MonoBehaviour
         if (wrong_data == "") wrong_data = "3";
         if (time_data == "") time_data = "99:99:99";
         wrong_data = PlayerPrefs.GetString(game_mode + "_wrongs_" + LevelToInt(level_mode));
-        Debug.Log(game_mode + "_times_" + LevelToInt(level_mode));
+        //Debug.Log(game_mode + "_times_" + LevelToInt(level_mode));
     }
 
     public bool IsBest()

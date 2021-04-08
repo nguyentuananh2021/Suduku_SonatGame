@@ -19,7 +19,7 @@ public class Level : MonoBehaviour
         Display();
     }
 
-    public void SetLevelGrid()
+    private void SetLevelGrid()
     {
         level_grid = GameSetting.Instance.GetGameMode();
     }
@@ -27,7 +27,7 @@ public class Level : MonoBehaviour
     {
         return level_grid;
     }
-    public void Display()
+    private void Display()
     {
         level_text.GetComponent<Text>().text = level_grid;
     }

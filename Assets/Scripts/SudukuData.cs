@@ -8,17 +8,28 @@ public class SudukuData : MonoBehaviour
     public SudukuBoardData data = new SudukuBoardData();
     public static SudukuData Instance;
     public int square_empty;
-    public int[] unsolve_data_base;
     public struct SudukuBoardData
     {
         public int[] unsolved_data;
         public int[] solved_data;
-
-        public SudukuBoardData(int[] unsolve_data, int[] solve_data) : this()
+        public int[] unsolved_data_base;
+        
+        public SudukuBoardData(int[] unsolve_data, int[] solve_data, int[] unsolve_data_base) : this()
         {
-            this.unsolved_data = unsolve_data;
-            this.solved_data = solve_data;
+            unsolved_data = unsolve_data;
+            unsolved_data_base = unsolve_data_base;
+            solved_data = solve_data;
         }
+    }
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            //DontDestroyOnLoad(this);
+            Instance = this;
+        }
+        else
+            Destroy(this);
     }
     public void CheckForYouWin()
     {
@@ -38,7 +49,7 @@ public class SudukuData : MonoBehaviour
         }
         return square_empty;
     }
-   public SudukuBoardData GetDataGameMode(string level)
+    public SudukuBoardData GetDataGameMode(string level)
     {
         switch (level)
         {
@@ -69,7 +80,7 @@ public class SudukuData : MonoBehaviour
                 SetData(Dropdown.Instance.grid_mode, 24);
                 break;
             //9x9
-           case "Easy 9x9":
+            case "Easy 9x9":
                 SetData(Dropdown.Instance.grid_mode, 40);
                 break;
             case "Medium 9x9":
@@ -99,21 +110,13 @@ public class SudukuData : MonoBehaviour
         //}
         return data;
     }
-    void Awake()
+   
+    private void CopyUnsolveData()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        } 
-        else
-            Destroy(this);
-    }
-    private void CopyUnsolveData() 
-    {
-        unsolve_data_base = new int[data.unsolved_data.Length];
+        data.unsolved_data_base = new int[data.unsolved_data.Length];
         for (int i = 0; i < data.unsolved_data.Length; i++)
         {
-            unsolve_data_base[i] = data.unsolved_data[i];
-        }    
+            data.unsolved_data_base[i] = data.unsolved_data[i];
+        }
     }
 }
