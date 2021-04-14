@@ -37,7 +37,7 @@ public class YouWinPopup : MonoBehaviour
     }
     public void GetData()
         {
-        string grid_mode = Dropdown.Instance.GetGridMode().ToString(); //4, 6, 9
+        string grid_mode = DropdownGridMode.Instance.GetGridMode().ToString(); //4, 6, 9
         game_mode = grid_mode + "x" + grid_mode;
        
         string[] level_grid = GameSetting.Instance.GetGameMode().Split(' ');

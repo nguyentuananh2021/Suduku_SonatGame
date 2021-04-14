@@ -65,11 +65,21 @@ public class GameEvents : MonoBehaviour
 
     public delegate void DeleteNumber();
     public static event DeleteNumber OnDeleteNumber;
-    public static void OnDeleteNumbermethod()
+    public static void OnDeleteNumberMethod()
     {
         if(OnDeleteNumber != null)
         {
             OnDeleteNumber();
         }
+    } 
+    public delegate void Hint();
+    public static event Hint OnHint;
+    public static void OnHintMethod()
+    {
+        if(OnHint != null)
+        {
+            OnHint();
+        }
     }
+
 }

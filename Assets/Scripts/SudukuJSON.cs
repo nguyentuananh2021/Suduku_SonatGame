@@ -8,6 +8,7 @@ public class Data
     public string grid_mode;
     public string times_;
     public int wrongs_;
+    public int hint_;
     public int[] solved_data;
     public int[] unsolved_data;
     public int[] unsolved_data_base;
@@ -17,8 +18,7 @@ public class SudukuJSON : MonoBehaviour
 {
     public static SudukuJSON Instance;
     public Data data = new Data();
- 
-    private void Awake()
+     private void Awake()
     {
         if (Instance == null)
         {
@@ -43,7 +43,7 @@ public class SudukuJSON : MonoBehaviour
 
     public void SetGamePlay()
     {
-        Dropdown.Instance.SetGridMode(int.Parse(data.grid_mode.Split('x')[1]));
+        DropdownGridMode.Instance.SetGridMode(int.Parse(data.grid_mode.Split('x')[1]));
         GameSetting.Instance.SetGameMode(GetGameMode());
         SudukuData.Instance.data = new SudukuData.SudukuBoardData(data.unsolved_data, data.solved_data, data.unsolved_data_base);
         SceneManager.LoadScene("GameScene");

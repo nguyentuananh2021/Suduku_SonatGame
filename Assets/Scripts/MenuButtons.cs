@@ -14,7 +14,7 @@ public class MenuButtons : MonoBehaviour
     public void LoadEasyGame(string name)
     {
         SudukuJSON.Instance.ResetFile();
-        switch (Dropdown.Instance.grid_mode)
+        switch (DropdownGridMode.Instance.grid_mode)
         {
             case 4:
                 GameSetting.Instance.SetGameMode(GameSetting.EGameMode.EASY_4x4);
@@ -34,7 +34,7 @@ public class MenuButtons : MonoBehaviour
     public void LoadMediumGame(string name)
     {
         SudukuJSON.Instance.ResetFile();
-        switch (Dropdown.Instance.grid_mode)
+        switch (DropdownGridMode.Instance.grid_mode)
         {
             case 4:
                 GameSetting.Instance.SetGameMode(GameSetting.EGameMode.MEDIUM_4x4);
@@ -53,7 +53,7 @@ public class MenuButtons : MonoBehaviour
     public void LoadHardGame(string name)
     {
         SudukuJSON.Instance.ResetFile();
-        switch (Dropdown.Instance.grid_mode)
+        switch (DropdownGridMode.Instance.grid_mode)
         {
             case 4:
                 GameSetting.Instance.SetGameMode(GameSetting.EGameMode.HARD_4x4);
@@ -72,7 +72,7 @@ public class MenuButtons : MonoBehaviour
     public void LoadVeryHardGame(string name)
     {
         SudukuJSON.Instance.ResetFile();
-        switch (Dropdown.Instance.grid_mode)
+        switch (DropdownGridMode.Instance.grid_mode)
         {
             case 4:
                 GameSetting.Instance.SetGameMode(GameSetting.EGameMode.VERY_HARD_4x4);

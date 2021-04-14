@@ -54,7 +54,7 @@ public class LineIndicator : MonoBehaviour
     }
     public void Start()
     {
-        n = Dropdown.Instance.grid_mode;
+        n = DropdownGridMode.Instance.grid_mode;
         line_data = LineData(n);
         line_data_falt = LineDataFalt(n);
         switch (n)

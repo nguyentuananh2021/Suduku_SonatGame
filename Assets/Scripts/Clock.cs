@@ -15,6 +15,9 @@ public class Clock : MonoBehaviour
     private bool stop_clock_ = false;
     private bool pause_clock_ = false;
     public static Clock Instance;
+
+    string time_data;
+    private bool is_continue = false;
     private void Awake()
     {
         if (Instance)
@@ -29,17 +32,20 @@ public class Clock : MonoBehaviour
     void Start()
     {
         stop_clock_ = false;
-        if (PlayerPrefs.GetString("json_data") != "")
+        is_continue = false;
+        var json_data_pref = PlayerPrefs.GetString("json_data");
+        if (json_data_pref != "")
         {
-            var time = JsonUtility.FromJson<Data>(PlayerPrefs.GetString("json_data")).times_;
-            hour_ = int.Parse(time.Split(':')[0]);
-            minute_ = int.Parse(time.Split(':')[1]);
-            seconds_ = int.Parse(time.Split(':')[2]);
+            is_continue = true;
+            time_data = JsonUtility.FromJson<Data>(json_data_pref).times_;
+            hour_ = int.Parse(time_data.Split(':')[0]);
+            minute_ = int.Parse(time_data.Split(':')[1]);
+            seconds_ = int.Parse(time_data.Split(':')[2]);
         }
-       
+        //Debug.Log(hour_ + ":" + minute_ + ":" + seconds_);
+        delta_time = (hour_ * 3600 + minute_ * 60 + seconds_);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(stop_clock_ == true)
@@ -48,16 +54,21 @@ public class Clock : MonoBehaviour
             //Debug.Log("Destroy Timer");
         }
         if (pause_clock_ == false)
-            {
-                delta_time += Time.deltaTime;
-                TimeSpan span = TimeSpan.FromSeconds(delta_time);
-                string hour = LeadingZero(span.Hours + hour_);
-                string minute = LeadingZero(span.Minutes + minute_);
-                string seconds = LeadingZero(span.Seconds + seconds_);
-                textClock.text = hour + ":" + minute + ":" + seconds;
-            }
+        {
+            delta_time += Time.deltaTime;
+           
+            TimeSpan span = TimeSpan.FromSeconds(delta_time);
+
+
+            string hour = LeadingZero(span.Hours);
+            string minute = LeadingZero(span.Minutes);
+            string seconds = LeadingZero(span.Seconds);
+
+            textClock.text = hour + ":" + minute + ":" + seconds;
+        }
      
     }
+
     public string LeadingZero(int n)
     {
         return n.ToString().PadLeft(2, '0');
@@ -89,8 +100,5 @@ public class Clock : MonoBehaviour
     {
         pause_clock_ = Bool;
     }
-    public static string GetCurrentTime()
-    {
-        return Instance.delta_time.ToString();
-    }
+
 }

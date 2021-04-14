@@ -8,7 +8,7 @@ public class RubberButton : Selectable, IPointerClickHandler
 {
     public void OnPointerClick(PointerEventData eventData)
     {
-        GameEvents.OnDeleteNumbermethod();
+        GameEvents.OnDeleteNumberMethod();
     }
 
 }
