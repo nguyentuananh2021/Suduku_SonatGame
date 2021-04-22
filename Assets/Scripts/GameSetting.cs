@@ -38,7 +38,7 @@ public class GameSetting : MonoBehaviour
     }
     public void SetGameMode(string mode)
     {
-        switch (DropdownGridMode.Instance.grid_mode)
+        switch (DropdownGridMode.Instance.GetGridMode())
         {
             case 4:
                 if (mode == "Easy_4x4") SetGameMode(EGameMode.EASY_4x4);

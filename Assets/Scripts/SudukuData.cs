@@ -55,42 +55,42 @@ public class SudukuData : MonoBehaviour
         {
             //4x4
             case "Easy 4x4":
-                SetData(DropdownGridMode.Instance.grid_mode, 7);
+                SetData(DropdownGridMode.Instance.GetGridMode(), 7);
                 break;
             case "Medium 4x4":
-                SetData(DropdownGridMode.Instance.grid_mode, 8);
+                SetData(DropdownGridMode.Instance.GetGridMode(), 8);
                 break;
             case "Hard 4x4":
-                SetData(DropdownGridMode.Instance.grid_mode, 9);
+                SetData(DropdownGridMode.Instance.GetGridMode(), 9);
                 break;
             case "Very Hard 4x4":
-                SetData(DropdownGridMode.Instance.grid_mode, 10);
+                SetData(DropdownGridMode.Instance.GetGridMode(), 10);
                 break;
             //6x6
             case "Easy 6x6":
-                SetData(DropdownGridMode.Instance.grid_mode, 15);
+                SetData(DropdownGridMode.Instance.GetGridMode(), 15);
                 break;
             case "Medium 6x6":
-                SetData(DropdownGridMode.Instance.grid_mode, 18);
+                SetData(DropdownGridMode.Instance.GetGridMode(), 18);
                 break;
             case "Hard 6x6":
-                SetData(DropdownGridMode.Instance.grid_mode, 20);
+                SetData(DropdownGridMode.Instance.GetGridMode(), 20);
                 break;
             case "Very Hard 6x6":
-                SetData(DropdownGridMode.Instance.grid_mode, 24);
+                SetData(DropdownGridMode.Instance.GetGridMode(), 24);
                 break;
             //9x9
             case "Easy 9x9":
-                SetData(DropdownGridMode.Instance.grid_mode, 40);
+                SetData(DropdownGridMode.Instance.GetGridMode(), 40);
                 break;
             case "Medium 9x9":
-                SetData(DropdownGridMode.Instance.grid_mode, 50);
+                SetData(DropdownGridMode.Instance.GetGridMode(), 50);
                 break;
             case "Hard 9x9":
-                SetData(DropdownGridMode.Instance.grid_mode, 55);
+                SetData(DropdownGridMode.Instance.GetGridMode(), 55);
                 break;
             case "Very Hard 9x9":
-                SetData(DropdownGridMode.Instance.grid_mode, 64);
+                SetData(DropdownGridMode.Instance.GetGridMode(), 64);
                 break;
         }
         CopyUnsolveData();

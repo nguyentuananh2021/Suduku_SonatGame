@@ -72,13 +72,13 @@ public class GameEvents : MonoBehaviour
             OnDeleteNumber();
         }
     } 
-    public delegate void Hint();
-    public static event Hint OnHint;
-    public static void OnHintMethod()
+    public delegate void HintNumber();
+    public static event HintNumber OnHintNumber;
+    public static void OnHintNumberMethod()
     {
-        if(OnHint != null)
+        if(OnHintNumber != null)
         {
-            OnHint();
+            OnHintNumber();
         }
     }
 

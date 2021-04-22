@@ -1,19 +1,37 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class MenuStatisticalPopup : MonoBehaviour
 {
-    public TMP_Text Title_;
-    public List<TMP_Text> wrongs_;
-    public List<TMP_Text> times_;
+    public Text Title_;
+    public List<Text> wrongs_;
+    public List<Text> times_;
     public List<Button> btns_;
-
+    int dropdown_value = -1;
+    private void Start()
+    {
+        dropdown_value = PlayerPrefs.GetInt("grid_mode_data");
+    }
     public void Display()
     {
-        Displaytext_4x4();
+        switch (dropdown_value)
+        {
+            case 0:
+                Displaytext_4x4();
+                btns_[0].Select();
+                break;
+            case 1:
+                Displaytext_6x6();
+                btns_[1].Select();
+                break;
+            case 2:
+                Displaytext_9x9();
+                btns_[2].Select();
+                break;
+
+        }
     }
     public void Displaytext_4x4()
     {

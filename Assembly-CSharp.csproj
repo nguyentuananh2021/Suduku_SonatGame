@@ -64,15 +64,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\SaveStepData.cs" />
+    <Compile Include="Assets\BoxSuduku.cs" />
+    <Compile Include="Assets\ContinueGame.cs" />
     <Compile Include="Assets\Scripts\Clock.cs" />
-    <Compile Include="Assets\Scripts\ContinueGame.cs" />
     <Compile Include="Assets\Scripts\DropdownGridMode.cs" />
     <Compile Include="Assets\Scripts\GameEvents.cs" />
     <Compile Include="Assets\Scripts\GameSetting.cs" />
     <Compile Include="Assets\Scripts\GridSquare.cs" />
-    <Compile Include="Assets\Scripts\HintButton.cs" />
     <Compile Include="Assets\Scripts\HintNumber.cs" />
+    <Compile Include="Assets\Scripts\HintNumberButton.cs" />
     <Compile Include="Assets\Scripts\Level.cs" />
     <Compile Include="Assets\Scripts\LineIndicator.cs" />
     <Compile Include="Assets\Scripts\LineNumber.cs" />
@@ -86,12 +86,14 @@
     <Compile Include="Assets\Scripts\PaintSetting.cs" />
     <Compile Include="Assets\Scripts\RubberButton.cs" />
     <Compile Include="Assets\Scripts\SaveData.cs" />
+    <Compile Include="Assets\Scripts\SaveStepData.cs" />
     <Compile Include="Assets\Scripts\SudukuData.cs" />
     <Compile Include="Assets\Scripts\SudukuGenerator.cs" />
     <Compile Include="Assets\Scripts\SudukuGrid.cs" />
     <Compile Include="Assets\Scripts\SudukuJSON.cs" />
-    <Compile Include="Assets\Scripts\Undo.cs" />
+    <Compile Include="Assets\Scripts\TutorialHint.cs" />
     <Compile Include="Assets\Scripts\YouWinPopup.cs" />
+    <None Include="Assets\Resources\SUDUKU_JSON.txt" />
     <Reference Include="UnityEngine.Purchasing">
       <HintPath>C:/Users/Admin/Documents/Suduku_SonatGame/Library/ScriptAssemblies/UnityEngine.Purchasing.dll</HintPath>
     </Reference>

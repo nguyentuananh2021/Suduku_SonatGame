@@ -13,15 +13,15 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
     public bool note_active;
     
     private int number_ = 0;
-    
+    private int square_index_ = -1;
+
     private int correct_number;
     public bool has_default_value;
 
     private bool selected_ = false;
-    private int square_index_ = -1;
+    
 
     private bool has_wrong_value = false;
-    public bool IsSelected() { return selected_; }
 
     //public string GetStringNumberNotes()
     //{
@@ -42,9 +42,10 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
     private void Start()
     {
         DeActivateNumberNode();
-        ActivateNumberNote(DropdownGridMode.Instance.grid_mode);
+        ActivateNumberNote(DropdownGridMode.Instance.GetGridMode());
         Set_grid_layout_note();
     }
+    
     private void ActivateNumberNote(int grid_mode)
     {
         for (int i = 0; i < grid_mode; i++)
@@ -61,7 +62,7 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
     }
     public void Set_grid_layout_note()
     {
-        if(DropdownGridMode.Instance.grid_mode == 4)
+        if(DropdownGridMode.Instance.GetGridMode() == 4)
         {
             grid_number_note.GetComponent<GridLayoutGroup>().constraint = GridLayoutGroup.Constraint.FixedRowCount;
             grid_number_note.GetComponent<GridLayoutGroup>().cellSize = new Vector2(100, 100);
@@ -126,8 +127,8 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
             if (number_notes[value - 1].GetComponent<Text>().text == "" || foce_update)
             {
                 number_notes[value - 1].GetComponent<Text>().text = value.ToString();
-                if(undo == false)
-                    SaveStepData.Instance.SaveJsonStep(square_index_, value, note_active, false);
+                //if (undo == false)
+                //    SaveStepData.Instance.SaveJsonStep(square_index_, value, note_active, false);
             }
             else
             {
@@ -135,7 +136,6 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
             }
                 
         }
-        
         SaveData.Instance.SaveJsonData();
     }
     public void SetGridNotes(List<int> notes)
@@ -214,7 +214,7 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
         GameEvents.OnSquareSelected += OnSquareSelected;
         GameEvents.OnNotesActive += OnNotesActive;
         GameEvents.OnDeleteNumber += OnDeleteNumber;
-        GameEvents.OnHint += OnHint;
+        GameEvents.OnHintNumber += OnHintNumber;
     }
     private void OnDisable()
     {
@@ -223,7 +223,7 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
         GameEvents.OnSquareSelected -= OnSquareSelected;
         GameEvents.OnNotesActive -= OnNotesActive;
         GameEvents.OnDeleteNumber -= OnDeleteNumber;
-        GameEvents.OnHint -= OnHint;
+        GameEvents.OnHintNumber -= OnHintNumber;
     }
 
     public void OnDeleteNumber()
@@ -239,15 +239,21 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
             SaveData.Instance.SaveJsonData();
         }
     }
-    public void OnHint()
+    public void OnHintNumber()
     {
         
-        if (selected_ && !has_default_value && HintNumber.Instance.GetNumberHint()>0 && !note_active )
+        var hint = HintNumber.Instance;
+        if (selected_ && !has_default_value && hint.GetNumberHint() > 0 && !note_active )
         {
             var number = SudukuData.Instance.data.solved_data[square_index_];
            // Debug.Log("index" + square_index_ + "    number:" + number);
-            OnSetNumber(number);
-            HintNumber.Instance.OnClickHint();
+            
+            hint.OnClickHint(square_index_);
+            if(HintNumber.Instance.GetSquareIndexInListNote() == 0 )
+            {
+                OnSetNumber(number);
+            }
+
         }
 
     } 
@@ -266,12 +272,12 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
                 if (item.text == number_.ToString())
                 {
                     item.text = "";
-                    SaveStepData.Instance.list_note_.Add(index);
+                    //SaveStepData.Instance.list_note_.Add(index);
                 }
             }
             
         }
-        SaveStepData.Instance.SaveJsonStep(square_index_, number_, false, true);
+        //SaveStepData.Instance.SaveJsonStep(square_index_, number_, false, true);
     }
 
     public void OnSetNumber(int number)

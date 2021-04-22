@@ -43,9 +43,9 @@ public class SudukuGrid : MonoBehaviour
         {
             Debug.Log("GridSquare is null");
         }
-        if (DropdownGridMode.Instance.grid_mode >= 0)
+        if (DropdownGridMode.Instance.GetGridMode() >= 0)
         {
-            SetGridMode(DropdownGridMode.Instance.grid_mode);
+            SetGridMode(DropdownGridMode.Instance.GetGridMode());
             CreateGrid();
             SetGridNumber(GameSetting.Instance.GetGameMode());
             // SetSquaresColor(LineIndicator.Instance.GetCellDataSolve(SudukuData.Instance.data.unsolved_data_base), cells_data_color);
@@ -74,15 +74,26 @@ public class SudukuGrid : MonoBehaviour
     }
     IEnumerator FadeInSquareNumber()
     {
-        var g_square = ConvertData();
+        var grid_square = ConvertData();
+        yield return new WaitForSeconds(0.3f);
         for (int i = 0; i < rows; i++)
         {
             yield return new WaitForSeconds(.03f);
+
             for (int j = 0; j < columns; j++)
             {
-                g_square[i,j].GetComponentsInChildren<Image>()[1].gameObject.SetActive(false);
+                grid_square[i,j].GetComponentsInChildren<Image>()[1].gameObject.SetActive(false);
                 
-               // g_square[i,j].GetComponentsInChildren<Image>()[0].color = Color.blue;
+                grid_square[i,j].GetComponentInChildren<Image>().color = line_color;
+                if (i > 0)
+                {
+                    grid_square[i - 1, j].GetComponentInChildren<Image>().color = Color.white;
+                }
+                   
+                if (i == rows - 1)
+                {
+                    grid_square[i, j].GetComponentInChildren<Image>().color = Color.white;
+                }
             }
             
         }

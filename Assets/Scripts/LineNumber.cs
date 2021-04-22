@@ -10,7 +10,7 @@ public class LineNumber : MonoBehaviour
     private void Start()
     {
         SetDeActivateAll();
-        SetActivate(DropdownGridMode.Instance.grid_mode);
+        SetActivate(DropdownGridMode.Instance.GetGridMode());
         
     }
     public void SetActivate(int grid_mode)

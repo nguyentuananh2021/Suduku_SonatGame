@@ -1,11 +1,10 @@
-﻿using System;
-using System.IO;
-using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
 public class ContinueGame : MonoBehaviour
 {
-    public TMP_Text text_continue;
+    public Text text_continue;
     public static ContinueGame Instance;
     private void Awake()
     {
@@ -20,7 +19,7 @@ public class ContinueGame : MonoBehaviour
     public void SetGamePlay()
     {
 
-        Dropdown.Instance.SetGridMode(int.Parse(JsonUtility.FromJson<Data>(PlayerPrefs.GetString("json_data")).grid_mode.Split('x')[1]));
+        DropdownGridMode.Instance.SetGridMode(int.Parse(JsonUtility.FromJson<Data>(PlayerPrefs.GetString("json_data")).grid_mode.Split('x')[1]));
         GameSetting.Instance.SetGameMode(SudukuJSON.Instance.GetGameMode());
         
         SceneManager.LoadScene("GameScene");
@@ -29,7 +28,7 @@ public class ContinueGame : MonoBehaviour
 
     private void Display()
     {
-        Debug.Log(PlayerPrefs.GetString("json_data"));
+       // Debug.Log(PlayerPrefs.GetString("json_data"));
         var data = JsonUtility.FromJson<Data>(PlayerPrefs.GetString("json_data"));
         if (PlayerPrefs.GetString("json_data") == "")
         {
