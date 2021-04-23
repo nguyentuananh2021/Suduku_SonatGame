@@ -530,7 +530,9 @@ MonoBehaviour:
   hint_text: {fileID: 0}
   fields: []
   BoxSuduku: {fileID: 0}
+  squareIndex: 0
   number_hint: 0
+  tutorial_mode: 
 --- !u!114 &167584578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -679,8 +681,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -238.4, y: 112.84}
-  m_SizeDelta: {x: 388.30774, y: 129.0751}
+  m_AnchoredPosition: {x: -238.4, y: 88.688995}
+  m_SizeDelta: {x: 388.30774, y: 177.37686}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &190296000
 MonoBehaviour:
@@ -921,8 +923,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 112.6}
-  m_SizeDelta: {x: 574.3305, y: 128.58577}
+  m_AnchoredPosition: {x: 0, y: 88.44699}
+  m_SizeDelta: {x: 574.3305, y: 176.8925}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &257792568
 MonoBehaviour:
@@ -1036,7 +1038,9 @@ MonoBehaviour:
   - {fileID: 421855384}
   BoxSuduku: {fileID: 1353093401224733888, guid: 94586b861c37dbb44a7600700c3b98f9,
     type: 3}
+  squareIndex: 0
   number_hint: 0
+  tutorial_mode: 
 --- !u!114 &264900832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1737,8 +1741,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 265.1, y: 113.32}
-  m_SizeDelta: {x: 530.10345, y: 129.06232}
+  m_AnchoredPosition: {x: 265.1, y: 88.925995}
+  m_SizeDelta: {x: 530.10345, y: 177.85123}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &370528818
 CanvasRenderer:
@@ -8392,8 +8396,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 12.198, y: 224.28}
-  m_SizeDelta: {x: 1270.7518, y: 93.7}
+  m_AnchoredPosition: {x: 10, y: 224.28}
+  m_SizeDelta: {x: 1336.3949, y: 93.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1701606649
 MonoBehaviour:
@@ -8775,7 +8779,9 @@ MonoBehaviour:
   hint_text: {fileID: 0}
   fields: []
   BoxSuduku: {fileID: 0}
+  squareIndex: 0
   number_hint: 0
+  tutorial_mode: 
 --- !u!114 &1803359416
 MonoBehaviour:
   m_ObjectHideFlags: 0
