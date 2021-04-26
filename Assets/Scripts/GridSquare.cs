@@ -239,6 +239,7 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
             SaveData.Instance.SaveJsonData();
         }
     }
+
     public void OnHintNumber()
     {
         
@@ -249,7 +250,7 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
            // Debug.Log("index" + square_index_ + "    number:" + number);
             
             hint.OnClickHint(square_index_);
-            if(HintNumber.Instance.GetSquareIndexInListNote() == 0 )
+            if(HintNumber.Instance.square_index_box == 0 )
             {
                 OnSetNumber(number);
             }
@@ -295,22 +296,19 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
                 else 
                 {
                     SetNoteSingleNumberValue(number);
-                    
+                    UndoNumber.Instance.AddUndoNumber(square_index_, number, true);
                 }  
             }
             else if(note_active == false)
             {
                 SetNoteNumberValue(0);
                 SetNumber(number);
-                
-                
                 if (correct_number != number_)
                 {
                     has_wrong_value = true;
                     var colors = this.colors;
                     colors.normalColor = Color.red;
                     this.colors = colors;
-
                     GameEvents.OnWrongNumberMethod();
                 }
                 else
@@ -319,9 +317,10 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
                     var colors = this.colors;
                     colors.normalColor = Color.white;
                     this.colors = colors;
+                    UndoNumber.Instance.AddUndoNumber(square_index_, number);
                     SetNumberData(number, square_index_);
                     DeleteNumberNotes(square_index_);
-                    
+                    UndoNumber.Instance.AddUndoNumber(square_index_, number);
                     SaveData.Instance.SaveJsonData();
                 }
             }

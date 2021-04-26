@@ -92,6 +92,7 @@
     <Compile Include="Assets\Scripts\SudukuGrid.cs" />
     <Compile Include="Assets\Scripts\SudukuJSON.cs" />
     <Compile Include="Assets\Scripts\TutorialHint.cs" />
+    <Compile Include="Assets\Scripts\UndoNumber.cs" />
     <Compile Include="Assets\Scripts\YouWinPopup.cs" />
     <None Include="Assets\Resources\SUDUKU_JSON.txt" />
     <Reference Include="UnityEngine.Purchasing">

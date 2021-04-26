@@ -71,7 +71,8 @@ public class GameEvents : MonoBehaviour
         {
             OnDeleteNumber();
         }
-    } 
+    }  
+
     public delegate void HintNumber();
     public static event HintNumber OnHintNumber;
     public static void OnHintNumberMethod()

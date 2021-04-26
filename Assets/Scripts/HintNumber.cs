@@ -12,8 +12,9 @@ public class HintNumber : MonoBehaviour
     public List<GameObject> fields;
     public GameObject BoxSuduku;
     public int squareIndex;
-
-
+    public Color higlight_area;
+    public List<Text> place_holders;
+    public Image suduku_bg;
     public struct Note
     {
         public int value;
@@ -40,7 +41,6 @@ public class HintNumber : MonoBehaviour
     }
     public void Start()
     {
-        
         SetField();
         SetListNoteValue(DropdownGridMode.Instance.GetGridMode(), ListCrossHatching);
         SetListNoteValue(DropdownGridMode.Instance.GetGridMode(), ListCellOnly);
@@ -80,8 +80,8 @@ public class HintNumber : MonoBehaviour
         return 0;
     }
 
-    int square_index_box;
-    int square_value_box;
+    public int square_index_box;
+    public int square_value_box;
     private int GetSquareValueInListNote()
     {
         int i = 0;
@@ -127,8 +127,8 @@ public class HintNumber : MonoBehaviour
     {
         SetListNoteValue(DropdownGridMode.Instance.GetGridMode(), ListCrossHatching);
         SetListNoteValue(DropdownGridMode.Instance.GetGridMode(), ListCellOnly);
-        CheckLine(square_index);
-        CheckBoxSquare(square_index);
+        Check_LastDigit(square_index);
+        Check_CrossHatchingBox(square_index);
         int check = 0;
         foreach (var item in ListCellOnly)
         {
@@ -141,15 +141,12 @@ public class HintNumber : MonoBehaviour
         {
             SetIndexValue(square_index, ListCellOnly);
             tutorial_mode = "Last Digit";
-            Debug.Log("Last Digit");
         }
         else
         {
             SetIndexValue(square_index, ListCrossHatching);
             tutorial_mode = "Cross-Hatching(Box)";
-            Debug.Log("CrossHatching");
         }
-
     }
     public void OnClickHint(int square_index)
     {
@@ -173,26 +170,59 @@ public class HintNumber : MonoBehaviour
         }
     }
 
-    private void LastDigit_ObserveThisNumber()
+    private void LastDigit_ObserveThisNumber(bool isBack = false)
     {
         SetAllSquareColor(Color.white);
         SetSquareColor(Color.gray);
         SudukuGrid.Instance.grid_squares_[squareIndex].GetComponentsInChildren<Image>(true)[0].color = Color.white;
-        var box = Instantiate(BoxSuduku, SudukuGrid.Instance.gameObject.transform);
-        box.GetComponent<Transform>().transform.position = SudukuGrid.Instance.grid_squares_[squareIndex].GetComponent<GridSquare>().transform.position;
-        box.GetComponent<Image>().rectTransform.sizeDelta = SizeDelta(squareIndex, true);
+        SudukuGrid.Instance.grid_squares_[squareIndex].GetComponentsInChildren<Image>(true)[1].color = Color.white;
+        if (isBack == false)
+        {
+            var box = Instantiate(BoxSuduku, SudukuGrid.Instance.gameObject.transform);
+            box.GetComponent<Transform>().transform.position = SudukuGrid.Instance.grid_squares_[squareIndex].GetComponent<GridSquare>().transform.position;
+            box.GetComponent<Image>().rectTransform.sizeDelta = SizeDelta(squareIndex, true);
+        }
     }
-    private void LastDigit_HiglinghtArea()
+    private void LastDigit_HiglightArea()
     {
-
+        var line_hor = LineIndicator.Instance.GetHorizontalLine(squareIndex);
+        var line_ver = LineIndicator.Instance.GetVerticalLine(squareIndex);
+        var line_squa = LineIndicator.Instance.GetSquare(squareIndex);
+        StartCoroutine(SetLineLight(line_squa, 0.05f, true));
+        StartCoroutine(SetLineLight(line_hor, 0.05f, true));
+        StartCoroutine(SetLineLight(line_ver, 0.05f, true));
     }
-     private void LastDigit_SetNumber()
+    private void LastDigit_SetNumber()
     {
+        var square = SudukuGrid.Instance.grid_squares_[square_index_box].GetComponent<GridSquare>();
+        square.GetComponentsInChildren<Image>(true)[0].color = Color.white;
 
+        square.GetComponentsInChildren<Image>()[1].GetComponentInChildren<Text>(true).text = "";
+        square.GetComponentsInChildren<Image>()[1].GetComponentInChildren<Text>(true).gameObject.SetActive(true);
+
+        square.GetComponentsInChildren<Image>()[1].GetComponentInChildren<Text>(true).text = square_value_box.ToString();
+        square.GetComponentsInChildren<Image>()[1].GetComponentInChildren<Text>(true).fontSize = 200;
+
+        square.GetComponentsInChildren<Image>(true)[1].color = Color.green;
     }
-     private void LastDigit_Apply()
+    private void LastDigit_Apply()
     {
-
+        Destroy(GameObject.Find("Box(Clone)"));
+        SetField();
+        BackHiglightArea();
+        SetSquareColor(Color.white);
+        foreach (var item in SudukuGrid.Instance.grid_squares_)
+        {
+            item.GetComponentsInChildren<Image>(true)[1].gameObject.SetActive(false);
+        }
+        
+        number_hint--;
+        hint_text.text = number_hint.ToString();
+        tutorial_popup.SetActive(false);
+        SudukuGrid.Instance.grid_squares_[square_index_box].GetComponent<GridSquare>().OnSetNumber(square_value_box);
+        SudukuGrid.Instance.grid_squares_[square_index_box].GetComponent<GridSquare>().SetNumberData(square_value_box, square_index_box); 
+        square_index_box = 0;
+        square_value_box = 0;
     }
 
     private void CrossHatchingBox_ObserveThisNumber()
@@ -208,7 +238,7 @@ public class HintNumber : MonoBehaviour
         SudukuGrid.Instance.SetSquaresColor(GetCellSameNumber_CrossHatchingBox().ToArray(), Color.green);
         
     }
-    private void CrossHatchingBox_HiglinghtArea()
+    private void CrossHatchingBox_HiglightArea()
     {
         
         foreach (var sq_index in arr_index_squares)
@@ -231,39 +261,34 @@ public class HintNumber : MonoBehaviour
             }
 
         }
+        var pos = PositionCenter(arr_index_squares[0], arr_index_squares[arr_index_squares.Length - 1]);
+        var box = Instantiate(BoxSuduku, SudukuGrid.Instance.gameObject.transform);
+        //SetLineDefaul(arr_index_squares);
+        box.GetComponent<Transform>().transform.position = pos;
+        box.GetComponent<Image>().rectTransform.sizeDelta = SizeDelta(arr_index_squares[0]);
+        StartCoroutine(SetLineLight(arr_index_squares, .0f));
     }
 
     private void CrossHatchingBox_SetNumber()
     {
         IEnumerator set_number(float time)
         {
-            var pos = PositionCenter(arr_index_squares[0], arr_index_squares[arr_index_squares.Length - 1]);
-            var box = Instantiate(BoxSuduku, SudukuGrid.Instance.gameObject.transform);
-            //SetLineDefaul(arr_index_squares);
-            box.GetComponent<Transform>().transform.position = pos;
-            box.GetComponent<Image>().rectTransform.sizeDelta = SizeDelta(arr_index_squares[0]);
-            StartCoroutine(SetLineLight(arr_index_squares, 0));
+            var square = SudukuGrid.Instance.grid_squares_[square_index_box].GetComponent<GridSquare>();
+            
             //SetBoxColor(SudukuData.Instance.data.unsolved_data, Color.gray);
             //SetBoxColor(arr_index_squares,Color.white);
-            SudukuGrid.Instance.grid_squares_[square_index_box].GetComponentsInChildren<Image>(true)[0].color = Color.white;
-            yield return new WaitForSeconds(time + 1);
-            // Debug.Log(box.GetComponent<RectTransform>().position.z);
+            
+            yield return new WaitForSeconds(time);
+            square.GetComponentsInChildren<Image>(true)[0].color = Color.white;
 
-
-            SudukuGrid.Instance.grid_squares_[square_index_box].GetComponentsInChildren<Image>(true)[1].gameObject.SetActive(true);
-            SudukuGrid.Instance.grid_squares_[square_index_box].GetComponentsInChildren<Image>()[1].GetComponentInChildren<Text>(true).text = "";
-
-            var square = SudukuGrid.Instance.grid_squares_[square_index_box].GetComponent<GridSquare>();
+            square.GetComponentsInChildren<Image>()[1].GetComponentInChildren<Text>(true).text = "";
             square.GetComponentsInChildren<Image>()[1].GetComponentInChildren<Text>(true).gameObject.SetActive(true);
 
             yield return new WaitForSeconds(time);
             square.GetComponentsInChildren<Image>()[1].GetComponentInChildren<Text>(true).text = square_value_box.ToString();
             square.GetComponentsInChildren<Image>()[1].GetComponentInChildren<Text>(true).fontSize = 200;
-            yield return new WaitForSeconds(time);
-            square.GetComponentsInChildren<Image>()[1].GetComponentInChildren<Text>(true).fontSize = 150;
-            yield return new WaitForSeconds(time);
-            square.GetComponentsInChildren<Image>()[1].GetComponentInChildren<Text>(true).fontSize = 200;
-            SudukuGrid.Instance.grid_squares_[square_index_box].GetComponentsInChildren<Image>(true)[1].color = Color.green;
+
+            square.GetComponentsInChildren<Image>(true)[1].color = Color.green;
             fields[2].GetComponentInChildren<Button>(true).gameObject.SetActive(true);
         }
 
@@ -275,14 +300,13 @@ public class HintNumber : MonoBehaviour
     {
         Destroy(GameObject.Find("Box(Clone)"));
         SetField();
-        BackHiglinghtArea();
+        BackHiglightArea();
         SetSquareColor(Color.white);
         SudukuGrid.Instance.grid_squares_[square_index_box].GetComponentsInChildren<Image>(true)[1].gameObject.SetActive(false);
         number_hint--;
         hint_text.text = number_hint.ToString();
         tutorial_popup.SetActive(false);
         SudukuGrid.Instance.grid_squares_[square_index_box].GetComponent<GridSquare>().SetNumber(square_value_box);
-        SudukuGrid.Instance.grid_squares_[square_index_box].GetComponent<GridSquare>().Select();
         SudukuGrid.Instance.grid_squares_[square_index_box].GetComponent<GridSquare>().OnSetNumber(square_value_box);
         SudukuGrid.Instance.grid_squares_[square_index_box].GetComponent<GridSquare>().SetNumberData(square_value_box, square_index_box);
         square_index_box = 0;
@@ -295,33 +319,38 @@ public class HintNumber : MonoBehaviour
     public void ObserveThisNumber()
     {
         tutorial_popup.gameObject.SetActive(true);
+        suduku_bg.color = Color.gray;
         switch (tutorial_mode)
         {
             case "Last Digit":
                 LastDigit_ObserveThisNumber();
+                place_holders[0].text = "Last Digit";
+                place_holders[1].text = "Observe this cell";
+
                 break;
             case "Cross-Hatching(Box)":
                 CrossHatchingBox_ObserveThisNumber();
+                place_holders[0].text = "Cross-Hatching(Box)";
+                place_holders[1].text = "Observe number " + "\"" + square_value_box + "\"";
                 break;
-   
         }
         
     }
-    //step 2 HiglinghtArea
-    public void HiglinghtArea()
+    //step 2 HiglightArea
+    public void HiglightArea()
     {
         switch (tutorial_mode)
         {
             case "Last Digit":
-                LastDigit_HiglinghtArea();
+                LastDigit_HiglightArea();
+                place_holders[2].text = "In Suduku, the numbers 1-9 cannot appear twice in the same row, column, or box.\nAs shown in the figuer, the numbers that appear in the highlight area cannot appear in this cell";
                 break;
             case "Cross-Hatching(Box)":
-                CrossHatchingBox_HiglinghtArea();
+                CrossHatchingBox_HiglightArea();
+                place_holders[2].text = "In Suduku, the numbers 1-9 cannot appear twice in the same row, column, or box.\nAs shown, observe number \""+square_value_box+"\" and its area;\nnumber "+"\""+square_value_box+"\" cannot appear in the highlight area";
                 break;
         }
     }
-
-
     // step 3 SetNumber
     public void SetNumber()
     {
@@ -329,15 +358,18 @@ public class HintNumber : MonoBehaviour
         {
             case "Last Digit":
                 LastDigit_SetNumber();
+                place_holders[3].text = "The row, column, and box of this cell contain all numbers except number \""+square_value_box+"\",\nSo this cell can only be filled with number \""+ square_value_box+"\"";
                 break;
             case "Cross-Hatching(Box)":
                 CrossHatchingBox_SetNumber();
+                place_holders[3].text = "As shown, observe this cell and its area; This cell is the only one in this box that can contain number \""+square_value_box+"\";\nSo this cell should be filled with number \""+square_value_box+"\".";
                 break;
         }
     }
     //step 4 ApplySetNumber
     public void ApplySetNumber()
     {
+        
         switch (tutorial_mode)
         {
             case "Last Digit":
@@ -347,19 +379,19 @@ public class HintNumber : MonoBehaviour
                 CrossHatchingBox_Apply();
                 break;
         }
+        suduku_bg.color = Color.white;
     }
 
-
-    //Back step 2 HiglinghtArea
-    public void BackHiglinghtArea()
+    //Back step 2 HiglightArea
+    public void BackHiglightArea()
     {
         switch (tutorial_mode)
         {
             case "Last Digit":
-                
+                Back_LastDigit_HiglightArea();
                 break;
             case "Cross-Hatching(Box)":
-                Back_CrossHatchingBox_HiglinghtArea();
+                Back_CrossHatchingBox_HiglightArea();
                 break;
         }
     }
@@ -370,13 +402,14 @@ public class HintNumber : MonoBehaviour
         switch (tutorial_mode)
         {
             case "Last Digit":
-                
+                Back_LastDigit_SetNumber();
                 break;
             case "Cross-Hatching(Box)":
                 Back_CrossHatchingBox_SetNumber();
                 break;
         }
     }
+ 
 
 
     private List<int> GetCellSameNumber_CrossHatchingBox()
@@ -472,22 +505,30 @@ public class HintNumber : MonoBehaviour
         return size_box;
     }
 
-    
-  
-    public void Back_CrossHatchingBox_SetNumber()
+    private void Back_LastDigit_SetNumber()
     {
-        //SetBoxColor(SudukuData.Instance.data.unsolved_data, Color.white);
-        //SetBoxColor(SudukuData.Instance.data.unsolved_data, Color.white);
-        Destroy(GameObject.Find("Box(Clone)"));
+        LastDigit_ObserveThisNumber(true);
+        LastDigit_HiglightArea();
+        SudukuGrid.Instance.grid_squares_[squareIndex].GetComponent<GridSquare>().GetComponentsInChildren<Image>()[1].GetComponentInChildren<Text>(true).gameObject.SetActive(false);
+    }
+
+    private void Back_LastDigit_HiglightArea()
+    {
+        LastDigit_ObserveThisNumber(true);
+    }
+    private void Back_CrossHatchingBox_SetNumber()
+    {
+        
         var square = SudukuGrid.Instance.grid_squares_[square_index_box].GetComponent<GridSquare>();
         square.GetComponentsInChildren<Image>()[1].GetComponentInChildren<Text>(true).gameObject.SetActive(false);
         square.GetComponentsInChildren<Image>(true)[1].color = Color.white;
         square.GetComponentsInChildren<Image>(true)[1].gameObject.SetActive(false);
-        Back_CrossHatchingBox_HiglinghtArea();
-        CrossHatchingBox_HiglinghtArea();
+        Back_CrossHatchingBox_HiglightArea();
+        CrossHatchingBox_HiglightArea();
     }
-    public void Back_CrossHatchingBox_HiglinghtArea()
+    private void Back_CrossHatchingBox_HiglightArea()
     {
+        Destroy(GameObject.Find("Box(Clone)"));
         foreach (var sq_index in arr_index_squares)
         {
             var line_hor = LineIndicator.Instance.GetHorizontalLine(sq_index);
@@ -514,6 +555,7 @@ public class HintNumber : MonoBehaviour
         foreach (var square in SudukuGrid.Instance.grid_squares_)
         {
             square.GetComponentInChildren<Image>().color = color;
+            square.GetComponentsInChildren<Image>(true)[1].color = color;
         }
     }
 
@@ -531,12 +573,21 @@ public class HintNumber : MonoBehaviour
             }
         }
     }
-    IEnumerator SetLineLight(int[] line, float time)
+    IEnumerator SetLineLight(int[] line, float time, bool is_lastDigit = false)
     {
         foreach (var item in line)
         {
             yield return new WaitForSeconds(time);
-            SudukuGrid.Instance.grid_squares_[item].GetComponentInChildren<Image>().color = Color.white;
+            if (item != square_index_box)
+            {
+                SudukuGrid.Instance.grid_squares_[item].GetComponentInChildren<Image>().color = higlight_area;
+                SudukuGrid.Instance.grid_squares_[item].GetComponentsInChildren<Image>(true)[1].color = higlight_area;
+            }
+            else
+            {
+                SudukuGrid.Instance.grid_squares_[item].GetComponentInChildren<Image>().color = Color.white;
+                SudukuGrid.Instance.grid_squares_[item].GetComponentsInChildren<Image>(true)[1].color = Color.white;
+            }
             if (SudukuData.Instance.data.unsolved_data[item] == square_value_box)
             {
                 SudukuGrid.Instance.grid_squares_[item].GetComponentInChildren<Image>().color = Color.green;
@@ -547,7 +598,7 @@ public class HintNumber : MonoBehaviour
 
                 //Debug.Log(SudukuGrid.Instance.grid_squares_[item].GetComponentsInChildren<Image>(true)[1].name);
                 SudukuGrid.Instance.grid_squares_[item].GetComponentsInChildren<Image>(true)[1].gameObject.SetActive(true);
-                if (item != square_index_box)
+                if (item != square_index_box && is_lastDigit == false)
                 {
                     SudukuGrid.Instance.grid_squares_[item].GetComponentsInChildren<Image>(true)[1].GetComponentInChildren<Text>(true).gameObject.SetActive(true);
                 }
@@ -567,13 +618,8 @@ public class HintNumber : MonoBehaviour
         }
     }
    
-    public void CheckBoxSquare(int square_index_)
+    public void Check_CrossHatchingBox(int square_index_)
     {
-        //for (int i = 0; i < arr_index_squares.Length; i++)
-        //{
-        //    if()
-        //}
-
         var data = SudukuData.Instance.data;
         arr_index_squares = LineIndicator.Instance.GetSquare(square_index_);
         for (int i = 0; i < arr_index_squares.Length; i++)
@@ -607,7 +653,7 @@ public class HintNumber : MonoBehaviour
     }
 //---------------------------------------------------
 //---------------------------------------------------
-    public void CheckLine(int square_index_)
+    public void Check_LastDigit(int square_index_)
     {
         var arr_index_hor = LineIndicator.Instance.GetHorizontalLine(square_index_);
         var arr_index_ver = LineIndicator.Instance.GetVerticalLine(square_index_);
