@@ -166,6 +166,7 @@ public class HintNumber : MonoBehaviour
         }
         else
         {
+            Clock.Instance.OnPauseGame(true);
             ObserveThisNumber();
         }
     }
@@ -325,13 +326,13 @@ public class HintNumber : MonoBehaviour
             case "Last Digit":
                 LastDigit_ObserveThisNumber();
                 place_holders[0].text = "Last Digit";
-                place_holders[1].text = "Observe this cell";
+                place_holders[1].text = "Observe <color=#0099FF>this cell</color>";
 
                 break;
             case "Cross-Hatching(Box)":
                 CrossHatchingBox_ObserveThisNumber();
                 place_holders[0].text = "Cross-Hatching(Box)";
-                place_holders[1].text = "Observe number " + "\"" + square_value_box + "\"";
+                place_holders[1].text = "Observe <color=#0099FF>number " + "\"" + square_value_box + "\"</color>";
                 break;
         }
         
@@ -343,11 +344,11 @@ public class HintNumber : MonoBehaviour
         {
             case "Last Digit":
                 LastDigit_HiglightArea();
-                place_holders[2].text = "In Suduku, the numbers 1-9 cannot appear twice in the same row, column, or box.\nAs shown in the figuer, the numbers that appear in the highlight area cannot appear in this cell";
+                place_holders[2].text = "In Suduku, the numbers 1-9 cannot appear twice in the same row, column, or box.\nAs shown in the figuer, the numbers that appear in the <color=#0099FF>highlight area</color> cannot appear in this cell";
                 break;
             case "Cross-Hatching(Box)":
                 CrossHatchingBox_HiglightArea();
-                place_holders[2].text = "In Suduku, the numbers 1-9 cannot appear twice in the same row, column, or box.\nAs shown, observe number \""+square_value_box+"\" and its area;\nnumber "+"\""+square_value_box+"\" cannot appear in the highlight area";
+                place_holders[2].text = "In Suduku, the numbers 1-9 cannot appear twice in the same row, column, or box.\nAs shown, observe <color=#0099FF>number \"" + square_value_box+ "\" </color>and its area;\n<color=#0099FF>number " + "\""+square_value_box+ "\"</color> cannot appear in the <color=#0099FF>highlight area</color>";
                 break;
         }
     }
@@ -358,18 +359,17 @@ public class HintNumber : MonoBehaviour
         {
             case "Last Digit":
                 LastDigit_SetNumber();
-                place_holders[3].text = "The row, column, and box of this cell contain all numbers except number \""+square_value_box+"\",\nSo this cell can only be filled with number \""+ square_value_box+"\"";
+                place_holders[3].text = "The row, column, and box of this cell contain all numbers except <color=#0099FF>number \"" + square_value_box+ "\"</color>,\nSo this cell can only be filled with <color=#0099FF>number \"" + square_value_box+"\"</color>";
                 break;
             case "Cross-Hatching(Box)":
                 CrossHatchingBox_SetNumber();
-                place_holders[3].text = "As shown, observe this cell and its area; This cell is the only one in this box that can contain number \""+square_value_box+"\";\nSo this cell should be filled with number \""+square_value_box+"\".";
+                place_holders[3].text = "As shown, observe this cell and its area; This cell is the only one in <color=#0099FF>this box</color> that can contain <color=#0099FF>number \"" + square_value_box+ "\"</color>;\nSo this cell should be filled with <color=#0099FF>number \"" + square_value_box+"\"</color>.";
                 break;
         }
     }
     //step 4 ApplySetNumber
     public void ApplySetNumber()
     {
-        
         switch (tutorial_mode)
         {
             case "Last Digit":
@@ -380,6 +380,7 @@ public class HintNumber : MonoBehaviour
                 break;
         }
         suduku_bg.color = Color.white;
+        Clock.Instance.OnPauseGame(false);
     }
 
     //Back step 2 HiglightArea

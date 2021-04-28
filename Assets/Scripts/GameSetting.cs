@@ -24,6 +24,7 @@ public class GameSetting : MonoBehaviour
         else
             Destroy(this);
     }
+    
     private EGameMode _GameMode;
     private void Start()
     {

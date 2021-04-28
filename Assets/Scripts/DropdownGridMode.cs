@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class DropdownGridMode : MonoBehaviour
 {
     public static DropdownGridMode Instance;
-    private int grid_mode = 9;
+    private int grid_mode = 4;
 
     void Awake()
     {
