@@ -216,6 +216,49 @@ public class LineIndicator : MonoBehaviour
     {
         return line_data_falt;
     }
+    public List<int> GetNumberCanMakeNote(int square_index)
+    {
+        List<int> numbers = new List<int>();
+        var unsolved_data = SudukuData.Instance.data.unsolved_data;
+        if (unsolved_data[square_index] == 0)
+        {
+            
+            int[] row_arr = GetHorizontalLine(square_index);
+            int[] col_arr = GetVerticalLine(square_index);
+            int[] squ_arr = GetSquare(square_index);
+
+
+            for (int number = 1; number <= squ_arr.Length; number++)
+            {
+                //Debug.Log("---------------------number = " + number);
+                for (int index = 0; index < squ_arr.Length; index++)
+                {
+                    // Debug.Log("row = " + unsolved_data[row_arr[index]] + "col = " + unsolved_data[col_arr[index]] + "squa = " + unsolved_data[squ_arr[index]]);
+                    if (IsOnly(number, squ_arr, col_arr, row_arr, unsolved_data))
+                    {
+                        if (numbers.Find(x => x == number) == 0)
+                        {
+                            numbers.Add(number);
+                           // Debug.Log(numbers[numbers.Count - 1]);
+                        }
+                    }
+                }
+            }
+        }
+     
+        return numbers;
+    }
+    private bool IsOnly(int value_, int[] arr_squ, int[] arr_hor, int[] arr_ver, int[] data_unsovlved)
+    {
+        for (int i = 0; i < arr_squ.Length; i++)
+        {
+            if (data_unsovlved[arr_squ[i]] == value_ || data_unsovlved[arr_hor[i]] == value_ || data_unsovlved[arr_ver[i]] == value_)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
     public List<int> GetCellNotes(int value, int square_index, int[] unsolved_data)
     {
         int[] row_arr = GetHorizontalLine(square_index);

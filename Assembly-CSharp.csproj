@@ -64,9 +64,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\ContinueGame.cs" />
-    <Compile Include="Assets\QuestionScript.cs" />
     <Compile Include="Assets\Scripts\Clock.cs" />
+    <Compile Include="Assets\Scripts\ContinueGame.cs" />
     <Compile Include="Assets\Scripts\DropdownGridMode.cs" />
     <Compile Include="Assets\Scripts\GameEvents.cs" />
     <Compile Include="Assets\Scripts\GameSetting.cs" />
@@ -84,6 +83,7 @@
     <Compile Include="Assets\Scripts\NoteButton.cs" />
     <Compile Include="Assets\Scripts\NumberButton.cs" />
     <Compile Include="Assets\Scripts\PaintSetting.cs" />
+    <Compile Include="Assets\Scripts\QuestionScript.cs" />
     <Compile Include="Assets\Scripts\RubberButton.cs" />
     <Compile Include="Assets\Scripts\SaveData.cs" />
     <Compile Include="Assets\Scripts\SaveStepData.cs" />
@@ -91,10 +91,9 @@
     <Compile Include="Assets\Scripts\SudukuGenerator.cs" />
     <Compile Include="Assets\Scripts\SudukuGrid.cs" />
     <Compile Include="Assets\Scripts\SudukuJSON.cs" />
+    <Compile Include="Assets\Scripts\TutorialGamePlay.cs" />
     <Compile Include="Assets\Scripts\UndoNumber.cs" />
     <Compile Include="Assets\Scripts\YouWinPopup.cs" />
-    <Compile Include="Assets\TutorialGamePlay.cs" />
-    <None Include="Assets\Resources\SUDUKU_JSON.txt" />
     <Reference Include="UnityEngine.Purchasing">
       <HintPath>C:/Users/Admin/Documents/Suduku_SonatGame/Library/ScriptAssemblies/UnityEngine.Purchasing.dll</HintPath>
     </Reference>

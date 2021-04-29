@@ -32,6 +32,7 @@ TextureImporter:
     21300054: YouWin
     21300056: statistics
     21300058: Suduku
+    21300060: Suduku_0
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -346,8 +347,8 @@ TextureImporter:
       name: YouWin
       rect:
         serializedVersion: 2
-        x: 938
-        y: 1263
+        x: 127
+        y: 1734
         width: 560
         height: 94
       alignment: 0
@@ -378,6 +379,26 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 2b598b60337b2ca49973e8f7b80bcf62
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Suduku_0
+      rect:
+        serializedVersion: 2
+        x: 897
+        y: 1214
+        width: 443
+        height: 206
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c901490709225f479cc08dd27d77901
       vertices: []
       indices: 
       edges: []

@@ -15,6 +15,7 @@ public class HintNumber : MonoBehaviour
     public Color higlight_area;
     public List<Text> place_holders;
     public Image suduku_bg;
+    private Color color_suduku_bg;
     public struct Note
     {
         public int value;
@@ -42,8 +43,7 @@ public class HintNumber : MonoBehaviour
     public void Start()
     {
         SetField();
-        SetListNoteValue(DropdownGridMode.Instance.GetGridMode(), ListCrossHatching);
-        SetListNoteValue(DropdownGridMode.Instance.GetGridMode(), ListCellOnly);
+       
         if (PlayerPrefs.GetString("json_data") != "")
         {
             number_hint = JsonUtility.FromJson<Data>(PlayerPrefs.GetString("json_data")).hint_;
@@ -112,8 +112,8 @@ public class HintNumber : MonoBehaviour
         }
         if(value == 0)
         {
-            square_index_box = GetSquareIndexInListNote();
-            square_value_box = GetSquareValueInListNote();
+            square_index_box = 0;
+            square_value_box = 0;
             
         }
         else
@@ -221,7 +221,6 @@ public class HintNumber : MonoBehaviour
         hint_text.text = number_hint.ToString();
         tutorial_popup.SetActive(false);
         SudukuGrid.Instance.grid_squares_[square_index_box].GetComponent<GridSquare>().OnSetNumber(square_value_box);
-        SudukuGrid.Instance.grid_squares_[square_index_box].GetComponent<GridSquare>().SetNumberData(square_value_box, square_index_box); 
         square_index_box = 0;
         square_value_box = 0;
     }
@@ -262,11 +261,7 @@ public class HintNumber : MonoBehaviour
             }
 
         }
-        var pos = PositionCenter(arr_index_squares[0], arr_index_squares[arr_index_squares.Length - 1]);
-        var box = Instantiate(BoxSuduku, SudukuGrid.Instance.gameObject.transform);
-        //SetLineDefaul(arr_index_squares);
-        box.GetComponent<Transform>().transform.position = pos;
-        box.GetComponent<Image>().rectTransform.sizeDelta = SizeDelta(arr_index_squares[0]);
+        
         StartCoroutine(SetLineLight(arr_index_squares, .0f));
     }
 
@@ -274,12 +269,18 @@ public class HintNumber : MonoBehaviour
     {
         IEnumerator set_number(float time)
         {
+            var pos = PositionCenter(arr_index_squares[0], arr_index_squares[arr_index_squares.Length - 1]);
+            var box = Instantiate(BoxSuduku, SudukuGrid.Instance.gameObject.transform);
+            //SetLineDefaul(arr_index_squares);
+            box.GetComponent<Transform>().transform.position = pos;
+            box.GetComponent<Image>().rectTransform.sizeDelta = SizeDelta(arr_index_squares[0]);
+            fields[2].GetComponentInChildren<Button>().gameObject.SetActive(false);
             var square = SudukuGrid.Instance.grid_squares_[square_index_box].GetComponent<GridSquare>();
             
             //SetBoxColor(SudukuData.Instance.data.unsolved_data, Color.gray);
             //SetBoxColor(arr_index_squares,Color.white);
-            
-            yield return new WaitForSeconds(time);
+
+            yield return new WaitForSeconds(time+1);
             square.GetComponentsInChildren<Image>(true)[0].color = Color.white;
 
             square.GetComponentsInChildren<Image>()[1].GetComponentInChildren<Text>(true).text = "";
@@ -293,8 +294,7 @@ public class HintNumber : MonoBehaviour
             fields[2].GetComponentInChildren<Button>(true).gameObject.SetActive(true);
         }
 
-
-        fields[2].GetComponentInChildren<Button>().gameObject.SetActive(false);
+        
         StartCoroutine(set_number(0.1f));
     } 
     private void CrossHatchingBox_Apply()
@@ -307,19 +307,17 @@ public class HintNumber : MonoBehaviour
         number_hint--;
         hint_text.text = number_hint.ToString();
         tutorial_popup.SetActive(false);
-        SudukuGrid.Instance.grid_squares_[square_index_box].GetComponent<GridSquare>().SetNumber(square_value_box);
+        //SudukuGrid.Instance.grid_squares_[square_index_box].GetComponent<GridSquare>().SetNumber(square_value_box);
         SudukuGrid.Instance.grid_squares_[square_index_box].GetComponent<GridSquare>().OnSetNumber(square_value_box);
-        SudukuGrid.Instance.grid_squares_[square_index_box].GetComponent<GridSquare>().SetNumberData(square_value_box, square_index_box);
         square_index_box = 0;
         square_value_box = 0;
     }
-
-
 
     //step 1 //ObserveThisNumber
     public void ObserveThisNumber()
     {
         tutorial_popup.gameObject.SetActive(true);
+        color_suduku_bg = suduku_bg.color;
         suduku_bg.color = Color.gray;
         switch (tutorial_mode)
         {
@@ -379,7 +377,22 @@ public class HintNumber : MonoBehaviour
                 CrossHatchingBox_Apply();
                 break;
         }
-        suduku_bg.color = Color.white;
+        //suduku_bg.color = color_suduku_bg;
+        var mode_ = PaintSetting.Instance.mode;
+        switch (mode_)
+        {
+            case 0:
+                PaintSetting.Instance.OnWhiteLight();
+                break;
+            case 1:
+                PaintSetting.Instance.OnGoldenLight();
+                break;
+            case 2:
+                PaintSetting.Instance.OnDarkLight();
+                break;
+
+        }
+        
         Clock.Instance.OnPauseGame(false);
     }
 

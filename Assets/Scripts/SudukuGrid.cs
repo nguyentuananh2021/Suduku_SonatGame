@@ -280,13 +280,15 @@ public class SudukuGrid : MonoBehaviour
     }
     public void OnSquareSelected(int square_index)
     {
-        var cells_data_unsolve = LineIndicator.Instance.GetCellDataSolve(SudukuData.Instance.data.unsolved_data_base);
+        var list_number_can_make_note = LineIndicator.Instance.GetNumberCanMakeNote(square_index);
+        //var cells_data_unsolve = LineIndicator.Instance.GetCellDataSolve(SudukuData.Instance.data.unsolved_data_base);
         var horizontal_line = LineIndicator.Instance.GetHorizontalLine(square_index);
         var vertical_line = LineIndicator.Instance.GetVerticalLine(square_index);
         var square = LineIndicator.Instance.GetSquare(square_index);
         var same_number = LineIndicator.Instance.GetAllSameNumber(square_index, SudukuData.Instance.data.unsolved_data);
         var cell_selected = LineIndicator.Instance.GetCellSelected(square_index);
 
+        LineNumber.Instance.SetActiveButton(list_number_can_make_note);
         SetSquaresColor(LineIndicator.Instance.GetAllSquaresIndexs(), Color.white);
         //SetSquaresColor(cells_data_unsolve, cells_data_color);
         SetSquaresColor(horizontal_line, line_color);

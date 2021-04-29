@@ -1,33 +1,36 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class LineNumber : MonoBehaviour
 {
-    public GameObject grid_layout;
+    public static LineNumber Instance;
     public List<GameObject> numbers_;
+    private void Awake()
+    {
+        if (Instance) Destroy(this);
+        Instance = this;
+    }
     private void Start()
     {
         SetDeActivateAll();
         SetActivate(DropdownGridMode.Instance.GetGridMode());
-        
+        SetDisableAllNumber();
     }
     public void SetActivate(int grid_mode)
     {
         switch (grid_mode)
         {
             case 4:
-                grid_layout.GetComponent<GridLayoutGroup>().spacing = new Vector2(250,0);
-                
+                GetComponent<GridLayoutGroup>().spacing = new Vector2(225,0);
                 Activate(4);
                 break;
             case 6:
-                grid_layout.GetComponent<GridLayoutGroup>().spacing = new Vector2(125, 0);
+                GetComponent<GridLayoutGroup>().spacing = new Vector2(100, 0);
                 Activate(6);
                 break;
             case 9:
-                grid_layout.GetComponent<GridLayoutGroup>().spacing = new Vector2(50, 0);
+                GetComponent<GridLayoutGroup>().spacing = new Vector2(25, 0);
                 Activate(9);
                 break;
         }
@@ -44,6 +47,21 @@ public class LineNumber : MonoBehaviour
         for (int i = 0; i < n; i++)
         {
             numbers_[i].SetActive(true);
+        }
+    }
+    public void SetActiveButton(List<int> numbers)
+    {
+        SetDisableAllNumber();
+        foreach (var item in numbers)
+        {
+            numbers_[item - 1].GetComponentsInChildren<Image>(true)[1].gameObject.SetActive(false);
+        }
+    }
+    private void SetDisableAllNumber()
+    {
+        foreach (var item in numbers_)
+        {
+            item.GetComponentsInChildren<Image>(true)[1].gameObject.SetActive(true);
         }
     }
 }

@@ -21,7 +21,7 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
     private bool selected_ = false;
     
 
-    private bool has_wrong_value = false;
+    public bool has_wrong_value = false;
 
     //public string GetStringNumberNotes()
     //{
@@ -78,6 +78,7 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
         }
         return notes;
     }
+
     //private void SetClearEmptyNotes()
     //{
     //    foreach (var number in number_notes)
@@ -118,6 +119,7 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
 
     public void SetNoteSingleNumberValue(int value, bool foce_update = false, bool undo = false)
     {
+        
         if (note_active == false && foce_update == false) return;
         if(value <= 0) { number_notes[value - 1].GetComponent<Text>().text = ""; }
         else
@@ -127,8 +129,6 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
             if (number_notes[value - 1].GetComponent<Text>().text == "" || foce_update)
             {
                 number_notes[value - 1].GetComponent<Text>().text = value.ToString();
-                //if (undo == false)
-                //    SaveStepData.Instance.SaveJsonStep(square_index_, value, note_active, false);
             }
             else
             {
@@ -136,6 +136,7 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
             }
                 
         }
+        
         SaveData.Instance.SaveJsonData();
     }
     public void SetGridNotes(List<int> notes)
@@ -285,6 +286,12 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
     {
         if (selected_ && has_default_value == false)
         {
+            if(has_wrong_value == false)
+            {
+                has_wrong_value = false;
+                UndoNumber.Instance.SetListUndo(square_index_, number_, GetSquareNotes()); 
+                //Debug.Log(UndoNumber.Instance.List_Undo.Count);
+            }
             if (note_active == true && has_wrong_value == false )
             {
                 List<int> list_cell = LineIndicator.Instance.GetCellNotes(number, square_index_, SudukuData.Instance.data.unsolved_data);
@@ -296,7 +303,7 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
                 else 
                 {
                     SetNoteSingleNumberValue(number);
-                    UndoNumber.Instance.AddUndoNumber(square_index_, number, true);
+                   
                 }  
             }
             else if(note_active == false)
@@ -317,10 +324,9 @@ public class GridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
                     var colors = this.colors;
                     colors.normalColor = Color.white;
                     this.colors = colors;
-                    UndoNumber.Instance.AddUndoNumber(square_index_, number);
                     SetNumberData(number, square_index_);
                     DeleteNumberNotes(square_index_);
-                    UndoNumber.Instance.AddUndoNumber(square_index_, number);
+                    
                     SaveData.Instance.SaveJsonData();
                 }
             }

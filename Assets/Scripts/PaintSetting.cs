@@ -24,6 +24,13 @@ public class PaintSetting : MonoBehaviour
     //public List<Button> btn_font_size;
     public List<Image> btn_light_mode;
     public List<Image> btn_font_size;
+
+    public static PaintSetting Instance;
+    private void Awake()
+    {
+        if (Instance) Destroy(this);
+        else Instance = this;
+    }
     void Start()
     {
         OnWhiteLight();
@@ -106,8 +113,8 @@ public class PaintSetting : MonoBehaviour
         mode = 2; 
         SetSelect();
         SetTextColor(Color.white);
-        SetTextColorSquare(bg_white, Color.gray);
-        SetBackgroundColor(bg_Dark, Color.gray, bg_Dark, bg_square);
+        SetTextColorSquare(Color.black, Color.gray);
+        SetBackgroundColor(bg_Dark, bg_Dark, bg_Dark, bg_square);
     }
 
 
