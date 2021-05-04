@@ -21,6 +21,7 @@ public class DropdownGridMode : MonoBehaviour
 
     public int GetGridMode()
     {
+
         return grid_mode;
     }
     public void SetGridMode(int grid_mode_)
