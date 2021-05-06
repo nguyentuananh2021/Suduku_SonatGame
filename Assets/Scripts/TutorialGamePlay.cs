@@ -8,6 +8,7 @@ public class TutorialGamePlay : MonoBehaviour
     public List<GameObject> squares_;
     public Color color_on_click = Color.yellow;
     public Color color_light_area = Color.blue;
+    public Color color_text_set_number = Color.blue;
     public List<Button> button_numbers;
     public List<Image> square_box1;
     public List<Image> square_box2;
@@ -18,6 +19,7 @@ public class TutorialGamePlay : MonoBehaviour
     public List<GameObject> Panels;
     private void Start()
     {
+        SetDisableButton(anims);
         Panels[0].gameObject.SetActive(true);
         square_box1[0].gameObject.GetComponentInChildren<Text>().text = "1";
         square_box1[1].gameObject.GetComponentInChildren<Text>().text = "2";
@@ -38,9 +40,17 @@ public class TutorialGamePlay : MonoBehaviour
         }
         square_box1[3].color = color_on_click;
         StartCoroutine(SetColorHiglightArea(0.1f));
+        SetDisableButton(anims);
+        anims[3].GetComponent<Button>().interactable = true;
         anims[3].GetComponent<Animator>().SetBool("isClick", true);
     }
-
+    private void SetDisableButton(List<Animator> Buttons)
+    {
+        foreach (var button in Buttons)
+        {
+            button.GetComponent<Button>().interactable = false;
+        }
+    }
     public void ClickNumber_4()
     {
         
@@ -48,8 +58,11 @@ public class TutorialGamePlay : MonoBehaviour
         {
             yield return new WaitForSeconds(time);
             square_box1[3].gameObject.GetComponentInChildren<Text>().text = "4";
-            square_box1[3].gameObject.GetComponentInChildren<Text>().color = Color.blue;
+            square_box1[3].gameObject.GetComponentInChildren<Text>().color = color_text_set_number;
             anims[3].GetComponent<Animator>().SetBool("isClick", false);
+            SetDisableButton(anims);
+
+            anims[1].GetComponent<Button>().interactable = true;
             anims[1].GetComponent<Animator>().SetBool("isClick", true);
             for (int i = 0; i < square_box1.Count; i++)
             {
@@ -87,8 +100,11 @@ public class TutorialGamePlay : MonoBehaviour
         {
             yield return new WaitForSeconds(time);
             square_box2[2].gameObject.GetComponentInChildren<Text>().text = "2";
-            square_box2[2].gameObject.GetComponentInChildren<Text>().color = Color.blue;
+            square_box2[2].gameObject.GetComponentInChildren<Text>().color = color_text_set_number;
             anims[1].GetComponent<Animator>().SetBool("isClick", false);
+
+            SetDisableButton(anims);
+            anims[0].GetComponent<Button>().interactable = true;
             anims[0].GetComponent<Animator>().SetBool("isClick", true);
             for (int i = 0; i < square_row.Count; i++)
             {
@@ -133,7 +149,8 @@ public class TutorialGamePlay : MonoBehaviour
         {
             yield return new WaitForSeconds(time);
             square_box4[2].gameObject.GetComponentInChildren<Text>().text = "1";
-            square_box4[2].gameObject.GetComponentInChildren<Text>().color = Color.blue;
+            square_box4[2].gameObject.GetComponentInChildren<Text>().color = color_text_set_number;
+
             anims[0].GetComponent<Animator>().SetBool("isClick", false);
             
             for (int i = 0; i < square_collumn.Count; i++)

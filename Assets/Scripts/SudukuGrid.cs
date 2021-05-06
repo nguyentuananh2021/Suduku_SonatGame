@@ -36,8 +36,8 @@ public class SudukuGrid : MonoBehaviour
     }
     void Start()
     {
-
-        start_position = new Vector2(0.0f, 0.0f);
+        SetPanelGrid();
+           start_position = new Vector2(0.0f, 0.0f);
         //Debug.Log(SudukuData.Instance.suduku_game.Count);
         if (grid_square.GetComponent<GridSquare>() == null)
         {
@@ -52,6 +52,22 @@ public class SudukuGrid : MonoBehaviour
             StartCoroutine(FadeInSquareNumber());
         }
         else Debug.Log("Grid Mode Null");
+    }
+    public RectTransform rect_panelCentrerGrid;
+    private void SetPanelGrid()
+    {
+        Camera cam = Camera.main;
+        float height = 2f * cam.orthographicSize;
+        float width = height * cam.aspect;
+        //Debug.Log(width + "   " + height);
+        if(height >= width * 2)
+        {
+            rect_panelCentrerGrid.transform.localScale = new Vector2(0.95f,0.95f);
+        }
+        else
+        {
+            rect_panelCentrerGrid.transform.localScale = new Vector2(1.02f, 1.02f);
+        }
     }
     private void CreateGrid()
     {

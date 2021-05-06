@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class LineNumber : MonoBehaviour
 {
     public static LineNumber Instance;
-    public List<GameObject> numbers_;
+    public List<NumberButton> numbers_;
     private void Awake()
     {
         if (Instance) Destroy(this);
@@ -39,14 +39,14 @@ public class LineNumber : MonoBehaviour
     {
         foreach (var item in numbers_)
         {
-            item.SetActive(false);
+            item.gameObject.SetActive(false);
         }
     }
     private void Activate( int n)
     {
         for (int i = 0; i < n; i++)
         {
-            numbers_[i].SetActive(true);
+            numbers_[i].gameObject.SetActive(true);
         }
     }
     public void SetActiveButton(List<int> numbers)
@@ -54,14 +54,14 @@ public class LineNumber : MonoBehaviour
         SetDisableAllNumber();
         foreach (var item in numbers)
         {
-            numbers_[item - 1].GetComponentsInChildren<Image>(true)[1].gameObject.SetActive(false);
+            numbers_[item - 1].interactable = true;
         }
     }
     private void SetDisableAllNumber()
     {
         foreach (var item in numbers_)
         {
-            item.GetComponentsInChildren<Image>(true)[1].gameObject.SetActive(true);
+            item.interactable = false;
         }
     }
 }

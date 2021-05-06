@@ -64,8 +64,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\MenuBar.cs" />
     <Compile Include="Assets\Scripts\Calendar.cs" />
+    <Compile Include="Assets\Scripts\CalendarData.cs" />
     <Compile Include="Assets\Scripts\Clock.cs" />
     <Compile Include="Assets\Scripts\ContinueGame.cs" />
     <Compile Include="Assets\Scripts\DropdownGridMode.cs" />
@@ -78,6 +78,7 @@
     <Compile Include="Assets\Scripts\LineIndicator.cs" />
     <Compile Include="Assets\Scripts\LineNumber.cs" />
     <Compile Include="Assets\Scripts\Lives.cs" />
+    <Compile Include="Assets\Scripts\MenuBar.cs" />
     <Compile Include="Assets\Scripts\MenuButtons.cs" />
     <Compile Include="Assets\Scripts\MenuGameOver.cs" />
     <Compile Include="Assets\Scripts\MenuPause.cs" />

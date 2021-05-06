@@ -33,10 +33,13 @@ public class UndoNumber : MonoBehaviour
     }
     public void OnUndo()
     {
+        
         Undo undo = new Undo();
         
         if (List_Undo.Count > 0)
         {
+            this.GetComponent<Animator>().SetBool("rotate", true);
+            StartCoroutine(SetRotate(1f));
             undo = List_Undo[List_Undo.Count - 1];
 
             var square = SudukuGrid.Instance.grid_squares_[undo.square_index].GetComponent<GridSquare>();
@@ -64,5 +67,12 @@ public class UndoNumber : MonoBehaviour
             List_Undo.Remove(List_Undo[List_Undo.Count - 1]);
         }
         else Debug.Log("list undo = "+List_Undo.Count);
+        
+        
+    }
+    public IEnumerator SetRotate(float time)
+    {
+        yield return new WaitForSeconds(time); 
+        this.GetComponent<Animator>().SetBool("rotate", false);
     }
 }

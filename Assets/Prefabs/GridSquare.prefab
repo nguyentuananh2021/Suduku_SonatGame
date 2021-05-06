@@ -297,7 +297,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 1, g: 0.70406073, b: 0.4481132, a: 1}
+    m_HighlightedColor: {r: 0.4198113, g: 0.8376699, b: 1, a: 1}
     m_PressedColor: {r: 0.9056604, g: 0.9056604, b: 0.9056604, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -327,6 +327,7 @@ MonoBehaviour:
   grid_number_note: {fileID: 4683358594537540597}
   note_active: 0
   has_default_value: 0
+  has_wrong_value: 0
 --- !u!1 &2644374287639250338
 GameObject:
   m_ObjectHideFlags: 0
