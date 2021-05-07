@@ -24,6 +24,16 @@ public class GameEvents : MonoBehaviour
             OnSquareSelected(square_index);
             
         }
+    } 
+    public delegate void DaySelected(int day_num);
+    public static event DaySelected OnDaySelected;
+    public static void DaySelectedMethod(int day_num)
+    {
+        if (OnDaySelected != null)
+        {
+            OnDaySelected(day_num);
+            
+        }
     }
 
     public delegate void WrongNumber();

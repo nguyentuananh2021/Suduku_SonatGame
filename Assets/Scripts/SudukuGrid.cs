@@ -37,7 +37,7 @@ public class SudukuGrid : MonoBehaviour
     void Start()
     {
         SetPanelGrid();
-           start_position = new Vector2(0.0f, 0.0f);
+        start_position = new Vector2(0.0f, 0.0f);
         //Debug.Log(SudukuData.Instance.suduku_game.Count);
         if (grid_square.GetComponent<GridSquare>() == null)
         {
