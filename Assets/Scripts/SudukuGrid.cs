@@ -38,11 +38,6 @@ public class SudukuGrid : MonoBehaviour
     {
         SetPanelGrid();
         start_position = new Vector2(0.0f, 0.0f);
-        //Debug.Log(SudukuData.Instance.suduku_game.Count);
-        if (grid_square.GetComponent<GridSquare>() == null)
-        {
-            Debug.Log("GridSquare is null");
-        }
         if (DropdownGridMode.Instance.GetGridMode() >= 0)
         {
             SetGridMode(DropdownGridMode.Instance.GetGridMode());
@@ -211,18 +206,27 @@ public class SudukuGrid : MonoBehaviour
 
     private void SetGridNumber(string level)
     {
-        var json_data_pref = PlayerPrefs.GetString("json_data");
-        // Debug.Log(data.solved_data[0]);
-        if (json_data_pref != "")
+        Debug.Log(GameSetting.Instance.IsDaily());
+        if (GameSetting.Instance.IsDaily())
         {
-            var json_data = JsonUtility.FromJson<Data>(json_data_pref);
-            SudukuData.Instance.data = new SudukuData.SudukuBoardData(json_data.unsolved_data, json_data.solved_data, json_data.unsolved_data_base);
-            SetGridSquareData(SudukuData.Instance.data);
+            SetGridSquareData(SudukuData.Instance.GetDataGameMode(level));
         }
         else
         {
-            SetGridSquareData( SudukuData.Instance.GetDataGameMode(level));
+            var json_data_pref = PlayerPrefs.GetString("json_data");
+            // Debug.Log(data.solved_data[0]);
+            if (json_data_pref == "")
+            {
+                SetGridSquareData(SudukuData.Instance.GetDataGameMode(level));
+            }
+            else
+            {
+                var json_data = JsonUtility.FromJson<Data>(json_data_pref);
+                SudukuData.Instance.data = new SudukuData.SudukuBoardData(json_data.unsolved_data, json_data.solved_data, json_data.unsolved_data_base);
+                SetGridSquareData(SudukuData.Instance.data);
+            }
         }
+        
         
         
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Calendar : MonoBehaviour
 {
@@ -27,6 +28,9 @@ public class Calendar : MonoBehaviour
 
     public DateTime currDate = DateTime.Now;
     public static Calendar Instance;
+
+
+
     private void Awake()
     {
         if (Instance) Destroy(this);
@@ -96,6 +100,22 @@ public class Calendar : MonoBehaviour
    
         for (int i = 0; i < 42; i++)
         {
+            //switch (Days[i].GetComponent<DayCalendar>().is_finish_percent)
+            //{
+            //    case 0:
+            //        //Debug.Log(Days[i+startDay].GetComponentsInChildren<Image>(true)[0].GetComponent<GameObject>().name);
+            //        Days[i].GetComponentsInChildren<Image>(true)[0].GetComponent<GameObject>().SetActive(false);
+            //        Days[i].GetComponentsInChildren<Image>(true)[1].GetComponent<GameObject>().SetActive(false);
+            //        break;
+            //    case 50:
+            //        //Days[i].GetComponentsInChildren<Image>(true)[0].gameObject.SetActive(true);
+            //        break;
+            //    case 100:
+            //        //Days[i].GetComponentsInChildren<Image>(true)[0].gameObject.SetActive(false);
+            //        //Days[i].GetComponentsInChildren<Image>(true)[1].gameObject.SetActive(true);
+            //        break;
+
+            //}
             Days[i].GetComponent<DayCalendar>().interactable = true;
             if (i < startDay || i - startDay >= endDay)
             {
@@ -105,9 +125,12 @@ public class Calendar : MonoBehaviour
             else
             {
                 Days[i].GetComponent<DayCalendar>().UpdateColor(Color.white, color_text);
+                
             }
             //Days[i].GetComponent<DayCalendar>().isToDay = false;
             Days[i].GetComponent<DayCalendar>().UpdateDay(i - startDay);
+
+            
         }
         ///This just checks if today is on our calendar. If so, we highlight it in green
         if (DateTime.Now.Year == year && DateTime.Now.Month == month)
@@ -175,8 +198,11 @@ public class Calendar : MonoBehaviour
     }
 
 
-    public void PlayDaily(string game_mode)
+    public void PlayDaily(string CurrenDate)
     {
-
+        GameSetting.Instance.SetDaiLyChallenges(true);
+        DropdownGridMode.Instance.SetGridMode(9);
+        GameSetting.Instance.SetGameMode("Easy_9x9");
+        SceneManager.LoadScene("GameScene");
     }
 }

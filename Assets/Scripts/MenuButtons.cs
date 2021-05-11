@@ -13,6 +13,7 @@ public class MenuButtons : MonoBehaviour
 
     public void LoadEasyGame(string name)
     {
+        GameSetting.Instance.SetDaiLyChallenges(false);
         SudukuJSON.Instance.ResetFile();
         switch (DropdownGridMode.Instance.GetGridMode())
         {
@@ -33,6 +34,7 @@ public class MenuButtons : MonoBehaviour
     }
     public void LoadMediumGame(string name)
     {
+        GameSetting.Instance.SetDaiLyChallenges(false);
         SudukuJSON.Instance.ResetFile();
         switch (DropdownGridMode.Instance.GetGridMode())
         {
@@ -52,6 +54,7 @@ public class MenuButtons : MonoBehaviour
     }
     public void LoadHardGame(string name)
     {
+        GameSetting.Instance.SetDaiLyChallenges(false);
         SudukuJSON.Instance.ResetFile();
         switch (DropdownGridMode.Instance.GetGridMode())
         {
@@ -71,6 +74,7 @@ public class MenuButtons : MonoBehaviour
     }
     public void LoadVeryHardGame(string name)
     {
+        GameSetting.Instance.SetDaiLyChallenges(false);
         SudukuJSON.Instance.ResetFile();
         switch (DropdownGridMode.Instance.GetGridMode())
         {

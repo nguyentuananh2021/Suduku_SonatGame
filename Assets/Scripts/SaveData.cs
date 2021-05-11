@@ -43,6 +43,13 @@ public class SaveData : MonoBehaviour
 
     public void SaveJsonData()
     {
-        PlayerPrefs.SetString("json_data", JsonUtility.ToJson(GetData()));
+        if (GameSetting.Instance.IsDaily())
+        {
+
+        }
+        else
+        {
+            PlayerPrefs.SetString("json_data", JsonUtility.ToJson(GetData()));
+        }
     }
 }

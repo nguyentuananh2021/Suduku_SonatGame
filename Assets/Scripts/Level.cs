@@ -21,7 +21,13 @@ public class Level : MonoBehaviour
 
     private void SetLevelGrid()
     {
-        level_grid = GameSetting.Instance.GetGameMode();
+        if (GameSetting.Instance.IsDaily())
+        {
+            var crr = Calendar.Instance.currDate;
+            level_grid = crr.Year + "." + crr.Month + "." + crr.Day;
+        }
+        else
+            level_grid = GameSetting.Instance.GetGameMode();
     }
     public string GetLevelGrid()
     {

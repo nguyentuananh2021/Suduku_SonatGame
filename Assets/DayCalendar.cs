@@ -7,11 +7,15 @@ using UnityEngine.Events;
 
 public class DayCalendar : Selectable, IPointerClickHandler, ISubmitHandler, IPointerUpHandler, IPointerExitHandler
 {
+
+
     private int day_num_previous = -1;
     public int day_num;
     public Color dayColor;
     public Color dayTextColor;
     public bool selected_ = false;
+
+    public int is_finish_percent = 0;
     /// <summary>
     /// Constructor of Day
     /// </summary>
@@ -26,7 +30,6 @@ public class DayCalendar : Selectable, IPointerClickHandler, ISubmitHandler, IPo
     {
 
     }
-
     /// <summary>
     /// Call this when updating the color so that both the dayColor is updated, as well as the visual color on the screen
     /// </summary>

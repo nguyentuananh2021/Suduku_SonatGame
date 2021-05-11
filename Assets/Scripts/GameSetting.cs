@@ -5,6 +5,15 @@ using UnityEngine.UI;
 using TMPro;
 public class GameSetting : MonoBehaviour
 {
+    private bool isDailyChallenges = false;
+    public void SetDaiLyChallenges(bool bool_)
+    {
+        isDailyChallenges = bool_;
+    }
+    public bool IsDaily()
+    {
+        return isDailyChallenges;
+    }
     public enum EGameMode
     {
         NOT_SET,
